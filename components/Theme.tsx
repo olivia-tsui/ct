@@ -48,33 +48,33 @@ function Theme_(props: ThemeProps, ref: HTMLElementRefOf<"div">) {
       saturation={{
         placeholder: _config.saturation.toString(),
         onChange: (e) => {
-          setConfig({..._config, saturation: e.target.value})
+          setConfig({..._config, saturation:parseFloat( e.target.value.toString())})
         }
       }}
       stepsLighter={{
         placeholder: _config.stepsLighter.toString(),
         onChange: (e) => {
-          setConfig({..._config, stepsLighter: e.target.value})
+          setConfig({..._config, stepsLighter: parseFloat( e.target.value)})
         }
 
       }}
       stepsDarker={{
         placeholder: _config.stepsDarker.toString(),
         onChange: (e) => {
-          setConfig({..._config, stepsDarker: e.target.value})
+          setConfig({..._config, stepsDarker:parseFloat( e.target.value)})
         }
 
       }}
       lightStepDistance={{
         placeholder: _config.lightStep.toString(),
         onChange: (e) => {
-          setConfig({..._config, lightStep: e.target.value})
+          setConfig({..._config, lightStep:parseFloat( e.target.value)})
         }
       }}
       darkStepDistance={{
         placeholder: _config.darkStep.toString(),
         onChange: (e) => {
-          setConfig({..._config, darkStep: e.target.value})
+          setConfig({..._config, darkStep: parseFloat( e.target.value)})
         }
       }}
       root={{ ref }} {...props} />
