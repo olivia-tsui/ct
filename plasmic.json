@@ -1,0 +1,156 @@
+{
+  "platform": "nextjs",
+  "code": {
+    "lang": "ts",
+    "scheme": "blackbox",
+    "reactRuntime": "classic"
+  },
+  "style": {
+    "scheme": "css-modules",
+    "defaultStyleCssFilePath": "plasmic/plasmic__default_style.css"
+  },
+  "images": {
+    "scheme": "public-files",
+    "publicDir": "../public",
+    "publicUrlPrefix": "/"
+  },
+  "tokens": {
+    "scheme": "theo",
+    "tokensFilePath": "plasmic-tokens.theo.json"
+  },
+  "srcDir": "components",
+  "defaultPlasmicDir": "./plasmic",
+  "projects": [
+    {
+      "projectId": "dczqNaFYoArv9QmtqhGLsR",
+      "projectApiToken": "Q3yiJwYoWgSnvcOdt6bDUwKA92FxmjkYteLnUBCq5Wp9yGD7aPMKikqWTLv1O0SXCP5c6o7adkOohTowg",
+      "projectName": "ColorTool",
+      "version": "latest",
+      "cssFilePath": "plasmic/color_tool/plasmic_color_tool.module.css",
+      "components": [
+        {
+          "id": "TG7tj4i4IGD7",
+          "name": "Homepage",
+          "type": "managed",
+          "projectId": "dczqNaFYoArv9QmtqhGLsR",
+          "renderModuleFilePath": "plasmic/color_tool/PlasmicHomepage.tsx",
+          "importSpec": {
+            "modulePath": "../pages/index.tsx"
+          },
+          "cssFilePath": "plasmic/color_tool/PlasmicHomepage.module.css",
+          "scheme": "blackbox",
+          "componentType": "page"
+        },
+        {
+          "id": "YczP2_j8Fh",
+          "name": "Color",
+          "type": "managed",
+          "projectId": "dczqNaFYoArv9QmtqhGLsR",
+          "renderModuleFilePath": "plasmic/color_tool/PlasmicColor.tsx",
+          "importSpec": {
+            "modulePath": "Color.tsx"
+          },
+          "cssFilePath": "plasmic/color_tool/PlasmicColor.module.css",
+          "scheme": "blackbox",
+          "componentType": "component"
+        },
+        {
+          "id": "dyZl0Y5DD8",
+          "name": "Colors",
+          "type": "managed",
+          "projectId": "dczqNaFYoArv9QmtqhGLsR",
+          "renderModuleFilePath": "plasmic/color_tool/PlasmicColors.tsx",
+          "importSpec": {
+            "modulePath": "Colors.tsx"
+          },
+          "cssFilePath": "plasmic/color_tool/PlasmicColors.module.css",
+          "scheme": "blackbox",
+          "componentType": "component"
+        },
+        {
+          "id": "434vhQcoRkn",
+          "name": "Input",
+          "type": "managed",
+          "projectId": "dczqNaFYoArv9QmtqhGLsR",
+          "renderModuleFilePath": "plasmic/color_tool/PlasmicInput.tsx",
+          "importSpec": {
+            "modulePath": "Input.tsx"
+          },
+          "cssFilePath": "plasmic/color_tool/PlasmicInput.module.css",
+          "scheme": "blackbox",
+          "componentType": "component",
+          "plumeType": "text-input"
+        },
+        {
+          "id": "AIPmHdmqsY",
+          "name": "Field",
+          "type": "managed",
+          "projectId": "dczqNaFYoArv9QmtqhGLsR",
+          "renderModuleFilePath": "plasmic/color_tool/PlasmicField.tsx",
+          "importSpec": {
+            "modulePath": "Field.tsx"
+          },
+          "cssFilePath": "plasmic/color_tool/PlasmicField.module.css",
+          "scheme": "blackbox",
+          "componentType": "component"
+        },
+        {
+          "id": "848il-tpeEh",
+          "name": "Theme",
+          "type": "managed",
+          "projectId": "dczqNaFYoArv9QmtqhGLsR",
+          "renderModuleFilePath": "plasmic/color_tool/PlasmicTheme.tsx",
+          "importSpec": {
+            "modulePath": "Theme.tsx"
+          },
+          "cssFilePath": "plasmic/color_tool/PlasmicTheme.module.css",
+          "scheme": "blackbox",
+          "componentType": "component"
+        }
+      ],
+      "icons": [
+        {
+          "id": "4MjaTm1IpeT",
+          "name": "SearchsvgIcon",
+          "moduleFilePath": "plasmic/color_tool/icons/PlasmicIcon__Searchsvg.tsx"
+        },
+        {
+          "id": "K6gY_eUm0B4",
+          "name": "ChecksvgIcon",
+          "moduleFilePath": "plasmic/color_tool/icons/PlasmicIcon__Checksvg.tsx"
+        }
+      ],
+      "images": [],
+      "indirect": false,
+      "globalContextsFilePath": "",
+      "codeComponents": [
+        {
+          "id": "4BRDAsxuI6",
+          "name": "PlasmicHead",
+          "componentImportPath": "@plasmicapp/react-web"
+        },
+        {
+          "id": "GcrPi5uLJO",
+          "name": "Fetcher",
+          "componentImportPath": "@plasmicapp/react-web/lib/data-sources"
+        }
+      ]
+    }
+  ],
+  "globalVariants": {
+    "variantGroups": [
+      {
+        "id": "Pt71tlTNpDnZr",
+        "name": "Screen",
+        "projectId": "dczqNaFYoArv9QmtqhGLsR",
+        "contextFilePath": "plasmic/color_tool/PlasmicGlobalVariant__Screen.tsx"
+      }
+    ]
+  },
+  "wrapPagesWithGlobalContexts": true,
+  "nextjsConfig": {
+    "pagesDir": "../pages"
+  },
+  "cliVersion": "0.1.206",
+  "$schema": "https://unpkg.com/@plasmicapp/cli@0.1.206/dist/plasmic.schema.json"
+}
