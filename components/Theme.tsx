@@ -7,38 +7,80 @@ import {
 } from "./plasmic/color_tool/PlasmicTheme";
 import { HTMLElementRefOf } from "@plasmicapp/react-web";
 
-// Your component props start with props for variants and slots you defined
-// in Plasmic, but you can add more here, like event handlers that you can
-// attach to named nodes in your component.
-//
-// If you don't want to expose certain variants or slots as a prop, you can use
-// Omit to hide them:
-//
-// interface ThemeProps extends Omit<DefaultThemeProps, "hideProps1"|"hideProp2"> {
-//   // etc.
-// }
-//
-// You can also stop extending from DefaultThemeProps altogether and have
-// total control over the props for your component.
 export interface ThemeProps extends DefaultThemeProps {}
+interface ThemeConfigType {
+  baseValue: string;
+  saturation: number;
+  stepsLighter: number;
+  stepsDarker: number;
+  lightStep: number;
+  darkStep: number;
+}
+
+const config = {
+  baseValue: "#0F3CC9",
+  saturation: 0,
+  stepsLighter: 10,
+  stepsDarker: 10,
+  lightStep: 3.5,
+  darkStep: 3.2,
+};
+
+export const ColorsContext = React.createContext(config);
+export const ConfigUpdateContext = React.createContext((data:ThemeConfigType) => {
+});
 
 function Theme_(props: ThemeProps, ref: HTMLElementRefOf<"div">) {
-  // Use PlasmicTheme to render this component as it was
-  // designed in Plasmic, by activating the appropriate variants,
-  // attaching the appropriate event handlers, etc.  You
-  // can also install whatever React hooks you need here to manage state or
-  // fetch data.
-  //
-  // Props you can pass into PlasmicTheme are:
-  // 1. Variants you want to activate,
-  // 2. Contents for slots you want to fill,
-  // 3. Overrides for any named node in the component to attach behavior and data,
-  // 4. Props to set on the root node.
-  //
-  // By default, we are just piping all ThemeProps here, but feel free
-  // to do whatever works for you.
 
-  return <PlasmicTheme root={{ ref }} {...props} />;
+  const [_config, setConfig] = React.useState(config);
+
+  return (
+    <ColorsContext.Provider value={_config}>
+      <ConfigUpdateContext.Provider value={(data:ThemeConfigType) => {
+        setConfig(data)
+      }}>
+      <PlasmicTheme baseValue={{
+        placeholder: _config.baseValue,
+        onChange: (e) => {
+          setConfig({..._config, baseValue: e.target.value.length > 6 ? e.target.value : _config.baseValue})
+        }
+      }}
+      saturation={{
+        placeholder: _config.saturation.toString(),
+        onChange: (e) => {
+          setConfig({..._config, saturation: e.target.value})
+        }
+      }}
+      stepsLighter={{
+        placeholder: _config.stepsLighter.toString(),
+        onChange: (e) => {
+          setConfig({..._config, stepsLighter: e.target.value})
+        }
+
+      }}
+      stepsDarker={{
+        placeholder: _config.stepsDarker.toString(),
+        onChange: (e) => {
+          setConfig({..._config, stepsDarker: e.target.value})
+        }
+
+      }}
+      lightStepDistance={{
+        placeholder: _config.lightStep.toString(),
+        onChange: (e) => {
+          setConfig({..._config, lightStep: e.target.value})
+        }
+      }}
+      darkStepDistance={{
+        placeholder: _config.darkStep.toString(),
+        onChange: (e) => {
+          setConfig({..._config, darkStep: e.target.value})
+        }
+      }}
+      root={{ ref }} {...props} />
+      </ConfigUpdateContext.Provider>
+      </ColorsContext.Provider>
+  );
 }
 
 const Theme = React.forwardRef(Theme_);

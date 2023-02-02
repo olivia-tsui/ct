@@ -37,10 +37,11 @@ import {
 
 import "@plasmicapp/react-web/lib/plasmic.css";
 
-import projectcss from "./plasmic_color_tool.module.css"; // plasmic-import: dczqNaFYoArv9QmtqhGLsR/projectcss
+import projectcss from "../blank_project/plasmic_blank_project.module.css"; // plasmic-import: dczqNaFYoArv9QmtqhGLsR/projectcss
 import sty from "./PlasmicColor.module.css"; // plasmic-import: YczP2_j8Fh/css
 
 export type PlasmicColor__VariantMembers = {};
+
 export type PlasmicColor__VariantsArgs = {};
 type VariantPropType = keyof PlasmicColor__VariantsArgs;
 export const PlasmicColor__VariantProps = new Array<VariantPropType>();
@@ -77,7 +78,15 @@ function PlasmicColor__RenderFunc(props: {
   const { variants, overrides, forNode } = props;
 
   const $ctx = ph.useDataEnv?.() || {};
-  const args = React.useMemo(() => Object.assign({}, props.args), [props.args]);
+  const args = React.useMemo(
+    () =>
+      Object.assign(
+        {},
+
+        props.args
+      ),
+    [props.args]
+  );
 
   const $props = {
     ...args,
@@ -132,7 +141,7 @@ const PlasmicDescendants = {
 } as const;
 type NodeNameType = keyof typeof PlasmicDescendants;
 type DescendantsType<T extends NodeNameType> =
-  (typeof PlasmicDescendants)[T][number];
+  typeof PlasmicDescendants[T][number];
 type NodeDefaultElementType = {
   root: "div";
   name: "div";
@@ -151,15 +160,15 @@ type NodeComponentProps<T extends NodeNameType> =
     args?: PlasmicColor__ArgsType;
     overrides?: NodeOverridesType<T>;
   } & Omit<PlasmicColor__VariantsArgs, ReservedPropsType> & // Specify variants directly as props
-    /* Specify args directly as props*/ Omit<
-      PlasmicColor__ArgsType,
-      ReservedPropsType
-    > &
-    /* Specify overrides for each element directly as props*/ Omit<
+    // Specify args directly as props
+    Omit<PlasmicColor__ArgsType, ReservedPropsType> &
+    // Specify overrides for each element directly as props
+    Omit<
       NodeOverridesType<T>,
       ReservedPropsType | VariantPropType | ArgPropType
     > &
-    /* Specify props for the root element*/ Omit<
+    // Specify props for the root element
+    Omit<
       Partial<React.ComponentProps<NodeDefaultElementType[T]>>,
       ReservedPropsType | VariantPropType | ArgPropType | DescendantsType<T>
     >;
