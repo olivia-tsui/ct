@@ -6,39 +6,57 @@ import {
   DefaultColorsProps
 } from "./plasmic/color_tool/PlasmicColors";
 import { HTMLElementRefOf } from "@plasmicapp/react-web";
+import Color from "./Color";
+import chroma from "./chroma"
+import { ColorsContext } from "./Theme";
 
-// Your component props start with props for variants and slots you defined
-// in Plasmic, but you can add more here, like event handlers that you can
-// attach to named nodes in your component.
-//
-// If you don't want to expose certain variants or slots as a prop, you can use
-// Omit to hide them:
-//
-// interface ColorsProps extends Omit<DefaultColorsProps, "hideProps1"|"hideProp2"> {
-//   // etc.
-// }
-//
-// You can also stop extending from DefaultColorsProps altogether and have
-// total control over the props for your component.
 export interface ColorsProps extends DefaultColorsProps {}
 
-function Colors_(props: ColorsProps, ref: HTMLElementRefOf<"div">) {
-  // Use PlasmicColors to render this component as it was
-  // designed in Plasmic, by activating the appropriate variants,
-  // attaching the appropriate event handlers, etc.  You
-  // can also install whatever React hooks you need here to manage state or
-  // fetch data.
-  //
-  // Props you can pass into PlasmicColors are:
-  // 1. Variants you want to activate,
-  // 2. Contents for slots you want to fill,
-  // 3. Overrides for any named node in the component to attach behavior and data,
-  // 4. Props to set on the root node.
-  //
-  // By default, we are just piping all ColorsProps here, but feel free
-  // to do whatever works for you.
 
-  return <PlasmicColors root={{ ref }} {...props} />;
+function Colors_(props: ColorsProps, ref: HTMLElementRefOf<"div">) {
+  const config = React.useContext(ColorsContext)
+
+  let shades= [config.baseValue]
+  let names = ["Base"]
+
+  for (let i = 1; i <= config.stepsLighter; i++) {
+    let newShade = chroma(config.baseValue).brighten(i/config.stepsLighter*config.lightStep).hex()
+    if (config.saturation > 0) {
+      newShade = chroma(newShade).saturate(config.saturation).hex()
+    } else if (config.saturation < 0) {
+      newShade = chroma(newShade).desaturate(-config.saturation).hex()
+    }
+
+    shades = [newShade].concat(shades)
+    names = [`L${i}`].concat(names)
+  }
+
+  for (let i = 1; i <= config.stepsDarker; i++) {
+    let newShade= chroma(config.baseValue).darken(i/config.stepsDarker*config.darkStep).hex()
+    if (config.saturation > 0) {
+      newShade = chroma(newShade).saturate(config.saturation).hex()
+    } else if (config.saturation < 0) {
+      newShade = chroma(newShade).desaturate(-config.saturation).hex()
+    }
+    shades.push(newShade)
+    names.push(`D${i}`)
+  }
+
+  return (
+    
+
+      <PlasmicColors
+        root={{
+          props: {
+            children: (shades).map((color,i) => {
+              return <Color color={color} name={names[i]} hexCode={color.toUpperCase()}></Color>
+            }),
+          },
+        }}
+        {...props}
+      />
+    
+  );
 }
 
 const Colors = React.forwardRef(Colors_);
