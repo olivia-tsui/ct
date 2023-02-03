@@ -82,28 +82,68 @@
           "plumeType": "text-input"
         },
         {
-          "id": "AIPmHdmqsY",
-          "name": "Field",
-          "type": "managed",
-          "projectId": "dczqNaFYoArv9QmtqhGLsR",
-          "renderModuleFilePath": "plasmic/color_tool/PlasmicField.tsx",
-          "importSpec": {
-            "modulePath": "Field.tsx"
-          },
-          "cssFilePath": "plasmic/color_tool/PlasmicField.module.css",
-          "scheme": "blackbox",
-          "componentType": "component"
-        },
-        {
           "id": "848il-tpeEh",
           "name": "Theme",
           "type": "managed",
           "projectId": "dczqNaFYoArv9QmtqhGLsR",
-          "renderModuleFilePath": "plasmic/color_tool/PlasmicTheme.tsx",
+          "renderModuleFilePath": "plasmic/color_tool/PlasmicTheme.jsx",
           "importSpec": {
-            "modulePath": "Theme.tsx"
+            "modulePath": "Theme.jsx"
           },
           "cssFilePath": "plasmic/color_tool/PlasmicTheme.module.css",
+          "scheme": "blackbox",
+          "componentType": "component"
+        },
+        {
+          "id": "AIPmHdmqsY",
+          "name": "InputField",
+          "type": "managed",
+          "projectId": "dczqNaFYoArv9QmtqhGLsR",
+          "renderModuleFilePath": "plasmic/color_tool/PlasmicInputField.tsx",
+          "importSpec": {
+            "modulePath": "InputField.tsx"
+          },
+          "cssFilePath": "plasmic/color_tool/PlasmicInputField.module.css",
+          "scheme": "blackbox",
+          "componentType": "component"
+        },
+        {
+          "id": "K_3cTz_dlp",
+          "name": "Themes",
+          "type": "managed",
+          "projectId": "dczqNaFYoArv9QmtqhGLsR",
+          "renderModuleFilePath": "plasmic/color_tool/PlasmicThemes.tsx",
+          "importSpec": {
+            "modulePath": "Themes.tsx"
+          },
+          "cssFilePath": "plasmic/color_tool/PlasmicThemes.module.css",
+          "scheme": "blackbox",
+          "componentType": "component"
+        },
+        {
+          "id": "iXX9rwSFEyL",
+          "name": "Button",
+          "type": "managed",
+          "projectId": "dczqNaFYoArv9QmtqhGLsR",
+          "renderModuleFilePath": "plasmic/color_tool/PlasmicButton.tsx",
+          "importSpec": {
+            "modulePath": "Button.tsx"
+          },
+          "cssFilePath": "plasmic/color_tool/PlasmicButton.module.css",
+          "scheme": "blackbox",
+          "componentType": "component",
+          "plumeType": "button"
+        },
+        {
+          "id": "b0WRjvMctS",
+          "name": "ColorField",
+          "type": "managed",
+          "projectId": "dczqNaFYoArv9QmtqhGLsR",
+          "renderModuleFilePath": "plasmic/color_tool/PlasmicColorField.tsx",
+          "importSpec": {
+            "modulePath": "ColorField.tsx"
+          },
+          "cssFilePath": "plasmic/color_tool/PlasmicColorField.module.css",
           "scheme": "blackbox",
           "componentType": "component"
         }
@@ -118,6 +158,26 @@
           "id": "K6gY_eUm0B4",
           "name": "ChecksvgIcon",
           "moduleFilePath": "plasmic/color_tool/icons/PlasmicIcon__Checksvg.tsx"
+        },
+        {
+          "id": "1TbpUnBChBh",
+          "name": "ChevronDownsvgIcon",
+          "moduleFilePath": "plasmic/color_tool/icons/PlasmicIcon__ChevronDownsvg.tsx"
+        },
+        {
+          "id": "XqTseEn1E97",
+          "name": "ChevronUpsvgIcon",
+          "moduleFilePath": "plasmic/color_tool/icons/PlasmicIcon__ChevronUpsvg.tsx"
+        },
+        {
+          "id": "Kv0ZYfEWi7y",
+          "name": "IconIcon",
+          "moduleFilePath": "plasmic/color_tool/icons/PlasmicIcon__Icon.tsx"
+        },
+        {
+          "id": "HwlYeO1i4N",
+          "name": "Icon2Icon",
+          "moduleFilePath": "plasmic/color_tool/icons/PlasmicIcon__Icon2.tsx"
         }
       ],
       "images": [],
@@ -133,6 +193,11 @@
           "id": "GcrPi5uLJO",
           "name": "Fetcher",
           "componentImportPath": "@plasmicapp/react-web/lib/data-sources"
+        },
+        {
+          "id": "19Vq7b8_2Z",
+          "name": "HuePicker",
+          "componentImportPath": "react-color"
         }
       ]
     },

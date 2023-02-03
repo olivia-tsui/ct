@@ -38,10 +38,11 @@ import Color from "../../Color"; // plasmic-import: YczP2_j8Fh/component
 
 import "@plasmicapp/react-web/lib/plasmic.css";
 
-import projectcss from "./plasmic_color_tool.module.css"; // plasmic-import: dczqNaFYoArv9QmtqhGLsR/projectcss
+import projectcss from "../blank_project/plasmic_blank_project.module.css"; // plasmic-import: dczqNaFYoArv9QmtqhGLsR/projectcss
 import sty from "./PlasmicColors.module.css"; // plasmic-import: dyZl0Y5DD8/css
 
 export type PlasmicColors__VariantMembers = {};
+
 export type PlasmicColors__VariantsArgs = {};
 type VariantPropType = keyof PlasmicColors__VariantsArgs;
 export const PlasmicColors__VariantProps = new Array<VariantPropType>();
@@ -49,6 +50,7 @@ export const PlasmicColors__VariantProps = new Array<VariantPropType>();
 export type PlasmicColors__ArgsType = {
   children?: React.ReactNode;
 };
+
 type ArgPropType = keyof PlasmicColors__ArgsType;
 export const PlasmicColors__ArgProps = new Array<ArgPropType>("children");
 
@@ -79,7 +81,15 @@ function PlasmicColors__RenderFunc(props: {
   const { variants, overrides, forNode } = props;
 
   const $ctx = ph.useDataEnv?.() || {};
-  const args = React.useMemo(() => Object.assign({}, props.args), [props.args]);
+  const args = React.useMemo(
+    () =>
+      Object.assign(
+        {},
+
+        props.args
+      ),
+    [props.args]
+  );
 
   const $props = {
     ...args,
@@ -133,7 +143,7 @@ const PlasmicDescendants = {
 } as const;
 type NodeNameType = keyof typeof PlasmicDescendants;
 type DescendantsType<T extends NodeNameType> =
-  (typeof PlasmicDescendants)[T][number];
+  typeof PlasmicDescendants[T][number];
 type NodeDefaultElementType = {
   root: "div";
 };
@@ -150,15 +160,15 @@ type NodeComponentProps<T extends NodeNameType> =
     args?: PlasmicColors__ArgsType;
     overrides?: NodeOverridesType<T>;
   } & Omit<PlasmicColors__VariantsArgs, ReservedPropsType> & // Specify variants directly as props
-    /* Specify args directly as props*/ Omit<
-      PlasmicColors__ArgsType,
-      ReservedPropsType
-    > &
-    /* Specify overrides for each element directly as props*/ Omit<
+    // Specify args directly as props
+    Omit<PlasmicColors__ArgsType, ReservedPropsType> &
+    // Specify overrides for each element directly as props
+    Omit<
       NodeOverridesType<T>,
       ReservedPropsType | VariantPropType | ArgPropType
     > &
-    /* Specify props for the root element*/ Omit<
+    // Specify props for the root element
+    Omit<
       Partial<React.ComponentProps<NodeDefaultElementType[T]>>,
       ReservedPropsType | VariantPropType | ArgPropType | DescendantsType<T>
     >;

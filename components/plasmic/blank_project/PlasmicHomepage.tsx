@@ -34,6 +34,7 @@ import {
   deriveRenderOpts,
   ensureGlobalVariants
 } from "@plasmicapp/react-web";
+import Themes from "../../Themes"; // plasmic-import: K_3cTz_dlp/component
 import Theme from "../../Theme"; // plasmic-import: 848il-tpeEh/component
 
 import "@plasmicapp/react-web/lib/plasmic.css";
@@ -55,7 +56,7 @@ export type PlasmicHomepage__OverridesType = {
   root?: p.Flex<"div">;
   section?: p.Flex<"section">;
   h1?: p.Flex<"h1">;
-  theme?: p.Flex<typeof Theme>;
+  themes?: p.Flex<typeof Themes>;
 };
 
 export interface DefaultHomepageProps {}
@@ -143,10 +144,10 @@ function PlasmicHomepage__RenderFunc(props: {
           </p.Stack>
 
           {true ? (
-            <Theme
-              data-plasmic-name={"theme"}
-              data-plasmic-override={overrides.theme}
-              className={classNames("__wab_instance", sty.theme)}
+            <Themes
+              data-plasmic-name={"themes"}
+              data-plasmic-override={overrides.themes}
+              className={classNames("__wab_instance", sty.themes)}
             />
           ) : null}
         </div>
@@ -156,10 +157,10 @@ function PlasmicHomepage__RenderFunc(props: {
 }
 
 const PlasmicDescendants = {
-  root: ["root", "section", "h1", "theme"],
+  root: ["root", "section", "h1", "themes"],
   section: ["section", "h1"],
   h1: ["h1"],
-  theme: ["theme"]
+  themes: ["themes"]
 } as const;
 type NodeNameType = keyof typeof PlasmicDescendants;
 type DescendantsType<T extends NodeNameType> =
@@ -168,7 +169,7 @@ type NodeDefaultElementType = {
   root: "div";
   section: "section";
   h1: "h1";
-  theme: typeof Theme;
+  themes: typeof Themes;
 };
 
 type ReservedPropsType = "variants" | "args" | "overrides";
@@ -234,7 +235,7 @@ export const PlasmicHomepage = Object.assign(
     // Helper components rendering sub-elements
     section: makeNodeComponent("section"),
     h1: makeNodeComponent("h1"),
-    theme: makeNodeComponent("theme"),
+    themes: makeNodeComponent("themes"),
 
     // Metadata about props expected for PlasmicHomepage
     internalVariantProps: PlasmicHomepage__VariantProps,

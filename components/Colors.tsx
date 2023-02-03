@@ -7,7 +7,7 @@ import {
 } from "./plasmic/color_tool/PlasmicColors";
 import { HTMLElementRefOf } from "@plasmicapp/react-web";
 import Color from "./Color";
-import chroma from "./chroma"
+import chroma from "chroma-js";
 import { ColorsContext } from "./Theme";
 
 export interface ColorsProps extends DefaultColorsProps {}
@@ -16,23 +16,28 @@ export interface ColorsProps extends DefaultColorsProps {}
 function Colors_(props: ColorsProps, ref: HTMLElementRefOf<"div">) {
   const config = React.useContext(ColorsContext)
 
-  let shades= [config.baseValue]
-  let names = ["Base"]
+  let shades :string[]= []
+  let names :string[]= []
 
-  for (let i = 1; i <= config.stepsLighter; i++) {
-    let newShade = chroma(config.baseValue).brighten(i/config.stepsLighter*config.lightStep).hex()
+  let lightScale = chroma.scale([chroma(config.baseValue).set('hsl.h',config.lightHueShift).luminance(config.lightLuminance).hex() ,config.baseValue]).colors(config.stepsLighter+1)
+  let darkScale = chroma.scale([config.baseValue,chroma(config.baseValue).set('hsl.h',config.darkHueShift).luminance(config.darkLuminance).hex()]).colors(config.stepsDarker+1)
+  for (let i = 0; i < lightScale.length-1; i++) {
+    
+    let newShade = lightScale[i]
     if (config.saturation > 0) {
       newShade = chroma(newShade).saturate(config.saturation).hex()
     } else if (config.saturation < 0) {
       newShade = chroma(newShade).desaturate(-config.saturation).hex()
     }
-
-    shades = [newShade].concat(shades)
-    names = [`L${i}`].concat(names)
+    shades.push(newShade)
+    names.push(`L${config.stepsLighter-i}`)
   }
+  // add base
+  shades.push(config.baseValue)
+  names.push("Base")
 
-  for (let i = 1; i <= config.stepsDarker; i++) {
-    let newShade= chroma(config.baseValue).darken(i/config.stepsDarker*config.darkStep).hex()
+  for (let i = 1; i < darkScale.length; i++) {
+    let newShade = darkScale[i]
     if (config.saturation > 0) {
       newShade = chroma(newShade).saturate(config.saturation).hex()
     } else if (config.saturation < 0) {
@@ -43,8 +48,6 @@ function Colors_(props: ColorsProps, ref: HTMLElementRefOf<"div">) {
   }
 
   return (
-    
-
       <PlasmicColors
         root={{
           props: {

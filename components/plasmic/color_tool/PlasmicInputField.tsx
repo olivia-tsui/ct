@@ -39,40 +39,47 @@ import Input from "../../Input"; // plasmic-import: 434vhQcoRkn/component
 import "@plasmicapp/react-web/lib/plasmic.css";
 
 import projectcss from "../blank_project/plasmic_blank_project.module.css"; // plasmic-import: dczqNaFYoArv9QmtqhGLsR/projectcss
-import sty from "./PlasmicField.module.css"; // plasmic-import: AIPmHdmqsY/css
+import sty from "./PlasmicInputField.module.css"; // plasmic-import: AIPmHdmqsY/css
 
 import SearchsvgIcon from "./icons/PlasmicIcon__Searchsvg"; // plasmic-import: 4MjaTm1IpeT/icon
 import ChecksvgIcon from "./icons/PlasmicIcon__Checksvg"; // plasmic-import: K6gY_eUm0B4/icon
 
-export type PlasmicField__VariantMembers = {};
+export type PlasmicInputField__VariantMembers = {};
 
-export type PlasmicField__VariantsArgs = {};
-type VariantPropType = keyof PlasmicField__VariantsArgs;
-export const PlasmicField__VariantProps = new Array<VariantPropType>();
+export type PlasmicInputField__VariantsArgs = {};
+type VariantPropType = keyof PlasmicInputField__VariantsArgs;
+export const PlasmicInputField__VariantProps = new Array<VariantPropType>();
 
-export type PlasmicField__ArgsType = {
+export type PlasmicInputField__ArgsType = {
   children?: React.ReactNode;
   placeholder?: string;
   value?: any;
+  type?: string;
+  step?: any;
 };
 
-type ArgPropType = keyof PlasmicField__ArgsType;
-export const PlasmicField__ArgProps = new Array<ArgPropType>(
+type ArgPropType = keyof PlasmicInputField__ArgsType;
+export const PlasmicInputField__ArgProps = new Array<ArgPropType>(
   "children",
   "placeholder",
-  "value"
+  "value",
+  "type",
+  "step"
 );
 
-export type PlasmicField__OverridesType = {
+export type PlasmicInputField__OverridesType = {
   root?: p.Flex<"div">;
   freeBox?: p.Flex<"div">;
+  text?: p.Flex<"div">;
   input?: p.Flex<typeof Input>;
 };
 
-export interface DefaultFieldProps {
+export interface DefaultInputFieldProps {
   children?: React.ReactNode;
   placeholder?: string;
   value?: any;
+  type?: string;
+  step?: any;
   className?: string;
 }
 
@@ -84,10 +91,10 @@ const __wrapUserPromise =
     return await promise;
   });
 
-function PlasmicField__RenderFunc(props: {
-  variants: PlasmicField__VariantsArgs;
-  args: PlasmicField__ArgsType;
-  overrides: PlasmicField__OverridesType;
+function PlasmicInputField__RenderFunc(props: {
+  variants: PlasmicInputField__VariantsArgs;
+  args: PlasmicInputField__ArgsType;
+  overrides: PlasmicInputField__OverridesType;
 
   forNode?: string;
 }) {
@@ -97,8 +104,10 @@ function PlasmicField__RenderFunc(props: {
   const args = React.useMemo(
     () =>
       Object.assign(
-        {},
-
+        {
+          type: "Text" as const,
+          step: "1" as const
+        },
         props.args
       ),
     [props.args]
@@ -135,8 +144,21 @@ function PlasmicField__RenderFunc(props: {
         >
           {p.renderPlasmicSlot({
             defaultContents: "baseValue",
-            value: args.children
+            value: args.children,
+            className: classNames(sty.slotTargetChildren)
           })}
+        </div>
+
+        <div
+          data-plasmic-name={"text"}
+          data-plasmic-override={overrides.text}
+          className={classNames(
+            projectcss.all,
+            projectcss.__wab_text,
+            sty.text
+          )}
+        >
+          {":"}
         </div>
 
         <Input
@@ -145,6 +167,8 @@ function PlasmicField__RenderFunc(props: {
           className={classNames("__wab_instance", sty.input)}
           defaultValue={args.value}
           placeholder={args.placeholder}
+          step={args.step}
+          type={args.type}
         />
       </div>
     ) : null
@@ -152,8 +176,9 @@ function PlasmicField__RenderFunc(props: {
 }
 
 const PlasmicDescendants = {
-  root: ["root", "freeBox", "input"],
+  root: ["root", "freeBox", "text", "input"],
   freeBox: ["freeBox"],
+  text: ["text"],
   input: ["input"]
 } as const;
 type NodeNameType = keyof typeof PlasmicDescendants;
@@ -162,23 +187,24 @@ type DescendantsType<T extends NodeNameType> =
 type NodeDefaultElementType = {
   root: "div";
   freeBox: "div";
+  text: "div";
   input: typeof Input;
 };
 
 type ReservedPropsType = "variants" | "args" | "overrides";
 type NodeOverridesType<T extends NodeNameType> = Pick<
-  PlasmicField__OverridesType,
+  PlasmicInputField__OverridesType,
   DescendantsType<T>
 >;
 type NodeComponentProps<T extends NodeNameType> =
   // Explicitly specify variants, args, and overrides as objects
   {
-    variants?: PlasmicField__VariantsArgs;
-    args?: PlasmicField__ArgsType;
+    variants?: PlasmicInputField__VariantsArgs;
+    args?: PlasmicInputField__ArgsType;
     overrides?: NodeOverridesType<T>;
-  } & Omit<PlasmicField__VariantsArgs, ReservedPropsType> & // Specify variants directly as props
+  } & Omit<PlasmicInputField__VariantsArgs, ReservedPropsType> & // Specify variants directly as props
     // Specify args directly as props
-    Omit<PlasmicField__ArgsType, ReservedPropsType> &
+    Omit<PlasmicInputField__ArgsType, ReservedPropsType> &
     // Specify overrides for each element directly as props
     Omit<
       NodeOverridesType<T>,
@@ -200,13 +226,13 @@ function makeNodeComponent<NodeName extends NodeNameType>(nodeName: NodeName) {
         deriveRenderOpts(props, {
           name: nodeName,
           descendantNames: [...PlasmicDescendants[nodeName]],
-          internalArgPropNames: PlasmicField__ArgProps,
-          internalVariantPropNames: PlasmicField__VariantProps
+          internalArgPropNames: PlasmicInputField__ArgProps,
+          internalVariantPropNames: PlasmicInputField__VariantProps
         }),
       [props, nodeName]
     );
 
-    return PlasmicField__RenderFunc({
+    return PlasmicInputField__RenderFunc({
       variants,
       args,
       overrides,
@@ -214,26 +240,27 @@ function makeNodeComponent<NodeName extends NodeNameType>(nodeName: NodeName) {
     });
   };
   if (nodeName === "root") {
-    func.displayName = "PlasmicField";
+    func.displayName = "PlasmicInputField";
   } else {
-    func.displayName = `PlasmicField.${nodeName}`;
+    func.displayName = `PlasmicInputField.${nodeName}`;
   }
   return func;
 }
 
-export const PlasmicField = Object.assign(
-  // Top-level PlasmicField renders the root element
+export const PlasmicInputField = Object.assign(
+  // Top-level PlasmicInputField renders the root element
   makeNodeComponent("root"),
   {
     // Helper components rendering sub-elements
     freeBox: makeNodeComponent("freeBox"),
+    text: makeNodeComponent("text"),
     input: makeNodeComponent("input"),
 
-    // Metadata about props expected for PlasmicField
-    internalVariantProps: PlasmicField__VariantProps,
-    internalArgProps: PlasmicField__ArgProps
+    // Metadata about props expected for PlasmicInputField
+    internalVariantProps: PlasmicInputField__VariantProps,
+    internalArgProps: PlasmicInputField__ArgProps
   }
 );
 
-export default PlasmicField;
+export default PlasmicInputField;
 /* prettier-ignore-end */

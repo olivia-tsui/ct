@@ -6,77 +6,84 @@ import {
   DefaultThemeProps
 } from "./plasmic/color_tool/PlasmicTheme";
 import { HTMLElementRefOf } from "@plasmicapp/react-web";
+import { setConfig } from "next/config";
+import chroma from "chroma-js";
 
-export interface ThemeProps extends DefaultThemeProps {}
-interface ThemeConfigType {
-  baseValue: string;
-  saturation: number;
-  stepsLighter: number;
-  stepsDarker: number;
-  lightStep: number;
-  darkStep: number;
-}
 
 const config = {
   baseValue: "#0F3CC9",
   saturation: 0,
   stepsLighter: 10,
   stepsDarker: 10,
-  lightStep: 3.5,
-  darkStep: 3.2,
+  lightLuminance: 0.85,
+  darkLuminance: 0.008,
+  lightHueShift: 225.48,
+  darkHueShift: 225.48
 };
 
 export const ColorsContext = React.createContext(config);
-export const ConfigUpdateContext = React.createContext((data:ThemeConfigType) => {
+export const ConfigUpdateContext = React.createContext((data) => {
+  setConfig(data)
 });
 
-function Theme_(props: ThemeProps, ref: HTMLElementRefOf<"div">) {
+function Theme_(props, ref) {
 
   const [_config, setConfig] = React.useState(config);
 
   return (
     <ColorsContext.Provider value={_config}>
-      <ConfigUpdateContext.Provider value={(data:ThemeConfigType) => {
+      <ConfigUpdateContext.Provider value={(data) => {
         setConfig(data)
       }}>
       <PlasmicTheme baseValue={{
-        placeholder: _config.baseValue,
+        value: _config.baseValue,
         onChange: (e) => {
           setConfig({..._config, baseValue: e.target.value.length > 6 ? e.target.value : _config.baseValue})
         }
       }}
       saturation={{
-        placeholder: _config.saturation.toString(),
+        value: _config.saturation.toString(),
         onChange: (e) => {
           setConfig({..._config, saturation:parseFloat( e.target.value.toString())})
         }
       }}
       stepsLighter={{
-        placeholder: _config.stepsLighter.toString(),
-        onChange: (e) => {
+        value: _config.stepsLighter.toString(),
+        onChange: (e ) => {
           setConfig({..._config, stepsLighter: parseFloat( e.target.value)})
         }
 
       }}
       stepsDarker={{
-        placeholder: _config.stepsDarker.toString(),
+        value: _config.stepsDarker.toString(),
         onChange: (e) => {
           setConfig({..._config, stepsDarker:parseFloat( e.target.value)})
         }
 
       }}
-      lightStepDistance={{
-        placeholder: _config.lightStep.toString(),
+      lightLuminance={{
+        value: _config.lightLuminance.toString(),
         onChange: (e) => {
-          setConfig({..._config, lightStep:parseFloat( e.target.value)})
+          setConfig({..._config, lightLuminance:parseFloat( e.target.value)})
+
         }
       }}
-      darkStepDistance={{
-        placeholder: _config.darkStep.toString(),
+      darkLuminance={{
+        value: _config.darkLuminance.toString(),
         onChange: (e) => {
-          setConfig({..._config, darkStep: parseFloat( e.target.value)})
+          setConfig({..._config, darkLuminance: parseFloat( e.target.value)})
         }
       }}
+      lightHue={{
+        onChange:(e)=>{
+          setConfig({..._config, lightHueShift: chroma(e.hex).hsl()[0].toFixed(2) })
+        }
+        }}
+       darkHue={{
+        onChange:(e)=>{
+          setConfig({..._config, darkHueShift: chroma(e.hex).hsl()[0].toFixed(2) })
+        }
+       }}
       root={{ ref }} {...props} />
       </ConfigUpdateContext.Provider>
       </ColorsContext.Provider>

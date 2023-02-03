@@ -34,16 +34,18 @@ import {
   deriveRenderOpts,
   ensureGlobalVariants
 } from "@plasmicapp/react-web";
-import Field from "../../Field"; // plasmic-import: AIPmHdmqsY/component
+import InputField from "../../InputField"; // plasmic-import: AIPmHdmqsY/component
 import Colors from "../../Colors"; // plasmic-import: dyZl0Y5DD8/component
 import Color from "../../Color"; // plasmic-import: YczP2_j8Fh/component
+import ColorField from "../../ColorField"; // plasmic-import: b0WRjvMctS/component
 
 import "@plasmicapp/react-web/lib/plasmic.css";
 
-import projectcss from "./plasmic_color_tool.module.css"; // plasmic-import: dczqNaFYoArv9QmtqhGLsR/projectcss
+import projectcss from "../blank_project/plasmic_blank_project.module.css"; // plasmic-import: dczqNaFYoArv9QmtqhGLsR/projectcss
 import sty from "./PlasmicTheme.module.css"; // plasmic-import: 848il-tpeEh/css
 
 export type PlasmicTheme__VariantMembers = {};
+
 export type PlasmicTheme__VariantsArgs = {};
 type VariantPropType = keyof PlasmicTheme__VariantsArgs;
 export const PlasmicTheme__VariantProps = new Array<VariantPropType>();
@@ -54,14 +56,15 @@ export const PlasmicTheme__ArgProps = new Array<ArgPropType>();
 
 export type PlasmicTheme__OverridesType = {
   root?: p.Flex<"div">;
-  freeBox?: p.Flex<"div">;
-  baseValue?: p.Flex<typeof Field>;
-  saturation?: p.Flex<typeof Field>;
-  stepsLighter?: p.Flex<typeof Field>;
-  stepsDarker?: p.Flex<typeof Field>;
-  lightStepDistance?: p.Flex<typeof Field>;
-  darkStepDistance?: p.Flex<typeof Field>;
+  baseValue?: p.Flex<typeof InputField>;
+  saturation?: p.Flex<typeof InputField>;
+  stepsLighter?: p.Flex<typeof InputField>;
+  stepsDarker?: p.Flex<typeof InputField>;
   colors?: p.Flex<typeof Colors>;
+  lightLuminance?: p.Flex<typeof InputField>;
+  lightHue?: p.Flex<typeof ColorField>;
+  darkHue?: p.Flex<typeof ColorField>;
+  darkLuminance?: p.Flex<typeof InputField>;
 };
 
 export interface DefaultThemeProps {
@@ -86,7 +89,15 @@ function PlasmicTheme__RenderFunc(props: {
   const { variants, overrides, forNode } = props;
 
   const $ctx = ph.useDataEnv?.() || {};
-  const args = React.useMemo(() => Object.assign({}, props.args), [props.args]);
+  const args = React.useMemo(
+    () =>
+      Object.assign(
+        {},
+
+        props.args
+      ),
+    [props.args]
+  );
 
   const $props = {
     ...args,
@@ -99,11 +110,13 @@ function PlasmicTheme__RenderFunc(props: {
 
   return (
     true ? (
-      <div
+      <p.Stack
+        as={"div"}
         data-plasmic-name={"root"}
         data-plasmic-override={overrides.root}
         data-plasmic-root={true}
         data-plasmic-for-node={forNode}
+        hasGap={true}
         className={classNames(
           projectcss.all,
           projectcss.root_reset,
@@ -113,66 +126,53 @@ function PlasmicTheme__RenderFunc(props: {
         )}
       >
         {true ? (
-          <div
-            data-plasmic-name={"freeBox"}
-            data-plasmic-override={overrides.freeBox}
-            className={classNames(projectcss.all, sty.freeBox)}
+          <p.Stack
+            as={"div"}
+            hasGap={true}
+            className={classNames(projectcss.all, sty.freeBox__jo9H0)}
           >
             {true ? (
-              <Field
+              <InputField
                 data-plasmic-name={"baseValue"}
                 data-plasmic-override={overrides.baseValue}
                 className={classNames("__wab_instance", sty.baseValue)}
+                type={"" as const}
               >
-                {"Base Color(hex)"}
-              </Field>
+                {"Base Value"}
+              </InputField>
             ) : null}
             {true ? (
-              <Field
+              <InputField
                 data-plasmic-name={"saturation"}
                 data-plasmic-override={overrides.saturation}
                 className={classNames("__wab_instance", sty.saturation)}
+                step={0.1 as const}
+                type={"Number" as const}
               >
                 {"Saturation(±)"}
-              </Field>
+              </InputField>
             ) : null}
             {true ? (
-              <Field
+              <InputField
                 data-plasmic-name={"stepsLighter"}
                 data-plasmic-override={overrides.stepsLighter}
                 className={classNames("__wab_instance", sty.stepsLighter)}
+                type={"Number" as const}
               >
                 {"Steps Lighter"}
-              </Field>
+              </InputField>
             ) : null}
             {true ? (
-              <Field
+              <InputField
                 data-plasmic-name={"stepsDarker"}
                 data-plasmic-override={overrides.stepsDarker}
                 className={classNames("__wab_instance", sty.stepsDarker)}
+                type={"Number" as const}
               >
                 {"Steps Darker"}
-              </Field>
+              </InputField>
             ) : null}
-            {true ? (
-              <Field
-                data-plasmic-name={"lightStepDistance"}
-                data-plasmic-override={overrides.lightStepDistance}
-                className={classNames("__wab_instance", sty.lightStepDistance)}
-              >
-                {"Light Step Distance"}
-              </Field>
-            ) : null}
-            {true ? (
-              <Field
-                data-plasmic-name={"darkStepDistance"}
-                data-plasmic-override={overrides.darkStepDistance}
-                className={classNames("__wab_instance", sty.darkStepDistance)}
-              >
-                {"Dark Step Distance"}
-              </Field>
-            ) : null}
-          </div>
+          </p.Stack>
         ) : null}
         {true ? (
           <Colors
@@ -180,14 +180,91 @@ function PlasmicTheme__RenderFunc(props: {
             data-plasmic-override={overrides.colors}
             className={classNames("__wab_instance", sty.colors)}
           >
-            <Color className={classNames("__wab_instance", sty.color__calWr)} />
+            <Color className={classNames("__wab_instance", sty.color__avIB)} />
 
             <Color className={classNames("__wab_instance", sty.color__qotr1)} />
 
             <Color className={classNames("__wab_instance", sty.color__qxMe)} />
           </Colors>
         ) : null}
-      </div>
+        {true ? (
+          <div className={classNames(projectcss.all, sty.freeBox__mViK)}>
+            {true ? (
+              <p.Stack
+                as={"div"}
+                hasGap={true}
+                className={classNames(projectcss.all, sty.freeBox__wpWem)}
+              >
+                {true ? (
+                  <InputField
+                    data-plasmic-name={"lightLuminance"}
+                    data-plasmic-override={overrides.lightLuminance}
+                    className={classNames("__wab_instance", sty.lightLuminance)}
+                    step={0.001 as const}
+                    type={"Number" as const}
+                  >
+                    {"Start Luminance"}
+                  </InputField>
+                ) : null}
+
+                <ColorField
+                  data-plasmic-name={"lightHue"}
+                  data-plasmic-override={overrides.lightHue}
+                  className={classNames("__wab_instance", sty.lightHue)}
+                  onChange={undefined}
+                  step={1 as const}
+                >
+                  <div
+                    className={classNames(
+                      projectcss.all,
+                      projectcss.__wab_text,
+                      sty.text__zlvRs
+                    )}
+                  >
+                    {"←Hue Shift"}
+                  </div>
+                </ColorField>
+              </p.Stack>
+            ) : null}
+            {true ? (
+              <p.Stack
+                as={"div"}
+                hasGap={true}
+                className={classNames(projectcss.all, sty.freeBox__eZ3Ci)}
+              >
+                <ColorField
+                  data-plasmic-name={"darkHue"}
+                  data-plasmic-override={overrides.darkHue}
+                  className={classNames("__wab_instance", sty.darkHue)}
+                  step={1 as const}
+                >
+                  <div
+                    className={classNames(
+                      projectcss.all,
+                      projectcss.__wab_text,
+                      sty.text__thpsX
+                    )}
+                  >
+                    {"→Hue Shift"}
+                  </div>
+                </ColorField>
+
+                {true ? (
+                  <InputField
+                    data-plasmic-name={"darkLuminance"}
+                    data-plasmic-override={overrides.darkLuminance}
+                    className={classNames("__wab_instance", sty.darkLuminance)}
+                    step={0.001 as const}
+                    type={"Number" as const}
+                  >
+                    {"End Luminance"}
+                  </InputField>
+                ) : null}
+              </p.Stack>
+            ) : null}
+          </div>
+        ) : null}
+      </p.Stack>
     ) : null
   ) as React.ReactElement | null;
 }
@@ -195,45 +272,40 @@ function PlasmicTheme__RenderFunc(props: {
 const PlasmicDescendants = {
   root: [
     "root",
-    "freeBox",
     "baseValue",
     "saturation",
     "stepsLighter",
     "stepsDarker",
-    "lightStepDistance",
-    "darkStepDistance",
-    "colors"
-  ],
-  freeBox: [
-    "freeBox",
-    "baseValue",
-    "saturation",
-    "stepsLighter",
-    "stepsDarker",
-    "lightStepDistance",
-    "darkStepDistance"
+    "colors",
+    "lightLuminance",
+    "lightHue",
+    "darkHue",
+    "darkLuminance"
   ],
   baseValue: ["baseValue"],
   saturation: ["saturation"],
   stepsLighter: ["stepsLighter"],
   stepsDarker: ["stepsDarker"],
-  lightStepDistance: ["lightStepDistance"],
-  darkStepDistance: ["darkStepDistance"],
-  colors: ["colors"]
+  colors: ["colors"],
+  lightLuminance: ["lightLuminance"],
+  lightHue: ["lightHue"],
+  darkHue: ["darkHue"],
+  darkLuminance: ["darkLuminance"]
 } as const;
 type NodeNameType = keyof typeof PlasmicDescendants;
 type DescendantsType<T extends NodeNameType> =
-  (typeof PlasmicDescendants)[T][number];
+  typeof PlasmicDescendants[T][number];
 type NodeDefaultElementType = {
   root: "div";
-  freeBox: "div";
-  baseValue: typeof Field;
-  saturation: typeof Field;
-  stepsLighter: typeof Field;
-  stepsDarker: typeof Field;
-  lightStepDistance: typeof Field;
-  darkStepDistance: typeof Field;
+  baseValue: typeof InputField;
+  saturation: typeof InputField;
+  stepsLighter: typeof InputField;
+  stepsDarker: typeof InputField;
   colors: typeof Colors;
+  lightLuminance: typeof InputField;
+  lightHue: typeof ColorField;
+  darkHue: typeof ColorField;
+  darkLuminance: typeof InputField;
 };
 
 type ReservedPropsType = "variants" | "args" | "overrides";
@@ -248,15 +320,15 @@ type NodeComponentProps<T extends NodeNameType> =
     args?: PlasmicTheme__ArgsType;
     overrides?: NodeOverridesType<T>;
   } & Omit<PlasmicTheme__VariantsArgs, ReservedPropsType> & // Specify variants directly as props
-    /* Specify args directly as props*/ Omit<
-      PlasmicTheme__ArgsType,
-      ReservedPropsType
-    > &
-    /* Specify overrides for each element directly as props*/ Omit<
+    // Specify args directly as props
+    Omit<PlasmicTheme__ArgsType, ReservedPropsType> &
+    // Specify overrides for each element directly as props
+    Omit<
       NodeOverridesType<T>,
       ReservedPropsType | VariantPropType | ArgPropType
     > &
-    /* Specify props for the root element*/ Omit<
+    // Specify props for the root element
+    Omit<
       Partial<React.ComponentProps<NodeDefaultElementType[T]>>,
       ReservedPropsType | VariantPropType | ArgPropType | DescendantsType<T>
     >;
@@ -297,14 +369,15 @@ export const PlasmicTheme = Object.assign(
   makeNodeComponent("root"),
   {
     // Helper components rendering sub-elements
-    freeBox: makeNodeComponent("freeBox"),
     baseValue: makeNodeComponent("baseValue"),
     saturation: makeNodeComponent("saturation"),
     stepsLighter: makeNodeComponent("stepsLighter"),
     stepsDarker: makeNodeComponent("stepsDarker"),
-    lightStepDistance: makeNodeComponent("lightStepDistance"),
-    darkStepDistance: makeNodeComponent("darkStepDistance"),
     colors: makeNodeComponent("colors"),
+    lightLuminance: makeNodeComponent("lightLuminance"),
+    lightHue: makeNodeComponent("lightHue"),
+    darkHue: makeNodeComponent("darkHue"),
+    darkLuminance: makeNodeComponent("darkLuminance"),
 
     // Metadata about props expected for PlasmicTheme
     internalVariantProps: PlasmicTheme__VariantProps,

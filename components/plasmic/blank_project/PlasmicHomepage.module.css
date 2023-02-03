@@ -19,7 +19,7 @@
   height: auto;
   margin-top: 0px;
   min-width: 0;
-  padding: 96px 24px;
+  padding: 24px 24px 0px;
 }
 .section > :global(.__wab_flex-container) {
   flex-direction: column;
@@ -49,6 +49,6 @@
   letter-spacing: 0px;
   min-width: 0;
 }
-.theme:global(.__wab_instance) {
+.themes:global(.__wab_instance) {
   position: relative;
 }

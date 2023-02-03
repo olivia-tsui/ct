@@ -1,0 +1,44 @@
+.root {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  position: relative;
+  padding: 0px;
+}
+.text {
+  position: relative;
+  width: auto;
+  height: auto;
+  max-width: 800px;
+  margin-right: 4px;
+}
+.huePicker:global(.__wab_instance) {
+  max-width: 240%;
+  object-fit: cover;
+  position: relative;
+  width: 100%;
+  min-width: 128px;
+}
+.input:global(.__wab_instance) {
+  max-width: 100%;
+  position: relative;
+  width: 96px;
+  margin-left: 8px;
+  flex-shrink: 0;
+}
+.svg__kWlcl {
+  position: relative;
+  object-fit: cover;
+  width: 1em;
+  height: 1em;
+}
+.svg__eSPaP {
+  position: relative;
+  object-fit: cover;
+  width: 1em;
+  height: 1em;
+}

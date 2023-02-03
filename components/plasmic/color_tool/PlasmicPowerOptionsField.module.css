@@ -1,0 +1,68 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  padding: 8px;
+}
+.freeBox {
+  position: relative;
+  width: 100%;
+  height: auto;
+  max-width: 800px;
+  display: flex;
+  flex-direction: row;
+  min-width: 0;
+}
+.select:global(.__wab_instance) {
+  max-width: 100%;
+  position: relative;
+  width: 100%;
+  min-width: 0;
+}
+.option__dIqlw:global(.__wab_instance) {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+}
+.option___46Wy4:global(.__wab_instance) {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+}
+.option__gGsU:global(.__wab_instance) {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+}
+.option__uuSmm:global(.__wab_instance) {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+}
+.option__lR8OQ:global(.__wab_instance) {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+}
+.option__nTD8:global(.__wab_instance) {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+}
+.option__djpPk:global(.__wab_instance) {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+}
+.option___5GmE6:global(.__wab_instance) {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+}

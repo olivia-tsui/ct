@@ -2,19 +2,19 @@
 // This file is owned by you, feel free to edit as you see fit.
 import * as React from "react";
 import * as ph from "@plasmicapp/host";
-
-import { ScreenVariantProvider } from "../components/plasmic/blank_project/PlasmicGlobalVariant__Screen";
 import { PlasmicHomepage } from "../components/plasmic/blank_project/PlasmicHomepage";
 import { useRouter } from "next/router";
 
-function Homepage() {
 
+function Homepage() {
+  const [numberOfTHemes, setNumberOfThemes] = React.useState(1);
   return (
     <ph.PageParamsProvider
       params={useRouter()?.query}
       query={useRouter()?.query}
     >
-      <PlasmicHomepage  />
+      <PlasmicHomepage   />
+
     </ph.PageParamsProvider>
   );
 }
