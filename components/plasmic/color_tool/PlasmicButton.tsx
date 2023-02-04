@@ -43,7 +43,6 @@ import "@plasmicapp/react-web/lib/plasmic.css";
 import projectcss from "../blank_project/plasmic_blank_project.module.css"; // plasmic-import: dczqNaFYoArv9QmtqhGLsR/projectcss
 import sty from "./PlasmicButton.module.css"; // plasmic-import: iXX9rwSFEyL/css
 
-import ChecksvgIcon from "./icons/PlasmicIcon__Checksvg"; // plasmic-import: K6gY_eUm0B4/icon
 import IconIcon from "./icons/PlasmicIcon__Icon"; // plasmic-import: Kv0ZYfEWi7y/icon
 
 export type PlasmicButton__VariantMembers = {
@@ -214,6 +213,11 @@ function PlasmicButton__RenderFunc(props: {
           sty.root,
           {
             [sty.root___focusVisibleWithin]: triggers.focusVisibleWithin_root,
+            [sty.rootglobal_dark__false]: hasVariant(
+              globalVariants,
+              "dark",
+              "_false"
+            ),
             [sty.rootglobal_dark__true]: hasVariant(
               globalVariants,
               "dark",
@@ -239,7 +243,10 @@ function PlasmicButton__RenderFunc(props: {
               "showStartIcon",
               "showStartIcon"
             ),
-            [sty.rootsimple]: hasVariant($state, "simple", "simple")
+            [sty.rootsimple]: hasVariant($state, "simple", "simple"),
+            [sty.rootsimple_global_dark__true]:
+              hasVariant($state, "simple", "simple") &&
+              hasVariant(globalVariants, "dark", "_true")
           }
         )}
         style={(() => {
@@ -270,7 +277,7 @@ function PlasmicButton__RenderFunc(props: {
           >
             {p.renderPlasmicSlot({
               defaultContents: (
-                <ChecksvgIcon
+                <svg
                   className={classNames(projectcss.all, sty.svg__n1Nxt)}
                   role={"img"}
                 />
@@ -336,7 +343,10 @@ function PlasmicButton__RenderFunc(props: {
                 $state,
                 "simple",
                 "simple"
-              )
+              ),
+              [sty.slotTargetChildrensimple_global_dark__true]:
+                hasVariant($state, "simple", "simple") &&
+                hasVariant(globalVariants, "dark", "_true")
             })
           })}
         </div>

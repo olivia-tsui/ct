@@ -49,6 +49,9 @@
 .rootsimple:hover {
   background: #e6e6e6;
 }
+.rootsimple_global_dark__true:hover {
+  background: #444444;
+}
 .root:focus-within {
   outline: none;
 }
@@ -61,6 +64,9 @@
 }
 .rootsimple:active {
   background: #d5d5d5;
+}
+.rootsimple_global_dark__true:active {
+  background: #444444;
 }
 .startIconContainer {
   display: flex;
@@ -99,6 +105,9 @@
 }
 .slotTargetChildrensimple {
   color: #000000;
+}
+.slotTargetChildrensimple_global_dark__true {
+  color: #ffffff;
 }
 .root:focus-within .slotTargetChildren > *,
 .root:focus-within .slotTargetChildren > :global(.__wab_slot) > *,

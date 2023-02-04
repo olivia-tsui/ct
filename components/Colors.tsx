@@ -11,16 +11,22 @@ import chroma from "chroma-js";
 import { ColorsContext } from "./Theme";
 import { ModeContext } from "../pages/index";
 
+
 import { InterpolationMode } from "chroma-js";
-export interface ColorsProps extends DefaultColorsProps {}
+export interface ColorsProps extends DefaultColorsProps {
+  uploaddata: (data: any) => string[];
+}
 
 
 function Colors_(props: ColorsProps, ref: HTMLElementRefOf<"div">) {
   const config = React.useContext(ColorsContext)
   const mode = React.useContext(ModeContext)
+
   let shades :string[]= []
   let names :string[]= []
   let textContrast:boolean[] = []
+
+
 
   let lightScale = chroma.scale([chroma(config.baseValue).set('hsl.h',config.lightHueShift).luminance(config.lightLuminance).hex() ,config.baseValue]).mode(mode as InterpolationMode).colors(config.stepsLighter+1)
   let darkScale = chroma.scale([config.baseValue,chroma(config.baseValue).set('hsl.h',config.darkHueShift).luminance(config.darkLuminance).hex()]).mode(mode as InterpolationMode).colors(config.stepsDarker+1)
@@ -54,14 +60,16 @@ function Colors_(props: ColorsProps, ref: HTMLElementRefOf<"div">) {
     textContrast.push(chroma.contrast("#FFFFFF",newShade)<4.5?true:false)
   }
 
+  props.uploaddata(JSON.stringify([names,shades]))
   return (
+    // @ts-ignore
       <PlasmicColors
         root={{
           props: {
             children: (shades).map((color,i) => {
                // @ts-ignore
               return <Color onDark={textContrast[i]} color={color} name={names[i]} hexCode={color.toUpperCase()}></Color>
-            }),
+            })
           },
         }}
         {...props}

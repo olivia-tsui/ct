@@ -44,8 +44,6 @@ import "@plasmicapp/react-web/lib/plasmic.css";
 import projectcss from "../blank_project/plasmic_blank_project.module.css"; // plasmic-import: dczqNaFYoArv9QmtqhGLsR/projectcss
 import sty from "./PlasmicColorField.module.css"; // plasmic-import: -6Apr9wI1O5/css
 
-import ChecksvgIcon from "./icons/PlasmicIcon__Checksvg"; // plasmic-import: K6gY_eUm0B4/icon
-
 export type PlasmicColorField__VariantMembers = {
   showPanel: "showPanel";
 };
@@ -81,6 +79,7 @@ export type PlasmicColorField__OverridesType = {
   text?: p.Flex<"div">;
   input?: p.Flex<typeof Input>;
   display?: p.Flex<"div">;
+  svg?: p.Flex<"svg">;
   picker?: p.Flex<typeof SketchPicker>;
   cover?: p.Flex<"div">;
 };
@@ -203,6 +202,14 @@ function PlasmicColorField__RenderFunc(props: {
           className={classNames("__wab_instance", sty.input, {
             [sty.inputshowPanel]: hasVariant($state, "showPanel", "showPanel")
           })}
+          endIcon={
+            <svg
+              data-plasmic-name={"svg"}
+              data-plasmic-override={overrides.svg}
+              className={classNames(projectcss.all, sty.svg)}
+              role={"img"}
+            />
+          }
           showStartIcon={true}
           startIcon={
             <div
@@ -257,10 +264,11 @@ function PlasmicColorField__RenderFunc(props: {
 }
 
 const PlasmicDescendants = {
-  root: ["root", "text", "input", "display", "picker", "cover"],
+  root: ["root", "text", "input", "display", "svg", "picker", "cover"],
   text: ["text"],
-  input: ["input", "display"],
+  input: ["input", "display", "svg"],
   display: ["display"],
+  svg: ["svg"],
   picker: ["picker"],
   cover: ["cover"]
 } as const;
@@ -272,6 +280,7 @@ type NodeDefaultElementType = {
   text: "div";
   input: typeof Input;
   display: "div";
+  svg: "svg";
   picker: typeof SketchPicker;
   cover: "div";
 };
@@ -340,6 +349,7 @@ export const PlasmicColorField = Object.assign(
     text: makeNodeComponent("text"),
     input: makeNodeComponent("input"),
     display: makeNodeComponent("display"),
+    svg: makeNodeComponent("svg"),
     picker: makeNodeComponent("picker"),
     cover: makeNodeComponent("cover"),
 

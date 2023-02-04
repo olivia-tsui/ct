@@ -43,9 +43,6 @@ import "@plasmicapp/react-web/lib/plasmic.css";
 import projectcss from "../blank_project/plasmic_blank_project.module.css"; // plasmic-import: dczqNaFYoArv9QmtqhGLsR/projectcss
 import sty from "./PlasmicInput.module.css"; // plasmic-import: 434vhQcoRkn/css
 
-import SearchsvgIcon from "./icons/PlasmicIcon__Searchsvg"; // plasmic-import: 4MjaTm1IpeT/icon
-import ChecksvgIcon from "./icons/PlasmicIcon__Checksvg"; // plasmic-import: K6gY_eUm0B4/icon
-
 export type PlasmicInput__VariantMembers = {
   showStartIcon: "showStartIcon";
   showEndIcon: "showEndIcon";
@@ -76,6 +73,9 @@ export type PlasmicInput__ArgsType = {
   "aria-labelledby"?: string;
   type?: string;
   step?: any;
+  max?: any;
+  min?: any;
+  maxLength?: number;
 };
 
 type ArgPropType = keyof PlasmicInput__ArgsType;
@@ -89,7 +89,10 @@ export const PlasmicInput__ArgProps = new Array<ArgPropType>(
   "aria-label",
   "aria-labelledby",
   "type",
-  "step"
+  "step",
+  "max",
+  "min",
+  "maxLength"
 );
 
 export type PlasmicInput__OverridesType = {
@@ -108,6 +111,9 @@ export interface DefaultInputProps extends pp.BaseTextInputProps {
   "aria-labelledby"?: string;
   type?: string;
   step?: any;
+  max?: any;
+  min?: any;
+  maxLength?: number;
 }
 
 const __wrapUserFunction =
@@ -245,7 +251,7 @@ function PlasmicInput__RenderFunc(props: {
         >
           {p.renderPlasmicSlot({
             defaultContents: (
-              <SearchsvgIcon
+              <svg
                 className={classNames(projectcss.all, sty.svg__aVb9A)}
                 role={"img"}
               />
@@ -285,6 +291,9 @@ function PlasmicInput__RenderFunc(props: {
         disabled={
           hasVariant($state, "isDisabled", "isDisabled") ? true : undefined
         }
+        max={args.max}
+        maxLength={args.maxLength}
+        min={args.min}
         name={args.name}
         placeholder={args.placeholder}
         required={args.required}
@@ -307,7 +316,7 @@ function PlasmicInput__RenderFunc(props: {
         >
           {p.renderPlasmicSlot({
             defaultContents: (
-              <ChecksvgIcon
+              <svg
                 className={classNames(projectcss.all, sty.svg__vFyEz)}
                 role={"img"}
               />

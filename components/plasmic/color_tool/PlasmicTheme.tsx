@@ -36,10 +36,10 @@ import {
 } from "@plasmicapp/react-web";
 import ColorField from "../../ColorField"; // plasmic-import: -6Apr9wI1O5/component
 import InputField from "../../InputField"; // plasmic-import: AIPmHdmqsY/component
+import Button from "../../Button"; // plasmic-import: iXX9rwSFEyL/component
 import Colors from "../../Colors"; // plasmic-import: dyZl0Y5DD8/component
 import Color from "../../Color"; // plasmic-import: YczP2_j8Fh/component
 import HueField from "../../HueField"; // plasmic-import: b0WRjvMctS/component
-import Button from "../../Button"; // plasmic-import: iXX9rwSFEyL/component
 
 import { useScreenVariants as useScreenVariantspt71TlTNpDnZr } from "../blank_project/PlasmicGlobalVariant__Screen"; // plasmic-import: Pt71tlTNpDnZr/globalVariant
 import { DarkValue, useDark } from "./PlasmicGlobalVariant__Dark"; // plasmic-import: AsCuTyckBi/globalVariant
@@ -49,7 +49,7 @@ import "@plasmicapp/react-web/lib/plasmic.css";
 import projectcss from "../blank_project/plasmic_blank_project.module.css"; // plasmic-import: dczqNaFYoArv9QmtqhGLsR/projectcss
 import sty from "./PlasmicTheme.module.css"; // plasmic-import: 848il-tpeEh/css
 
-import ChecksvgIcon from "./icons/PlasmicIcon__Checksvg"; // plasmic-import: K6gY_eUm0B4/icon
+import Icon5Icon from "./icons/PlasmicIcon__Icon5"; // plasmic-import: JJ3xl_PURO/icon
 import IconIcon from "./icons/PlasmicIcon__Icon"; // plasmic-import: Kv0ZYfEWi7y/icon
 
 export type PlasmicTheme__VariantMembers = {};
@@ -68,6 +68,7 @@ export type PlasmicTheme__OverridesType = {
   saturation?: p.Flex<typeof InputField>;
   stepsLighter?: p.Flex<typeof InputField>;
   stepsDarker?: p.Flex<typeof InputField>;
+  copy?: p.Flex<typeof Button>;
   colors?: p.Flex<typeof Colors>;
   lightLuminance?: p.Flex<typeof InputField>;
   lightHue?: p.Flex<typeof HueField>;
@@ -196,6 +197,7 @@ function PlasmicTheme__RenderFunc(props: {
                     "_true"
                   )
                 })}
+                min={1 as const}
                 type={"Number" as const}
               >
                 <div
@@ -221,11 +223,46 @@ function PlasmicTheme__RenderFunc(props: {
                 data-plasmic-name={"stepsDarker"}
                 data-plasmic-override={overrides.stepsDarker}
                 className={classNames("__wab_instance", sty.stepsDarker)}
+                min={1 as const}
                 type={"Number" as const}
               >
                 {"Steps Darker"}
               </InputField>
             ) : null}
+
+            <Button
+              data-plasmic-name={"copy"}
+              data-plasmic-override={overrides.copy}
+              className={classNames("__wab_instance", sty.copy)}
+              showStartIcon={true}
+              simple={true}
+              startIcon={
+                true ? (
+                  <div className={classNames(projectcss.all, sty.freeBox__qh1)}>
+                    <Icon5Icon
+                      className={classNames(projectcss.all, sty.svg___86MZq, {
+                        [sty.svgglobal_dark__true___86MZQuQts4]: hasVariant(
+                          globalVariants,
+                          "dark",
+                          "_true"
+                        )
+                      })}
+                      role={"img"}
+                    />
+                  </div>
+                ) : null
+              }
+            >
+              <div
+                className={classNames(
+                  projectcss.all,
+                  projectcss.__wab_text,
+                  sty.text__loEm
+                )}
+              >
+                {"Copy JSON"}
+              </div>
+            </Button>
           </p.Stack>
         ) : null}
         {true ? (
@@ -258,6 +295,9 @@ function PlasmicTheme__RenderFunc(props: {
                     data-plasmic-name={"lightLuminance"}
                     data-plasmic-override={overrides.lightLuminance}
                     className={classNames("__wab_instance", sty.lightLuminance)}
+                    max={0.999 as const}
+                    maxLength={3 as const}
+                    min={0.001 as const}
                     step={0.001 as const}
                     type={"Number" as const}
                   >
@@ -279,7 +319,7 @@ function PlasmicTheme__RenderFunc(props: {
                       sty.text__zlvRs
                     )}
                   >
-                    {"←Hue Shift"}
+                    {"Hue Rotation°"}
                   </div>
                 </HueField>
               </p.Stack>
@@ -290,6 +330,12 @@ function PlasmicTheme__RenderFunc(props: {
               data-plasmic-override={overrides.resetHueShift}
               className={classNames("__wab_instance", sty.resetHueShift)}
               simple={true}
+              startIcon={
+                <svg
+                  className={classNames(projectcss.all, sty.svg___0VwAy)}
+                  role={"img"}
+                />
+              }
             >
               <div
                 className={classNames(
@@ -298,7 +344,7 @@ function PlasmicTheme__RenderFunc(props: {
                   sty.text__oz6I
                 )}
               >
-                {"Reset Hue Shift"}
+                {"Reset Hue Rotation"}
               </div>
             </Button>
 
@@ -321,7 +367,7 @@ function PlasmicTheme__RenderFunc(props: {
                       sty.text__thpsX
                     )}
                   >
-                    {"→Hue Shift"}
+                    {"Hue Rotation°"}
                   </div>
                 </HueField>
 
@@ -330,6 +376,9 @@ function PlasmicTheme__RenderFunc(props: {
                     data-plasmic-name={"darkLuminance"}
                     data-plasmic-override={overrides.darkLuminance}
                     className={classNames("__wab_instance", sty.darkLuminance)}
+                    max={0.999 as const}
+                    maxLength={3 as const}
+                    min={0.001 as const}
                     step={0.001 as const}
                     type={"Number" as const}
                   >
@@ -352,6 +401,7 @@ const PlasmicDescendants = {
     "saturation",
     "stepsLighter",
     "stepsDarker",
+    "copy",
     "colors",
     "lightLuminance",
     "lightHue",
@@ -363,6 +413,7 @@ const PlasmicDescendants = {
   saturation: ["saturation"],
   stepsLighter: ["stepsLighter"],
   stepsDarker: ["stepsDarker"],
+  copy: ["copy"],
   colors: ["colors"],
   lightLuminance: ["lightLuminance"],
   lightHue: ["lightHue"],
@@ -379,6 +430,7 @@ type NodeDefaultElementType = {
   saturation: typeof InputField;
   stepsLighter: typeof InputField;
   stepsDarker: typeof InputField;
+  copy: typeof Button;
   colors: typeof Colors;
   lightLuminance: typeof InputField;
   lightHue: typeof HueField;
@@ -452,6 +504,7 @@ export const PlasmicTheme = Object.assign(
     saturation: makeNodeComponent("saturation"),
     stepsLighter: makeNodeComponent("stepsLighter"),
     stepsDarker: makeNodeComponent("stepsDarker"),
+    copy: makeNodeComponent("copy"),
     colors: makeNodeComponent("colors"),
     lightLuminance: makeNodeComponent("lightLuminance"),
     lightHue: makeNodeComponent("lightHue"),

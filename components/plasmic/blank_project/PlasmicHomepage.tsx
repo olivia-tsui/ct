@@ -159,7 +159,7 @@ function PlasmicHomepage__RenderFunc(props: {
             }
           )}
         >
-          {"Nuno Marcelino's Shades tool"}
+          {"Nuno Marcelino's Scale Tool"}
         </h2>
 
         {true ? (

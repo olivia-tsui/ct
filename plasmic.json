@@ -176,16 +176,6 @@
       ],
       "icons": [
         {
-          "id": "4MjaTm1IpeT",
-          "name": "SearchsvgIcon",
-          "moduleFilePath": "plasmic/color_tool/icons/PlasmicIcon__Searchsvg.tsx"
-        },
-        {
-          "id": "K6gY_eUm0B4",
-          "name": "ChecksvgIcon",
-          "moduleFilePath": "plasmic/color_tool/icons/PlasmicIcon__Checksvg.tsx"
-        },
-        {
           "id": "1TbpUnBChBh",
           "name": "ChevronDownsvgIcon",
           "moduleFilePath": "plasmic/color_tool/icons/PlasmicIcon__ChevronDownsvg.tsx"
@@ -214,6 +204,11 @@
           "id": "np9P2Ms67F",
           "name": "Icon4Icon",
           "moduleFilePath": "plasmic/color_tool/icons/PlasmicIcon__Icon4.tsx"
+        },
+        {
+          "id": "JJ3xl_PURO",
+          "name": "Icon5Icon",
+          "moduleFilePath": "plasmic/color_tool/icons/PlasmicIcon__Icon5.tsx"
         }
       ],
       "images": [],

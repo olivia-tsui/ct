@@ -119,6 +119,45 @@
 .stepsDarker:global(.__wab_instance) {
   position: relative;
 }
+.copy:global(.__wab_instance) {
+  max-width: 100%;
+  position: relative;
+  width: 124px;
+  flex-shrink: 0;
+}
+.freeBox__qh1 {
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: flex-start;
+  width: 16px;
+  height: 16px;
+  max-width: 100%;
+  padding: 0px;
+}
+.svg___86MZq {
+  object-fit: cover;
+  max-width: 100%;
+  color: #000;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+}
+.svgglobal_dark__true___86MZQuQts4 {
+  color: #ffffff;
+}
+.text__loEm {
+  font-size: 14px;
+  font-weight: 400;
+}
+.svg___6Svat {
+  position: relative;
+  object-fit: cover;
+  width: 1em;
+  height: 1em;
+}
 .colors:global(.__wab_instance) {
   height: 80px;
   flex-shrink: 0;
@@ -269,7 +308,7 @@
 .lightHue:global(.__wab_instance) {
   max-width: 100%;
   position: relative;
-  width: 326px;
+  width: 344px;
   height: 30px;
   flex-shrink: 0;
 }
@@ -362,7 +401,7 @@
   max-width: 100%;
   position: relative;
   height: 30px;
-  width: 326px;
+  width: 344px;
   flex-shrink: 0;
 }
 @media (min-width: 0px) and (max-width: 768px) {

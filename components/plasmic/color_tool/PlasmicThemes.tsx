@@ -143,7 +143,7 @@ function PlasmicThemes__RenderFunc(props: {
             />
           }
         >
-          {"Add Theme"}
+          {"Add Scale"}
         </Button>
       </p.Stack>
     ) : null

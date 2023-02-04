@@ -44,9 +44,6 @@ import "@plasmicapp/react-web/lib/plasmic.css";
 import projectcss from "../blank_project/plasmic_blank_project.module.css"; // plasmic-import: dczqNaFYoArv9QmtqhGLsR/projectcss
 import sty from "./PlasmicHueField.module.css"; // plasmic-import: b0WRjvMctS/css
 
-import SearchsvgIcon from "./icons/PlasmicIcon__Searchsvg"; // plasmic-import: 4MjaTm1IpeT/icon
-import ChecksvgIcon from "./icons/PlasmicIcon__Checksvg"; // plasmic-import: K6gY_eUm0B4/icon
-
 export type PlasmicHueField__VariantMembers = {};
 
 export type PlasmicHueField__VariantsArgs = {};
@@ -198,6 +195,18 @@ function PlasmicHueField__RenderFunc(props: {
               "_true"
             )
           })}
+          endIcon={
+            <svg
+              className={classNames(projectcss.all, sty.svg__fjss0)}
+              role={"img"}
+            />
+          }
+          startIcon={
+            <svg
+              className={classNames(projectcss.all, sty.svg__u49Cf)}
+              role={"img"}
+            />
+          }
           step={args.step}
           type={"Number" as const}
         />

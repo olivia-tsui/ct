@@ -43,9 +43,6 @@ import "@plasmicapp/react-web/lib/plasmic.css";
 import projectcss from "../blank_project/plasmic_blank_project.module.css"; // plasmic-import: dczqNaFYoArv9QmtqhGLsR/projectcss
 import sty from "./PlasmicInputField.module.css"; // plasmic-import: AIPmHdmqsY/css
 
-import SearchsvgIcon from "./icons/PlasmicIcon__Searchsvg"; // plasmic-import: 4MjaTm1IpeT/icon
-import ChecksvgIcon from "./icons/PlasmicIcon__Checksvg"; // plasmic-import: K6gY_eUm0B4/icon
-
 export type PlasmicInputField__VariantMembers = {};
 
 export type PlasmicInputField__VariantsArgs = {};
@@ -58,6 +55,9 @@ export type PlasmicInputField__ArgsType = {
   value?: any;
   type?: string;
   step?: any;
+  max?: any;
+  min?: any;
+  maxLength?: number;
 };
 
 type ArgPropType = keyof PlasmicInputField__ArgsType;
@@ -66,7 +66,10 @@ export const PlasmicInputField__ArgProps = new Array<ArgPropType>(
   "placeholder",
   "value",
   "type",
-  "step"
+  "step",
+  "max",
+  "min",
+  "maxLength"
 );
 
 export type PlasmicInputField__OverridesType = {
@@ -82,6 +85,9 @@ export interface DefaultInputFieldProps {
   value?: any;
   type?: string;
   step?: any;
+  max?: any;
+  min?: any;
+  maxLength?: number;
   className?: string;
 }
 
@@ -185,7 +191,22 @@ function PlasmicInputField__RenderFunc(props: {
           data-plasmic-override={overrides.input}
           className={classNames("__wab_instance", sty.input)}
           defaultValue={args.value}
+          endIcon={
+            <svg
+              className={classNames(projectcss.all, sty.svg__swgG5)}
+              role={"img"}
+            />
+          }
+          max={args.max}
+          maxLength={args.maxLength}
+          min={args.min}
           placeholder={args.placeholder}
+          startIcon={
+            <svg
+              className={classNames(projectcss.all, sty.svg___0OeO)}
+              role={"img"}
+            />
+          }
           step={args.step}
           type={args.type}
         />
