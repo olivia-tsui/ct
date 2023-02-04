@@ -40,12 +40,12 @@ function Colors_(props: ColorsProps, ref: HTMLElementRefOf<"div">) {
     }
     shades.push(newShade)
     names.push(`L${config.stepsLighter-i}`)
-    textContrast.push(chroma.contrast("#FFFFFF",newShade)<4.5?true:false)
+    textContrast.push(chroma.contrast("#FFFFFF",newShade)<2.5?true:false)
   }
   // add base
   shades.push(config.baseValue)
   names.push("Base")
-  textContrast.push(chroma.contrast("#FFFFFF",config.baseValue)<4.5?true:false)
+  textContrast.push(chroma.contrast("#FFFFFF",config.baseValue)<2.5?true:false)
 
 
   for (let i = 1; i < darkScale.length; i++) {
@@ -57,7 +57,7 @@ function Colors_(props: ColorsProps, ref: HTMLElementRefOf<"div">) {
     }
     shades.push(newShade)
     names.push(`D${i}`)
-    textContrast.push(chroma.contrast("#FFFFFF",newShade)<4.5?true:false)
+    textContrast.push(chroma.contrast("#FFFFFF",newShade)<2.5?true:false)
   }
 
   props.uploaddata(JSON.stringify([names,shades]))
