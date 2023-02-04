@@ -212,7 +212,7 @@ function PlasmicHomepage__RenderFunc(props: {
                 )
               })}
               defaultValue={"hsl" as const}
-              options={["hsl", "hsv", "hcl", "lab", "rgb"]}
+              options={["rgb", "hsl", "hsv", "hsi", "lab", "lch", "lrgb"]}
               size={"large" as const}
             />
           </p.Stack>
