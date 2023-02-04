@@ -1,24 +1,63 @@
 .root {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
   width: 100%;
   height: 56px;
   max-width: 100%;
   position: relative;
+  flex-wrap: nowrap;
+  align-content: stretch;
   min-width: 0;
   padding: 0px;
+}
+@media (min-width: 0px) and (max-width: 768px) {
+  .root {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    justify-content: flex-start;
+  }
 }
 .color__rqWlM:global(.__wab_instance) {
   max-width: 100%;
   position: relative;
+  width: auto;
+  left: auto;
+  top: auto;
+}
+@media (min-width: 0px) and (max-width: 768px) {
+  .color__rqWlM:global(.__wab_instance) {
+    left: auto;
+    top: auto;
+  }
 }
 .color__sha4Z:global(.__wab_instance) {
   max-width: 100%;
   position: relative;
+  width: auto;
+  left: auto;
+  top: auto;
+}
+@media (min-width: 0px) and (max-width: 768px) {
+  .color__sha4Z:global(.__wab_instance) {
+    left: auto;
+    top: auto;
+  }
 }
 .color__edWfw:global(.__wab_instance) {
   max-width: 100%;
   position: relative;
+  width: auto;
+  left: auto;
+  top: auto;
+}
+@media (min-width: 0px) and (max-width: 768px) {
+  .color__edWfw:global(.__wab_instance) {
+    left: auto;
+    top: auto;
+  }
 }

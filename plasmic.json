@@ -39,7 +39,7 @@
           },
           "cssFilePath": "plasmic/blank_project/PlasmicHomepage.module.css",
           "scheme": "blackbox",
-          "componentType": "page"
+          "componentType": "component"
         },
         {
           "id": "YczP2_j8Fh",
@@ -80,19 +80,6 @@
           "scheme": "blackbox",
           "componentType": "component",
           "plumeType": "text-input"
-        },
-        {
-          "id": "848il-tpeEh",
-          "name": "Theme",
-          "type": "managed",
-          "projectId": "dczqNaFYoArv9QmtqhGLsR",
-          "renderModuleFilePath": "plasmic/color_tool/PlasmicTheme.jsx",
-          "importSpec": {
-            "modulePath": "Theme.jsx"
-          },
-          "cssFilePath": "plasmic/color_tool/PlasmicTheme.module.css",
-          "scheme": "blackbox",
-          "componentType": "component"
         },
         {
           "id": "AIPmHdmqsY",
@@ -136,6 +123,19 @@
         },
         {
           "id": "b0WRjvMctS",
+          "name": "HueField",
+          "type": "managed",
+          "projectId": "dczqNaFYoArv9QmtqhGLsR",
+          "renderModuleFilePath": "plasmic/color_tool/PlasmicHueField.tsx",
+          "importSpec": {
+            "modulePath": "HueField.tsx"
+          },
+          "cssFilePath": "plasmic/color_tool/PlasmicHueField.module.css",
+          "scheme": "blackbox",
+          "componentType": "component"
+        },
+        {
+          "id": "-6Apr9wI1O5",
           "name": "ColorField",
           "type": "managed",
           "projectId": "dczqNaFYoArv9QmtqhGLsR",
@@ -144,6 +144,32 @@
             "modulePath": "ColorField.tsx"
           },
           "cssFilePath": "plasmic/color_tool/PlasmicColorField.module.css",
+          "scheme": "blackbox",
+          "componentType": "component"
+        },
+        {
+          "id": "zF_ww3iA59",
+          "name": "Toggle",
+          "type": "managed",
+          "projectId": "dczqNaFYoArv9QmtqhGLsR",
+          "renderModuleFilePath": "plasmic/color_tool/PlasmicToggle.tsx",
+          "importSpec": {
+            "modulePath": "Toggle.tsx"
+          },
+          "cssFilePath": "plasmic/color_tool/PlasmicToggle.module.css",
+          "scheme": "blackbox",
+          "componentType": "component"
+        },
+        {
+          "id": "848il-tpeEh",
+          "name": "Theme",
+          "type": "managed",
+          "projectId": "dczqNaFYoArv9QmtqhGLsR",
+          "renderModuleFilePath": "plasmic/color_tool/PlasmicTheme.tsx",
+          "importSpec": {
+            "modulePath": "Theme.tsx"
+          },
+          "cssFilePath": "plasmic/color_tool/PlasmicTheme.module.css",
           "scheme": "blackbox",
           "componentType": "component"
         }
@@ -178,6 +204,16 @@
           "id": "HwlYeO1i4N",
           "name": "Icon2Icon",
           "moduleFilePath": "plasmic/color_tool/icons/PlasmicIcon__Icon2.tsx"
+        },
+        {
+          "id": "zadRXlEOY1",
+          "name": "Icon3Icon",
+          "moduleFilePath": "plasmic/color_tool/icons/PlasmicIcon__Icon3.tsx"
+        },
+        {
+          "id": "np9P2Ms67F",
+          "name": "Icon4Icon",
+          "moduleFilePath": "plasmic/color_tool/icons/PlasmicIcon__Icon4.tsx"
         }
       ],
       "images": [],
@@ -198,6 +234,16 @@
           "id": "19Vq7b8_2Z",
           "name": "HuePicker",
           "componentImportPath": "react-color"
+        },
+        {
+          "id": "u1DqtwXrnZ",
+          "name": "SketchPicker",
+          "componentImportPath": "react-color"
+        },
+        {
+          "id": "kcO9YN8MH5",
+          "name": "Segmented",
+          "componentImportPath": "antd"
         }
       ]
     },
@@ -244,6 +290,12 @@
         "name": "Screen",
         "projectId": "dczqNaFYoArv9QmtqhGLsR",
         "contextFilePath": "plasmic/blank_project/PlasmicGlobalVariant__Screen.tsx"
+      },
+      {
+        "id": "AsCuTyckBi",
+        "name": "Dark",
+        "projectId": "dczqNaFYoArv9QmtqhGLsR",
+        "contextFilePath": "plasmic/color_tool/PlasmicGlobalVariant__Dark.tsx"
       }
     ]
   },

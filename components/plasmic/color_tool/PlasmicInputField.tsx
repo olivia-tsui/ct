@@ -36,6 +36,8 @@ import {
 } from "@plasmicapp/react-web";
 import Input from "../../Input"; // plasmic-import: 434vhQcoRkn/component
 
+import { DarkValue, useDark } from "./PlasmicGlobalVariant__Dark"; // plasmic-import: AsCuTyckBi/globalVariant
+
 import "@plasmicapp/react-web/lib/plasmic.css";
 
 import projectcss from "../blank_project/plasmic_blank_project.module.css"; // plasmic-import: dczqNaFYoArv9QmtqhGLsR/projectcss
@@ -122,6 +124,10 @@ function PlasmicInputField__RenderFunc(props: {
 
   const [$queries, setDollarQueries] = React.useState({});
 
+  const globalVariants = ensureGlobalVariants({
+    dark: useDark()
+  });
+
   return (
     true ? (
       <div
@@ -145,7 +151,13 @@ function PlasmicInputField__RenderFunc(props: {
           {p.renderPlasmicSlot({
             defaultContents: "baseValue",
             value: args.children,
-            className: classNames(sty.slotTargetChildren)
+            className: classNames(sty.slotTargetChildren, {
+              [sty.slotTargetChildrenglobal_dark__true]: hasVariant(
+                globalVariants,
+                "dark",
+                "_true"
+              )
+            })
           })}
         </div>
 
@@ -155,7 +167,14 @@ function PlasmicInputField__RenderFunc(props: {
           className={classNames(
             projectcss.all,
             projectcss.__wab_text,
-            sty.text
+            sty.text,
+            {
+              [sty.textglobal_dark__true]: hasVariant(
+                globalVariants,
+                "dark",
+                "_true"
+              )
+            }
           )}
         >
           {":"}

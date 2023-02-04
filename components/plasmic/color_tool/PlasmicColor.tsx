@@ -40,11 +40,16 @@ import "@plasmicapp/react-web/lib/plasmic.css";
 import projectcss from "../blank_project/plasmic_blank_project.module.css"; // plasmic-import: dczqNaFYoArv9QmtqhGLsR/projectcss
 import sty from "./PlasmicColor.module.css"; // plasmic-import: YczP2_j8Fh/css
 
-export type PlasmicColor__VariantMembers = {};
+export type PlasmicColor__VariantMembers = {
+  onDark: "onDark";
+};
 
-export type PlasmicColor__VariantsArgs = {};
+export type PlasmicColor__VariantsArgs = {
+  onDark?: SingleBooleanChoiceArg<"onDark">;
+};
+
 type VariantPropType = keyof PlasmicColor__VariantsArgs;
-export const PlasmicColor__VariantProps = new Array<VariantPropType>();
+export const PlasmicColor__VariantProps = new Array<VariantPropType>("onDark");
 
 export type PlasmicColor__ArgsType = {};
 type ArgPropType = keyof PlasmicColor__ArgsType;
@@ -57,6 +62,7 @@ export type PlasmicColor__OverridesType = {
 };
 
 export interface DefaultColorProps {
+  onDark?: SingleBooleanChoiceArg<"onDark">;
   className?: string;
 }
 
@@ -95,6 +101,20 @@ function PlasmicColor__RenderFunc(props: {
 
   const currentUser = p.useCurrentUser?.() || {};
 
+  const stateSpecs = React.useMemo(
+    () => [
+      {
+        path: "onDark",
+        type: "private",
+        variableType: "variant",
+        initFunc: true ? ($props, $state, $ctx) => $props.onDark : undefined
+      }
+    ],
+
+    [$props, $ctx]
+  );
+  const $state = p.useDollarState(stateSpecs, $props, $ctx);
+
   const [$queries, setDollarQueries] = React.useState({});
 
   return (
@@ -108,13 +128,16 @@ function PlasmicColor__RenderFunc(props: {
         projectcss.root_reset,
         projectcss.plasmic_default_styles,
         projectcss.plasmic_mixins,
-        sty.root
+        sty.root,
+        { [sty.rootonDark]: hasVariant($state, "onDark", "onDark") }
       )}
     >
       <div
         data-plasmic-name={"name"}
         data-plasmic-override={overrides.name}
-        className={classNames(projectcss.all, projectcss.__wab_text, sty.name)}
+        className={classNames(projectcss.all, projectcss.__wab_text, sty.name, {
+          [sty.nameonDark]: hasVariant($state, "onDark", "onDark")
+        })}
       >
         {"Name"}
       </div>
@@ -125,7 +148,8 @@ function PlasmicColor__RenderFunc(props: {
         className={classNames(
           projectcss.all,
           projectcss.__wab_text,
-          sty.hexCode
+          sty.hexCode,
+          { [sty.hexCodeonDark]: hasVariant($state, "onDark", "onDark") }
         )}
       >
         {"#HexCode"}

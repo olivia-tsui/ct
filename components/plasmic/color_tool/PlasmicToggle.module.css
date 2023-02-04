@@ -1,0 +1,57 @@
+.root {
+  display: flex;
+  width: 32px;
+  height: 32px;
+  max-width: 100%;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  border-radius: 2px;
+  padding: 8px;
+}
+.rootglobal_dark__true {
+  width: 32px;
+  height: 32px;
+  max-width: 100%;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-row-gap: 0px;
+  border-radius: 2px;
+  padding: 8px;
+}
+.root:hover {
+  background: #f5f5f5;
+}
+.rootglobal_dark__true:hover {
+  background: #444444;
+}
+.svg__nrY7 {
+  position: relative;
+  object-fit: cover;
+  max-width: 100%;
+  color: #000;
+  left: auto;
+  top: auto;
+  width: 1em;
+  flex-shrink: 0;
+  height: 1em;
+}
+.svgglobal_dark__true__nrY7UQts4 {
+  display: none;
+}
+.svg__ur6I8 {
+  position: relative;
+  plasmic-display-none: true;
+  object-fit: cover;
+  max-width: 100%;
+  color: #fff;
+  width: 1em;
+  flex-shrink: 0;
+  height: 1em;
+}
+.svgglobal_dark__true__ur6I8UQts4 {
+  display: block;
+}

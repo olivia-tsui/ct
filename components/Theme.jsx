@@ -3,12 +3,11 @@
 import * as React from "react";
 import {
   PlasmicTheme,
-  DefaultThemeProps
+  DefaultThemeProps,
 } from "./plasmic/color_tool/PlasmicTheme";
 import { HTMLElementRefOf } from "@plasmicapp/react-web";
 import { setConfig } from "next/config";
 import chroma from "chroma-js";
-
 
 const config = {
   baseValue: "#0F3CC9",
@@ -18,75 +17,148 @@ const config = {
   lightLuminance: 0.85,
   darkLuminance: 0.008,
   lightHueShift: 225.48,
-  darkHueShift: 225.48
+  darkHueShift: 225.48,
 };
 
 export const ColorsContext = React.createContext(config);
 export const ConfigUpdateContext = React.createContext((data) => {
-  setConfig(data)
+  setConfig(data);
 });
 
 function Theme_(props, ref) {
-
   const [_config, setConfig] = React.useState(config);
-
+  const [lightScrubColor, setLightScrubColor] = React.useState(
+    _config.baseValue
+  );
+  const [darkScrubColor, setDarkScrubColor] = React.useState(_config.baseValue);
   return (
     <ColorsContext.Provider value={_config}>
-      <ConfigUpdateContext.Provider value={(data) => {
-        setConfig(data)
-      }}>
-      <PlasmicTheme baseValue={{
-        value: _config.baseValue,
-        onChange: (e) => {
-          setConfig({..._config, baseValue: e.target.value.length > 6 ? e.target.value : _config.baseValue})
-        }
-      }}
-      saturation={{
-        value: _config.saturation.toString(),
-        onChange: (e) => {
-          setConfig({..._config, saturation:parseFloat( e.target.value.toString())})
-        }
-      }}
-      stepsLighter={{
-        value: _config.stepsLighter.toString(),
-        onChange: (e ) => {
-          setConfig({..._config, stepsLighter: parseFloat( e.target.value)})
-        }
-
-      }}
-      stepsDarker={{
-        value: _config.stepsDarker.toString(),
-        onChange: (e) => {
-          setConfig({..._config, stepsDarker:parseFloat( e.target.value)})
-        }
-
-      }}
-      lightLuminance={{
-        value: _config.lightLuminance.toString(),
-        onChange: (e) => {
-          setConfig({..._config, lightLuminance:parseFloat( e.target.value)})
-
-        }
-      }}
-      darkLuminance={{
-        value: _config.darkLuminance.toString(),
-        onChange: (e) => {
-          setConfig({..._config, darkLuminance: parseFloat( e.target.value)})
-        }
-      }}
-      lightHue={{
-        onChange:(e)=>{
-          setConfig({..._config, lightHueShift: chroma(e.hex).hsl()[0].toFixed(2) })
-        }
+      <ConfigUpdateContext.Provider
+        value={(data) => {
+          setConfig(data);
         }}
-       darkHue={{
-        onChange:(e)=>{
-          setConfig({..._config, darkHueShift: chroma(e.hex).hsl()[0].toFixed(2) })
-        }
-       }}
-      root={{ ref }} {...props} />
+      >
+        <PlasmicTheme
+          saturation={{
+            value: _config.saturation.toString(),
+            onChange: (e) => {
+              setConfig({
+                ..._config,
+                saturation: parseFloat(e.target.value.toString()),
+              });
+            },
+          }}
+          stepsLighter={{
+            value: _config.stepsLighter.toString(),
+            onChange: (e) => {
+              setConfig({
+                ..._config,
+                stepsLighter: parseFloat(e.target.value),
+              });
+            },
+          }}
+          stepsDarker={{
+            value: _config.stepsDarker.toString(),
+            onChange: (e) => {
+              setConfig({
+                ..._config,
+                stepsDarker: parseFloat(e.target.value),
+              });
+            },
+          }}
+          lightLuminance={{
+            value: _config.lightLuminance.toString(),
+            onChange: (e) => {
+              setConfig({
+                ..._config,
+                lightLuminance: parseFloat(e.target.value),
+              });
+            },
+          }}
+          darkLuminance={{
+            value: _config.darkLuminance.toString(),
+            onChange: (e) => {
+              setConfig({
+                ..._config,
+                darkLuminance: parseFloat(e.target.value),
+              });
+            },
+          }}
+          lightHue={{
+            onScrub: (e) => {
+              setLightScrubColor(e.hex);
+              setConfig({
+                ..._config,
+                lightHueShift: chroma(e.hex).hsl()[0].toFixed(2),
+              });
+            },
+            input: {
+              value: _config.lightHueShift.toString(),
+            },
+            onChange: (e) => {
+              setConfig({
+                ..._config,
+                lightHueShift: parseFloat(e.target.value),
+              });
+              setLightScrubColor(
+                chroma(_config.baseValue).set("hsl.h", e.target.value).hex()
+              );
+            },
+            huePicker: {
+              props: {
+                color: lightScrubColor,
+              },
+            },
+          }}
+          darkHue={{
+            onScrub: (e) => {
+              setDarkScrubColor(e.hex);
+              setConfig({
+                ..._config,
+                darkHueShift: chroma(e.hex).hsl()[0].toFixed(2),
+              });
+            },
+            input: {
+              value: _config.darkHueShift.toString(),
+            },
+            onChange: (e) => {
+              setConfig({
+                ..._config,
+                darkHueShift: parseFloat(e.target.value),
+              });
+              setDarkScrubColor(
+                chroma(_config.baseValue).set("hsl.h", e.target.value).hex()
+              );
+            },
+            huePicker: {
+              props: {
+                color: darkScrubColor,
+              },
+            },
+          }}
+          resetHueShift={{
+            props: {
+              notRendered:
+                _config.lightHueShift ===
+                  chroma(_config.baseValue).hsl()[0].toFixed(2) &&
+                _config.darkHueShift ===
+                  chroma(_config.baseValue).hsl()[0].toFixed(2),
+              onClick: () => {
+                setConfig({
+                  ..._config,
+                  lightHueShift: chroma(_config.baseValue).hsl()[0].toFixed(2),
+                  darkHueShift: chroma(_config.baseValue).hsl()[0].toFixed(2),
+                });
+                setLightScrubColor(_config.baseValue);
+                setDarkScrubColor(_config.baseValue);
+              },
+            },
+          }}
+          root={{ ref }}
+          {...props}
+        />
       </ConfigUpdateContext.Provider>
-      </ColorsContext.Provider>
+    </ColorsContext.Provider>
   );
 }
 

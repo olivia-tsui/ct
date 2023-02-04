@@ -2,7 +2,7 @@
   flex-direction: row;
   display: flex;
   position: relative;
-  background: #232320;
+  background: #2f2f2f;
   cursor: pointer;
   transition-property: background;
   transition-duration: 0.1s;
@@ -25,6 +25,9 @@
 .root > :global(.__wab_flex-container) > :global(.__wab_slot) > picture > img {
   margin-left: 8px;
 }
+.rootglobal_dark__true {
+  background: #444444;
+}
 .rootshowStartIcon {
   padding-left: 16px;
 }
@@ -35,11 +38,18 @@
   cursor: not-allowed;
   opacity: 0.6;
 }
+.rootsimple {
+  height: 30px;
+  background: none;
+  padding: 8px 12px;
+}
 .root:hover {
   background: #282826;
 }
+.rootsimple:hover {
+  background: #e6e6e6;
+}
 .root:focus-within {
-  box-shadow: 0px 0px 0px 3px #96c7f2;
   outline: none;
 }
 .root___focusVisibleWithin {
@@ -48,6 +58,9 @@
 }
 .root:active {
   background: #2e2e2b;
+}
+.rootsimple:active {
+  background: #d5d5d5;
 }
 .startIconContainer {
   display: flex;
@@ -83,6 +96,9 @@
   color: #ededec;
   font-weight: 500;
   white-space: pre;
+}
+.slotTargetChildrensimple {
+  color: #000000;
 }
 .root:focus-within .slotTargetChildren > *,
 .root:focus-within .slotTargetChildren > :global(.__wab_slot) > *,

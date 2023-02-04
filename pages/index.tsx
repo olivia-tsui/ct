@@ -5,16 +5,36 @@ import * as ph from "@plasmicapp/host";
 import { PlasmicHomepage } from "../components/plasmic/blank_project/PlasmicHomepage";
 import { useRouter } from "next/router";
 
+import { DarkContext, DarkValue } from "../components/plasmic/color_tool/PlasmicGlobalVariant__Dark"; 
+export const ModeContext = React.createContext("hsl");
 
 function Homepage() {
-  const [numberOfTHemes, setNumberOfThemes] = React.useState(1);
+const [mode, setMode] = React.useState("hsl")
+const [dark, setDark] = React.useState('_false')
+
   return (
     <ph.PageParamsProvider
       params={useRouter()?.query}
       query={useRouter()?.query}
     >
-      <PlasmicHomepage   />
-
+      <DarkContext.Provider value={dark as DarkValue}>
+      <ModeContext.Provider value={mode}>
+      <PlasmicHomepage toggle={{
+        // @ts-ignore
+        props:{
+          onClick: () =>  {
+            dark === '_false' ? setDark('_true') : setDark('_false')
+          }
+        }
+      }} mode={{
+        props:{
+          onChange:(value)=>{
+            setMode(value.toString())
+          }
+        }
+      }} />
+</ModeContext.Provider>
+</DarkContext.Provider>
     </ph.PageParamsProvider>
   );
 }

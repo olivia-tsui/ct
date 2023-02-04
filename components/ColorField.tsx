@@ -3,36 +3,61 @@
 import * as React from "react";
 import {
   PlasmicColorField,
-  DefaultColorFieldProps
+  DefaultColorFieldProps,
 } from "./plasmic/color_tool/PlasmicColorField";
 import { HTMLElementRefOf } from "@plasmicapp/react-web";
-import chroma from "chroma-js";
-import { ColorsContext } from "./Theme";
-import { PlasmicOptionsField__ArgProps } from "./plasmic/color_tool/PlasmicOptionsField";
+import { ColorsContext,ConfigUpdateContext } from "./Theme";
 
 export interface ColorFieldProps extends DefaultColorFieldProps {}
 
 function ColorField_(props: ColorFieldProps, ref: HTMLElementRefOf<"div">) {
-  const config = React.useContext(ColorsContext)
+  const config = React.useContext(ColorsContext);
+  const updateConfig = React.useContext(ConfigUpdateContext);
+  const [showPanel, setShowPanel] = React.useState(false);
   const [color, setColor] = React.useState(config.baseValue);
+  const [inputValue, setInputValue] = React.useState(color);
 
-
-  return <PlasmicColorField input={{
-    props:{
-      value: chroma(color).hsl()[0].toFixed(2),
-      onChange:(e) => {
-        setColor(chroma.hsl(Number(e.target.value), 1, 0.5).hex());
-      }
-    }
-  }}
-    huePicker={{
-    props:{
-      color: color,
-      onChange: (e) => {
-        setColor(e.hex);
-      }
-    }
-  }} root={{ ref }} {...props} />;
+  React.useEffect(() => {
+    updateConfig({...config,  baseValue: color });
+  }, [color]);
+  return (
+    <PlasmicColorField
+      showPanel={showPanel}
+      input={{
+        value:inputValue,
+        onChange: (e) => {
+          setInputValue(e.target.value.toUpperCase());
+          if (e.target.value.length === 7 && /^#[0-9A-Fa-f]{6}$/.test(e.target.value)) setColor(e.target.value);
+        }
+      }}
+      picker={{
+        props: {
+          color: color,
+          onChange: (e) => {
+            setColor(e.hex.toUpperCase());
+            setInputValue(e.hex.toUpperCase());
+          }
+          
+        },
+      }}
+      display={{
+        onClick: () => {
+          setShowPanel(true)
+        },
+        style:{
+          backgroundColor: color
+        }
+      }}
+      cover={{
+        onClick: () => {
+          setShowPanel(false);
+        }
+      }}
+    
+      root={{ ref }}
+      {...props}
+    />
+  );
 }
 
 const ColorField = React.forwardRef(ColorField_);

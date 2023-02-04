@@ -12,7 +12,13 @@
 .name {
   color: #ffffff;
 }
+.nameonDark {
+  color: #000000;
+}
 .hexCode {
   color: #ffffff;
   font-size: 12px;
+}
+.hexCodeonDark {
+  color: #000000;
 }

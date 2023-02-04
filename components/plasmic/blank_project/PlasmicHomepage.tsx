@@ -34,8 +34,13 @@ import {
   deriveRenderOpts,
   ensureGlobalVariants
 } from "@plasmicapp/react-web";
+import Toggle from "../../Toggle"; // plasmic-import: zF_ww3iA59/component
+import { Segmented } from "antd"; // plasmic-import: kcO9YN8MH5/codeComponent
 import Themes from "../../Themes"; // plasmic-import: K_3cTz_dlp/component
 import Theme from "../../Theme"; // plasmic-import: 848il-tpeEh/component
+
+import { DarkValue, useDark } from "../color_tool/PlasmicGlobalVariant__Dark"; // plasmic-import: AsCuTyckBi/globalVariant
+import { useScreenVariants as useScreenVariantspt71TlTNpDnZr } from "./PlasmicGlobalVariant__Screen"; // plasmic-import: Pt71tlTNpDnZr/globalVariant
 
 import "@plasmicapp/react-web/lib/plasmic.css";
 
@@ -55,11 +60,17 @@ export const PlasmicHomepage__ArgProps = new Array<ArgPropType>();
 export type PlasmicHomepage__OverridesType = {
   root?: p.Flex<"div">;
   section?: p.Flex<"section">;
-  h1?: p.Flex<"h1">;
+  h2?: p.Flex<"h2">;
+  freeBox?: p.Flex<"div">;
+  toggle?: p.Flex<typeof Toggle>;
+  text?: p.Flex<"div">;
+  mode?: p.Flex<typeof Segmented>;
   themes?: p.Flex<typeof Themes>;
 };
 
-export interface DefaultHomepageProps {}
+export interface DefaultHomepageProps {
+  className?: string;
+}
 
 const __wrapUserFunction =
   globalThis.__PlasmicWrapUserFunction ?? ((loc, fn) => fn());
@@ -98,68 +109,150 @@ function PlasmicHomepage__RenderFunc(props: {
 
   const [$queries, setDollarQueries] = React.useState({});
 
+  const globalVariants = ensureGlobalVariants({
+    dark: useDark(),
+    screen: useScreenVariantspt71TlTNpDnZr()
+  });
+
   return (
-    <React.Fragment>
-      <Head></Head>
-
-      <style>{`
-        body {
-          margin: 0;
+    <div
+      data-plasmic-name={"root"}
+      data-plasmic-override={overrides.root}
+      data-plasmic-root={true}
+      data-plasmic-for-node={forNode}
+      className={classNames(
+        projectcss.all,
+        projectcss.root_reset,
+        projectcss.plasmic_default_styles,
+        projectcss.plasmic_mixins,
+        sty.root,
+        {
+          [sty.rootglobal_dark__true]: hasVariant(
+            globalVariants,
+            "dark",
+            "_true"
+          )
         }
-      `}</style>
-
-      <div className={projectcss.plasmic_page_wrapper}>
-        <div
-          data-plasmic-name={"root"}
-          data-plasmic-override={overrides.root}
-          data-plasmic-root={true}
-          data-plasmic-for-node={forNode}
+      )}
+    >
+      <p.Stack
+        as={"section"}
+        data-plasmic-name={"section"}
+        data-plasmic-override={overrides.section}
+        hasGap={true}
+        className={classNames(projectcss.all, sty.section)}
+      >
+        <h2
+          data-plasmic-name={"h2"}
+          data-plasmic-override={overrides.h2}
           className={classNames(
             projectcss.all,
-            projectcss.root_reset,
-            projectcss.plasmic_default_styles,
-            projectcss.plasmic_mixins,
-            sty.root
+            projectcss.h2,
+            projectcss.__wab_text,
+            sty.h2,
+            {
+              [sty.h2global_dark__true]: hasVariant(
+                globalVariants,
+                "dark",
+                "_true"
+              )
+            }
           )}
         >
+          {"Nuno Marcelino's Shades tool"}
+        </h2>
+
+        {true ? (
           <p.Stack
-            as={"section"}
-            data-plasmic-name={"section"}
-            data-plasmic-override={overrides.section}
+            as={"div"}
+            data-plasmic-name={"freeBox"}
+            data-plasmic-override={overrides.freeBox}
             hasGap={true}
-            className={classNames(projectcss.all, sty.section)}
+            className={classNames(projectcss.all, sty.freeBox)}
           >
-            <h1
-              data-plasmic-name={"h1"}
-              data-plasmic-override={overrides.h1}
+            <Toggle
+              data-plasmic-name={"toggle"}
+              data-plasmic-override={overrides.toggle}
+              className={classNames("__wab_instance", sty.toggle, {
+                [sty.toggleglobal_dark__true]: hasVariant(
+                  globalVariants,
+                  "dark",
+                  "_true"
+                )
+              })}
+            />
+
+            <div
+              data-plasmic-name={"text"}
+              data-plasmic-override={overrides.text}
               className={classNames(
                 projectcss.all,
-                projectcss.h1,
                 projectcss.__wab_text,
-                sty.h1
+                sty.text,
+                {
+                  [sty.textglobal_dark__true]: hasVariant(
+                    globalVariants,
+                    "dark",
+                    "_true"
+                  )
+                }
               )}
             >
-              {"World's Best Shades tool"}
-            </h1>
-          </p.Stack>
+              {"Interpolation Mode:"}
+            </div>
 
-          {true ? (
-            <Themes
-              data-plasmic-name={"themes"}
-              data-plasmic-override={overrides.themes}
-              className={classNames("__wab_instance", sty.themes)}
+            <Segmented
+              data-plasmic-name={"mode"}
+              data-plasmic-override={overrides.mode}
+              className={classNames("__wab_instance", sty.mode, {
+                [sty.modeglobal_dark__true]: hasVariant(
+                  globalVariants,
+                  "dark",
+                  "_true"
+                )
+              })}
+              defaultValue={"hsl" as const}
+              options={["hsl", "hsv", "hcl", "lab", "rgb"]}
+              size={"large" as const}
             />
-          ) : null}
-        </div>
-      </div>
-    </React.Fragment>
+          </p.Stack>
+        ) : null}
+      </p.Stack>
+
+      {true ? (
+        <Themes
+          data-plasmic-name={"themes"}
+          data-plasmic-override={overrides.themes}
+          className={classNames("__wab_instance", sty.themes, {
+            [sty.themesglobal_dark__true]: hasVariant(
+              globalVariants,
+              "dark",
+              "_true"
+            )
+          })}
+        />
+      ) : null}
+    </div>
   ) as React.ReactElement | null;
 }
 
 const PlasmicDescendants = {
-  root: ["root", "section", "h1", "themes"],
-  section: ["section", "h1"],
-  h1: ["h1"],
+  root: [
+    "root",
+    "section",
+    "h2",
+    "freeBox",
+    "toggle",
+    "text",
+    "mode",
+    "themes"
+  ],
+  section: ["section", "h2", "freeBox", "toggle", "text", "mode"],
+  h2: ["h2"],
+  freeBox: ["freeBox", "toggle", "text", "mode"],
+  toggle: ["toggle"],
+  text: ["text"],
+  mode: ["mode"],
   themes: ["themes"]
 } as const;
 type NodeNameType = keyof typeof PlasmicDescendants;
@@ -168,7 +261,11 @@ type DescendantsType<T extends NodeNameType> =
 type NodeDefaultElementType = {
   root: "div";
   section: "section";
-  h1: "h1";
+  h2: "h2";
+  freeBox: "div";
+  toggle: typeof Toggle;
+  text: "div";
+  mode: typeof Segmented;
   themes: typeof Themes;
 };
 
@@ -234,20 +331,16 @@ export const PlasmicHomepage = Object.assign(
   {
     // Helper components rendering sub-elements
     section: makeNodeComponent("section"),
-    h1: makeNodeComponent("h1"),
+    h2: makeNodeComponent("h2"),
+    freeBox: makeNodeComponent("freeBox"),
+    toggle: makeNodeComponent("toggle"),
+    text: makeNodeComponent("text"),
+    mode: makeNodeComponent("mode"),
     themes: makeNodeComponent("themes"),
 
     // Metadata about props expected for PlasmicHomepage
     internalVariantProps: PlasmicHomepage__VariantProps,
-    internalArgProps: PlasmicHomepage__ArgProps,
-
-    // Page metadata
-    pageMetadata: {
-      title: "",
-      description: "",
-      ogImageSrc: "",
-      canonical: ""
-    }
+    internalArgProps: PlasmicHomepage__ArgProps
   }
 );
 

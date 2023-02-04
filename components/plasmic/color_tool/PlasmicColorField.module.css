@@ -9,6 +9,9 @@
   position: relative;
   padding: 0px;
 }
+.slotTargetChildrenglobal_dark__true {
+  color: #ffffff;
+}
 .text {
   position: relative;
   width: auto;
@@ -16,29 +19,59 @@
   max-width: 800px;
   margin-right: 4px;
 }
-.huePicker:global(.__wab_instance) {
-  max-width: 240%;
-  object-fit: cover;
-  position: relative;
-  width: 100%;
-  min-width: 128px;
+.textglobal_dark__true {
+  color: #ffffff;
 }
 .input:global(.__wab_instance) {
   max-width: 100%;
   position: relative;
-  width: 96px;
+  width: 100%;
   margin-left: 8px;
+  height: 30px;
+  min-width: 0;
+}
+.display {
+  display: block;
+  position: relative;
+  width: 16px;
+  height: 16px;
+  max-width: 100%;
+  padding: 0px;
+}
+.svg__qzkPf {
+  position: relative;
+  object-fit: cover;
+  width: 1em;
+  height: 1em;
+}
+.picker:global(.__wab_instance) {
+  max-width: 100%;
+  object-fit: cover;
+  position: relative;
+  width: 60px;
   flex-shrink: 0;
 }
-.svg__kWlcl {
-  position: relative;
-  object-fit: cover;
-  width: 1em;
-  height: 1em;
+.pickershowPanel:global(.__wab_instance) {
+  position: absolute;
+  left: auto;
+  top: -32px;
+  opacity: 1;
+  z-index: 1;
+  right: -84px;
 }
-.svg__eSPaP {
-  position: relative;
-  object-fit: cover;
-  width: 1em;
-  height: 1em;
+.cover {
+  position: fixed;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  left: 0;
+  top: 0;
+  z-index: 0;
+  right: 0;
+  bottom: 0;
+  display: none;
+  padding: 8px;
+}
+.covershowPanel {
+  display: block;
 }

@@ -11,18 +11,23 @@ import Theme from "./Theme";
 export interface ThemesProps extends DefaultThemesProps {}
 
 function Themes_(props: ThemesProps, ref: HTMLElementRefOf<"div">) {
-const [numberOfThemes, setNumberOfThemes] = React.useState(1);
-  return <PlasmicThemes children={
-    Array.from(Array(numberOfThemes).keys()).map((i) => {
-      return <Theme key={i} />
-    })
-  } add={{
-    props:{
-      onClick: () => {
-        setNumberOfThemes(numberOfThemes + 1)
-      }
-    }
-  }} root={{ ref }} {...props} />;
+  const [numberOfThemes, setNumberOfThemes] = React.useState(1);
+  return (
+    <PlasmicThemes
+      count={Array.from(Array(numberOfThemes).keys()).map((i) => {
+        return <Theme key={i} />;
+      })}
+      add={{
+        props: {
+          onClick: () => {
+            setNumberOfThemes(numberOfThemes + 1);
+          },
+        },
+      }}
+      root={{ ref }}
+      {...props}
+    />
+  );
 }
 
 const Themes = React.forwardRef(Themes_);

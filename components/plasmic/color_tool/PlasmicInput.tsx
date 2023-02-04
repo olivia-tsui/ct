@@ -36,6 +36,8 @@ import {
   ensureGlobalVariants
 } from "@plasmicapp/react-web";
 
+import { DarkValue, useDark } from "./PlasmicGlobalVariant__Dark"; // plasmic-import: AsCuTyckBi/globalVariant
+
 import "@plasmicapp/react-web/lib/plasmic.css";
 
 import projectcss from "../blank_project/plasmic_blank_project.module.css"; // plasmic-import: dczqNaFYoArv9QmtqhGLsR/projectcss
@@ -48,22 +50,19 @@ export type PlasmicInput__VariantMembers = {
   showStartIcon: "showStartIcon";
   showEndIcon: "showEndIcon";
   isDisabled: "isDisabled";
-  color: "dark";
 };
 
 export type PlasmicInput__VariantsArgs = {
   showStartIcon?: SingleBooleanChoiceArg<"showStartIcon">;
   showEndIcon?: SingleBooleanChoiceArg<"showEndIcon">;
   isDisabled?: SingleBooleanChoiceArg<"isDisabled">;
-  color?: SingleChoiceArg<"dark">;
 };
 
 type VariantPropType = keyof PlasmicInput__VariantsArgs;
 export const PlasmicInput__VariantProps = new Array<VariantPropType>(
   "showStartIcon",
   "showEndIcon",
-  "isDisabled",
-  "color"
+  "isDisabled"
 );
 
 export type PlasmicInput__ArgsType = {
@@ -109,7 +108,6 @@ export interface DefaultInputProps extends pp.BaseTextInputProps {
   "aria-labelledby"?: string;
   type?: string;
   step?: any;
-  color?: SingleChoiceArg<"dark">;
 }
 
 const __wrapUserFunction =
@@ -175,13 +173,6 @@ function PlasmicInput__RenderFunc(props: {
         type: "private",
         variableType: "variant",
         initFunc: true ? ($props, $state, $ctx) => $props.isDisabled : undefined
-      },
-
-      {
-        path: "color",
-        type: "private",
-        variableType: "variant",
-        initFunc: true ? ($props, $state, $ctx) => $props.color : undefined
       }
     ],
 
@@ -200,6 +191,10 @@ function PlasmicInput__RenderFunc(props: {
     focusVisibleWithin_root: isRootFocusVisibleWithin
   };
 
+  const globalVariants = ensureGlobalVariants({
+    dark: useDark()
+  });
+
   return (
     <div
       data-plasmic-name={"root"}
@@ -214,7 +209,11 @@ function PlasmicInput__RenderFunc(props: {
         sty.root,
         {
           [sty.root___focusVisibleWithin]: triggers.focusVisibleWithin_root,
-          [sty.rootcolor_dark]: hasVariant($state, "color", "dark"),
+          [sty.rootglobal_dark__true]: hasVariant(
+            globalVariants,
+            "dark",
+            "_true"
+          ),
           [sty.rootisDisabled]: hasVariant($state, "isDisabled", "isDisabled"),
           [sty.rootshowStartIcon]: hasVariant(
             $state,
@@ -232,11 +231,6 @@ function PlasmicInput__RenderFunc(props: {
           className={classNames(projectcss.all, sty.startIconContainer, {
             [sty.startIconContainer___focusVisibleWithin]:
               triggers.focusVisibleWithin_root,
-            [sty.startIconContainercolor_dark]: hasVariant(
-              $state,
-              "color",
-              "dark"
-            ),
             [sty.startIconContainerisDisabled]: hasVariant(
               $state,
               "isDisabled",
@@ -259,11 +253,6 @@ function PlasmicInput__RenderFunc(props: {
 
             value: args.startIcon,
             className: classNames(sty.slotTargetStartIcon, {
-              [sty.slotTargetStartIconcolor_dark]: hasVariant(
-                $state,
-                "color",
-                "dark"
-              ),
               [sty.slotTargetStartIconshowStartIcon]: hasVariant(
                 $state,
                 "showStartIcon",
@@ -281,7 +270,11 @@ function PlasmicInput__RenderFunc(props: {
         aria-labelledby={args["aria-labelledby"]}
         className={classNames(projectcss.all, projectcss.input, sty.input, {
           [sty.input___focusVisibleWithin]: triggers.focusVisibleWithin_root,
-          [sty.inputcolor_dark]: hasVariant($state, "color", "dark"),
+          [sty.inputglobal_dark__true]: hasVariant(
+            globalVariants,
+            "dark",
+            "_true"
+          ),
           [sty.inputisDisabled]: hasVariant($state, "isDisabled", "isDisabled"),
           [sty.inputshowStartIcon]: hasVariant(
             $state,
@@ -305,11 +298,6 @@ function PlasmicInput__RenderFunc(props: {
           data-plasmic-name={"endIconContainer"}
           data-plasmic-override={overrides.endIconContainer}
           className={classNames(projectcss.all, sty.endIconContainer, {
-            [sty.endIconContainercolor_dark]: hasVariant(
-              $state,
-              "color",
-              "dark"
-            ),
             [sty.endIconContainershowEndIcon]: hasVariant(
               $state,
               "showEndIcon",
@@ -327,11 +315,6 @@ function PlasmicInput__RenderFunc(props: {
 
             value: args.endIcon,
             className: classNames(sty.slotTargetEndIcon, {
-              [sty.slotTargetEndIconcolor_dark]: hasVariant(
-                $state,
-                "color",
-                "dark"
-              ),
               [sty.slotTargetEndIconshowEndIcon]: hasVariant(
                 $state,
                 "showEndIcon",

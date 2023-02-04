@@ -9,18 +9,21 @@ import { HTMLElementRefOf } from "@plasmicapp/react-web";
 import Color from "./Color";
 import chroma from "chroma-js";
 import { ColorsContext } from "./Theme";
+import { ModeContext } from "../pages/index";
 
+import { InterpolationMode } from "chroma-js";
 export interface ColorsProps extends DefaultColorsProps {}
 
 
 function Colors_(props: ColorsProps, ref: HTMLElementRefOf<"div">) {
   const config = React.useContext(ColorsContext)
-
+  const mode = React.useContext(ModeContext)
   let shades :string[]= []
   let names :string[]= []
+  let textContrast:boolean[] = []
 
-  let lightScale = chroma.scale([chroma(config.baseValue).set('hsl.h',config.lightHueShift).luminance(config.lightLuminance).hex() ,config.baseValue]).colors(config.stepsLighter+1)
-  let darkScale = chroma.scale([config.baseValue,chroma(config.baseValue).set('hsl.h',config.darkHueShift).luminance(config.darkLuminance).hex()]).colors(config.stepsDarker+1)
+  let lightScale = chroma.scale([chroma(config.baseValue).set('hsl.h',config.lightHueShift).luminance(config.lightLuminance).hex() ,config.baseValue]).mode(mode as InterpolationMode).colors(config.stepsLighter+1)
+  let darkScale = chroma.scale([config.baseValue,chroma(config.baseValue).set('hsl.h',config.darkHueShift).luminance(config.darkLuminance).hex()]).mode(mode as InterpolationMode).colors(config.stepsDarker+1)
   for (let i = 0; i < lightScale.length-1; i++) {
     
     let newShade = lightScale[i]
@@ -31,10 +34,13 @@ function Colors_(props: ColorsProps, ref: HTMLElementRefOf<"div">) {
     }
     shades.push(newShade)
     names.push(`L${config.stepsLighter-i}`)
+    textContrast.push(chroma.contrast("#FFFFFF",newShade)<4.5?true:false)
   }
   // add base
   shades.push(config.baseValue)
   names.push("Base")
+  textContrast.push(chroma.contrast("#FFFFFF",config.baseValue)<4.5?true:false)
+
 
   for (let i = 1; i < darkScale.length; i++) {
     let newShade = darkScale[i]
@@ -45,6 +51,7 @@ function Colors_(props: ColorsProps, ref: HTMLElementRefOf<"div">) {
     }
     shades.push(newShade)
     names.push(`D${i}`)
+    textContrast.push(chroma.contrast("#FFFFFF",newShade)<4.5?true:false)
   }
 
   return (
@@ -52,7 +59,8 @@ function Colors_(props: ColorsProps, ref: HTMLElementRefOf<"div">) {
         root={{
           props: {
             children: (shades).map((color,i) => {
-              return <Color color={color} name={names[i]} hexCode={color.toUpperCase()}></Color>
+               // @ts-ignore
+              return <Color onDark={textContrast[i]} color={color} name={names[i]} hexCode={color.toUpperCase()}></Color>
             }),
           },
         }}

@@ -5,32 +5,28 @@
   height: auto;
   align-items: center;
   justify-content: flex-start;
-  background: #ffffff;
   position: sticky;
   min-width: 0;
   border-radius: 2px;
-  padding: 7px 11px;
+  padding: 7px 4px 7px 12px;
   border: 1px solid #ffffff00;
-}
-.rootcolor_dark {
-  background: #232320;
-  border-color: #717069;
 }
 .root:hover {
   border-color: #e6e6e6;
+}
+.rootglobal_dark__true:hover {
+  border-color: #444444;
 }
 .root:focus-within {
   box-shadow: 0px 0px 0px 2px #0c8ce9;
   width: 100%;
   height: auto;
-  background: #ffffff;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
   flex-row-gap: 0px;
   min-width: 0;
   outline: none;
-  padding: 7px 11px;
   border-color: #ffffff00;
 }
 .root___focusVisibleWithin {
@@ -56,9 +52,6 @@
 .slotTargetStartIconshowStartIcon {
   color: #90908c;
 }
-.slotTargetStartIconcolor_dark {
-  color: #ffffff;
-}
 .svg__aVb9A {
   position: relative;
   object-fit: cover;
@@ -75,11 +68,11 @@
   padding: 0px;
   border-width: 0px;
 }
+.inputglobal_dark__true {
+  color: #ffffff;
+}
 .inputisDisabled {
   cursor: not-allowed;
-}
-.inputcolor_dark {
-  color: #ffffff;
 }
 .root:focus-within .input {
   outline: none;
@@ -95,9 +88,6 @@
 }
 .root .input::placeholder {
   color: #706f6c;
-}
-.rootcolor_dark .inputcolor_dark::placeholder {
-  color: #c8c7c1;
 }
 .root:focus-within .input::placeholder {
   outline: none;
@@ -117,9 +107,6 @@
 }
 .slotTargetEndIconshowEndIcon {
   color: #90908c;
-}
-.slotTargetEndIconcolor_dark {
-  color: #ffffff;
 }
 .svg__vFyEz {
   position: relative;
