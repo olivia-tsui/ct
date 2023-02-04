@@ -11,8 +11,8 @@ import chroma from "chroma-js";
 const config = {
   baseValue: "#0F3CC9",
   saturation: 0,
-  stepsLighter: 10,
-  stepsDarker: 10,
+  stepsLighter: 11,
+  stepsDarker: 12,
   lightLuminance: 0.85,
   darkLuminance: 0.008,
   lightHueShift: 225.48,
