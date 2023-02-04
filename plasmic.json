@@ -231,14 +231,14 @@
           "componentImportPath": "react-color"
         },
         {
-          "id": "u1DqtwXrnZ",
-          "name": "SketchPicker",
-          "componentImportPath": "react-color"
-        },
-        {
           "id": "kcO9YN8MH5",
           "name": "Segmented",
           "componentImportPath": "antd"
+        },
+        {
+          "id": "HV4wY_pYon",
+          "name": "SketchPicker",
+          "componentImportPath": "react-color"
         }
       ]
     },

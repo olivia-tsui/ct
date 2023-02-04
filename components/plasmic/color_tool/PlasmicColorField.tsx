@@ -35,7 +35,7 @@ import {
   ensureGlobalVariants
 } from "@plasmicapp/react-web";
 import Input from "../../Input"; // plasmic-import: 434vhQcoRkn/component
-import { SketchPicker } from "react-color"; // plasmic-import: u1DqtwXrnZ/codeComponent
+import { SketchPicker } from "react-color"; // plasmic-import: HV4wY_pYon/codeComponent
 
 import { DarkValue, useDark } from "./PlasmicGlobalVariant__Dark"; // plasmic-import: AsCuTyckBi/globalVariant
 

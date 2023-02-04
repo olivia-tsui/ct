@@ -29,6 +29,7 @@ registerComponent(SketchPicker,{
       type: "string",
       defaultValue:"#00FFFF"
     },
+
     onChange:{
       type: "string",
     },

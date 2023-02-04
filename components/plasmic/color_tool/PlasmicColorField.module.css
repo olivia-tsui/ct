@@ -54,10 +54,10 @@
 .pickershowPanel:global(.__wab_instance) {
   position: absolute;
   left: auto;
-  top: -32px;
+  top: -52px;
   opacity: 1;
   z-index: 1;
-  right: -84px;
+  right: -154px;
 }
 .cover {
   position: fixed;
