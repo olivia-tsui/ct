@@ -89,16 +89,6 @@
     margin-top: 8px;
   }
 }
-.baseValue:global(.__wab_instance) {
-  max-width: 100%;
-  position: relative;
-  height: 30px;
-  width: 100%;
-  min-width: 0;
-}
-.text__jc8U {
-  white-space: pre;
-}
 .saturation:global(.__wab_instance) {
   position: relative;
 }
@@ -116,8 +106,26 @@
 .textglobal_dark__true__yCgZuQts4 {
   color: #ffffff;
 }
+.baseValue:global(.__wab_instance) {
+  max-width: 100%;
+  position: relative;
+  height: 30px;
+  width: 100%;
+  min-width: 0;
+}
+.text__jc8U {
+  white-space: pre;
+}
 .stepsDarker:global(.__wab_instance) {
   position: relative;
+}
+.darkSaturation:global(.__wab_instance) {
+  position: relative;
+}
+@media (min-width: 0px) and (max-width: 768px) {
+  .darkSaturation:global(.__wab_instance) {
+    flex-shrink: 0;
+  }
 }
 .copy:global(.__wab_instance) {
   max-width: 100%;

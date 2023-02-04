@@ -24,20 +24,26 @@ function Colors_(props: ColorsProps, ref: HTMLElementRefOf<"div">) {
 
   let shades :string[]= []
   let names :string[]= []
-  let textContrast:boolean[] = []
+  let textContrast:boolean[] = [];
 
+  let light = chroma(config.baseValue).set('hsl.h',config.lightHueShift).luminance(config.lightLuminance);
 
+  let dark = chroma(config.baseValue).set('hsl.h',config.darkHueShift).luminance(config.darkLuminance)
+  if (config.saturation > 0) {
+     light = light.saturate(config.saturation)
+  } else if (config.saturation < 0) {
+    light = light.desaturate(-config.saturation)
+  } 
+  if (config.darkSaturation > 0) {
+    dark = dark.saturate(config.darkSaturation)
+  } else if (config.darkSaturation < 0) {
+    dark = dark.desaturate(-config.darkSaturation)
+  }
 
-  let lightScale = chroma.scale([chroma(config.baseValue).set('hsl.h',config.lightHueShift).luminance(config.lightLuminance).hex() ,config.baseValue]).mode(mode as InterpolationMode).colors(config.stepsLighter+1)
-  let darkScale = chroma.scale([config.baseValue,chroma(config.baseValue).set('hsl.h',config.darkHueShift).luminance(config.darkLuminance).hex()]).mode(mode as InterpolationMode).colors(config.stepsDarker+1)
+  let lightScale = chroma.scale([light.hex() ,config.baseValue]).mode(mode as InterpolationMode).colors(config.stepsLighter+1)
+  let darkScale = chroma.scale([config.baseValue,dark.hex()]).mode(mode as InterpolationMode).colors(config.stepsDarker+1)
   for (let i = 0; i < lightScale.length-1; i++) {
-    
     let newShade = lightScale[i]
-    if (config.saturation > 0) {
-      newShade = chroma(newShade).saturate(config.saturation).hex()
-    } else if (config.saturation < 0) {
-      newShade = chroma(newShade).desaturate(-config.saturation).hex()
-    }
     shades.push(newShade)
     names.push(`L${config.stepsLighter-i}`)
     textContrast.push(chroma.contrast("#FFFFFF",newShade)<2.5?true:false)
@@ -47,14 +53,8 @@ function Colors_(props: ColorsProps, ref: HTMLElementRefOf<"div">) {
   names.push("Base")
   textContrast.push(chroma.contrast("#FFFFFF",config.baseValue)<2.5?true:false)
 
-
   for (let i = 1; i < darkScale.length; i++) {
     let newShade = darkScale[i]
-    if (config.saturation > 0) {
-      newShade = chroma(newShade).saturate(config.saturation).hex()
-    } else if (config.saturation < 0) {
-      newShade = chroma(newShade).desaturate(-config.saturation).hex()
-    }
     shades.push(newShade)
     names.push(`D${i}`)
     textContrast.push(chroma.contrast("#FFFFFF",newShade)<2.5?true:false)

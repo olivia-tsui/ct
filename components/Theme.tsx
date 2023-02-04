@@ -11,6 +11,7 @@ import chroma from "chroma-js";
 const config = {
   baseValue: "#0F3CC9",
   saturation: 0,
+  darkSaturation: 0,
   stepsLighter: 11,
   stepsDarker: 12,
   lightLuminance: 0.85,
@@ -50,6 +51,15 @@ function Theme_(props, ref) {
                 saturation: parseFloat(e.target.value.toString()),
               });
             },
+          }}
+          darkSaturation={{
+            value: _config.darkSaturation.toString(),
+            onChange: (e) => {
+              setConfig({
+                ..._config,
+                darkSaturation: parseFloat(e.target.value.toString()),
+              })
+            }
           }}
           stepsLighter={{
             value: _config.stepsLighter.toString(),
