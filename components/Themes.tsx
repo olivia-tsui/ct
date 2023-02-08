@@ -11,11 +11,50 @@ import Theme from "./Theme";
 export interface ThemesProps extends DefaultThemesProps {}
 
 function Themes_(props: ThemesProps, ref: HTMLElementRefOf<"div">) {
+
   const [numberOfThemes, setNumberOfThemes] = React.useState(1);
+  const [localConfigs, setLocalConfigs] = React.useState([]);
+
+const defaultConfig = {
+  name:"Default",
+  baseValue: "#0F3CC9",
+  saturation: 0,
+  darkSaturation: 0,
+  stepsLighter: 10,
+  stepsDarker: 10,
+  lightLuminance: 0.85,
+  darkLuminance: 0.008,
+  lightHueShift: 225.48,
+  darkHueShift: 225.48,
+  lightDomain:[0,100],
+  darkDomain:[0,100]
+};
+
+React.useEffect(() => {
+
+  let lastStoredConfigs = localStorage.getItem("theme_configs");
+  let lastStoredConfigsParsed = JSON.parse(lastStoredConfigs?lastStoredConfigs:"[]");
+  if (lastStoredConfigsParsed.length > 0) {
+    setLocalConfigs(lastStoredConfigsParsed);
+  }
+  localStorage.setItem("theme_configs", "");
+}, []);
+
+React.useEffect(() => {
+  setNumberOfThemes(localConfigs.length);
+
+}, [localConfigs]);
   return (
     <PlasmicThemes
       count={Array.from(Array(numberOfThemes).keys()).map((i) => {
-        return <Theme key={i} />;
+        return (
+          <Theme
+            key={i}
+            config={
+              localConfigs.length > 0 ? localConfigs[i] : defaultConfig
+            }
+          />
+        );
       })}
       add={{
         props: {

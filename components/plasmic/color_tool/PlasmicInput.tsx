@@ -152,6 +152,9 @@ function PlasmicInput__RenderFunc(props: {
     ...variants
   };
 
+  const refsRef = React.useRef({});
+  const $refs = refsRef.current;
+
   const currentUser = p.useCurrentUser?.() || {};
 
   const stateSpecs = React.useMemo(
@@ -296,6 +299,9 @@ function PlasmicInput__RenderFunc(props: {
         min={args.min}
         name={args.name}
         placeholder={args.placeholder}
+        ref={ref => {
+          $refs["input"] = ref;
+        }}
         required={args.required}
         step={args.step}
         type={args.type}

@@ -49,8 +49,9 @@ import "@plasmicapp/react-web/lib/plasmic.css";
 import projectcss from "../blank_project/plasmic_blank_project.module.css"; // plasmic-import: dczqNaFYoArv9QmtqhGLsR/projectcss
 import sty from "./PlasmicTheme.module.css"; // plasmic-import: 848il-tpeEh/css
 
-import Icon5Icon from "./icons/PlasmicIcon__Icon5"; // plasmic-import: JJ3xl_PURO/icon
+import Icon6Icon from "./icons/PlasmicIcon__Icon6"; // plasmic-import: B-EzNgU_VY/icon
 import IconIcon from "./icons/PlasmicIcon__Icon"; // plasmic-import: Kv0ZYfEWi7y/icon
+import Icon5Icon from "./icons/PlasmicIcon__Icon5"; // plasmic-import: JJ3xl_PURO/icon
 
 export type PlasmicTheme__VariantMembers = {};
 
@@ -64,12 +65,16 @@ export const PlasmicTheme__ArgProps = new Array<ArgPropType>();
 
 export type PlasmicTheme__OverridesType = {
   root?: p.Flex<"div">;
-  saturation?: p.Flex<typeof InputField>;
-  stepsLighter?: p.Flex<typeof InputField>;
+  name?: p.Flex<typeof InputField>;
   baseValue?: p.Flex<typeof ColorField>;
+  stepsLighter?: p.Flex<typeof InputField>;
   stepsDarker?: p.Flex<typeof InputField>;
-  darkSaturation?: p.Flex<typeof InputField>;
+  remove?: p.Flex<typeof Button>;
   copy?: p.Flex<typeof Button>;
+  saturation?: p.Flex<typeof InputField>;
+  lightDomain?: p.Flex<typeof InputField>;
+  darkDomain?: p.Flex<typeof InputField>;
+  darkSaturation?: p.Flex<typeof InputField>;
   colors?: p.Flex<typeof Colors>;
   lightLuminance?: p.Flex<typeof InputField>;
   lightHue?: p.Flex<typeof HueField>;
@@ -115,6 +120,9 @@ function PlasmicTheme__RenderFunc(props: {
     ...variants
   };
 
+  const refsRef = React.useRef({});
+  const $refs = refsRef.current;
+
   const currentUser = p.useCurrentUser?.() || {};
 
   const [$queries, setDollarQueries] = React.useState({});
@@ -145,49 +153,17 @@ function PlasmicTheme__RenderFunc(props: {
           <p.Stack
             as={"div"}
             hasGap={true}
-            className={classNames(projectcss.all, sty.freeBox__jo9H0)}
+            className={classNames(projectcss.all, sty.freeBox___4U85)}
           >
             {true ? (
               <InputField
-                data-plasmic-name={"saturation"}
-                data-plasmic-override={overrides.saturation}
-                className={classNames("__wab_instance", sty.saturation)}
+                data-plasmic-name={"name"}
+                data-plasmic-override={overrides.name}
+                className={classNames("__wab_instance", sty.name)}
                 step={0.1 as const}
-                type={"Number" as const}
+                type={"Text" as const}
               >
-                {"Light Saturation(±)"}
-              </InputField>
-            ) : null}
-            {true ? (
-              <InputField
-                data-plasmic-name={"stepsLighter"}
-                data-plasmic-override={overrides.stepsLighter}
-                className={classNames("__wab_instance", sty.stepsLighter, {
-                  [sty.stepsLighterglobal_dark__true]: hasVariant(
-                    globalVariants,
-                    "dark",
-                    "_true"
-                  )
-                })}
-                min={1 as const}
-                type={"Number" as const}
-              >
-                <div
-                  className={classNames(
-                    projectcss.all,
-                    projectcss.__wab_text,
-                    sty.text__yCgZ,
-                    {
-                      [sty.textglobal_dark__true__yCgZuQts4]: hasVariant(
-                        globalVariants,
-                        "dark",
-                        "_true"
-                      )
-                    }
-                  )}
-                >
-                  {"Steps Lighter"}
-                </div>
+                {"Name"}
               </InputField>
             ) : null}
 
@@ -206,9 +182,9 @@ function PlasmicTheme__RenderFunc(props: {
                 className={classNames(
                   projectcss.all,
                   projectcss.__wab_text,
-                  sty.text__jc8U,
+                  sty.text__tEsny,
                   {
-                    [sty.textglobal_dark__true__jc8UuQts4]: hasVariant(
+                    [sty.textglobal_dark__true__tEsnYuQts4]: hasVariant(
                       globalVariants,
                       "dark",
                       "_true"
@@ -222,6 +198,38 @@ function PlasmicTheme__RenderFunc(props: {
 
             {true ? (
               <InputField
+                data-plasmic-name={"stepsLighter"}
+                data-plasmic-override={overrides.stepsLighter}
+                className={classNames("__wab_instance", sty.stepsLighter, {
+                  [sty.stepsLighterglobal_dark__true]: hasVariant(
+                    globalVariants,
+                    "dark",
+                    "_true"
+                  )
+                })}
+                min={1 as const}
+                type={"Number" as const}
+              >
+                <div
+                  className={classNames(
+                    projectcss.all,
+                    projectcss.__wab_text,
+                    sty.text__sfkjO,
+                    {
+                      [sty.textglobal_dark__true__sfkjOuQts4]: hasVariant(
+                        globalVariants,
+                        "dark",
+                        "_true"
+                      )
+                    }
+                  )}
+                >
+                  {"Steps Lighter"}
+                </div>
+              </InputField>
+            ) : null}
+            {true ? (
+              <InputField
                 data-plasmic-name={"stepsDarker"}
                 data-plasmic-override={overrides.stepsDarker}
                 className={classNames("__wab_instance", sty.stepsDarker)}
@@ -231,17 +239,37 @@ function PlasmicTheme__RenderFunc(props: {
                 {"Steps Darker"}
               </InputField>
             ) : null}
-            {true ? (
-              <InputField
-                data-plasmic-name={"darkSaturation"}
-                data-plasmic-override={overrides.darkSaturation}
-                className={classNames("__wab_instance", sty.darkSaturation)}
-                step={0.1 as const}
-                type={"Number" as const}
+
+            <Button
+              data-plasmic-name={"remove"}
+              data-plasmic-override={overrides.remove}
+              className={classNames("__wab_instance", sty.remove)}
+              isDanger={true}
+              showStartIcon={true}
+              simple={true}
+              startIcon={
+                true ? (
+                  <div
+                    className={classNames(projectcss.all, sty.freeBox__dt3Rb)}
+                  >
+                    <Icon6Icon
+                      className={classNames(projectcss.all, sty.svg___1Thal)}
+                      role={"img"}
+                    />
+                  </div>
+                ) : null
+              }
+            >
+              <div
+                className={classNames(
+                  projectcss.all,
+                  projectcss.__wab_text,
+                  sty.text__o1TQ
+                )}
               >
-                {"Dark Saturation(±)"}
-              </InputField>
-            ) : null}
+                {"Remove Scale"}
+              </div>
+            </Button>
 
             <Button
               data-plasmic-name={"copy"}
@@ -251,10 +279,12 @@ function PlasmicTheme__RenderFunc(props: {
               simple={true}
               startIcon={
                 true ? (
-                  <div className={classNames(projectcss.all, sty.freeBox__qh1)}>
+                  <div
+                    className={classNames(projectcss.all, sty.freeBox__ok0G1)}
+                  >
                     <Icon5Icon
-                      className={classNames(projectcss.all, sty.svg___86MZq, {
-                        [sty.svgglobal_dark__true___86MZQuQts4]: hasVariant(
+                      className={classNames(projectcss.all, sty.svg__dode0, {
+                        [sty.svgglobal_dark__true__dode0UQts4]: hasVariant(
                           globalVariants,
                           "dark",
                           "_true"
@@ -270,12 +300,62 @@ function PlasmicTheme__RenderFunc(props: {
                 className={classNames(
                   projectcss.all,
                   projectcss.__wab_text,
-                  sty.text__loEm
+                  sty.text__p1SIn
                 )}
               >
                 {"Copy JSON"}
               </div>
             </Button>
+          </p.Stack>
+        ) : null}
+        {true ? (
+          <p.Stack
+            as={"div"}
+            hasGap={true}
+            className={classNames(projectcss.all, sty.freeBox__jo9H0)}
+          >
+            {true ? (
+              <InputField
+                data-plasmic-name={"saturation"}
+                data-plasmic-override={overrides.saturation}
+                className={classNames("__wab_instance", sty.saturation)}
+                step={0.1 as const}
+                type={"Number" as const}
+              >
+                {"Light Saturation(±)"}
+              </InputField>
+            ) : null}
+            {true ? (
+              <InputField
+                data-plasmic-name={"lightDomain"}
+                data-plasmic-override={overrides.lightDomain}
+                className={classNames("__wab_instance", sty.lightDomain)}
+                type={"Text" as const}
+              >
+                {"Light Domain Partition"}
+              </InputField>
+            ) : null}
+            {true ? (
+              <InputField
+                data-plasmic-name={"darkDomain"}
+                data-plasmic-override={overrides.darkDomain}
+                className={classNames("__wab_instance", sty.darkDomain)}
+                type={"Text" as const}
+              >
+                {"Dark Domain Partition"}
+              </InputField>
+            ) : null}
+            {true ? (
+              <InputField
+                data-plasmic-name={"darkSaturation"}
+                data-plasmic-override={overrides.darkSaturation}
+                className={classNames("__wab_instance", sty.darkSaturation)}
+                step={0.1 as const}
+                type={"Number" as const}
+              >
+                {"Dark Saturation(±)"}
+              </InputField>
+            ) : null}
           </p.Stack>
         ) : null}
         {true ? (
@@ -410,12 +490,16 @@ function PlasmicTheme__RenderFunc(props: {
 const PlasmicDescendants = {
   root: [
     "root",
-    "saturation",
-    "stepsLighter",
+    "name",
     "baseValue",
+    "stepsLighter",
     "stepsDarker",
-    "darkSaturation",
+    "remove",
     "copy",
+    "saturation",
+    "lightDomain",
+    "darkDomain",
+    "darkSaturation",
     "colors",
     "lightLuminance",
     "lightHue",
@@ -423,12 +507,16 @@ const PlasmicDescendants = {
     "darkHue",
     "darkLuminance"
   ],
-  saturation: ["saturation"],
-  stepsLighter: ["stepsLighter"],
+  name: ["name"],
   baseValue: ["baseValue"],
+  stepsLighter: ["stepsLighter"],
   stepsDarker: ["stepsDarker"],
-  darkSaturation: ["darkSaturation"],
+  remove: ["remove"],
   copy: ["copy"],
+  saturation: ["saturation"],
+  lightDomain: ["lightDomain"],
+  darkDomain: ["darkDomain"],
+  darkSaturation: ["darkSaturation"],
   colors: ["colors"],
   lightLuminance: ["lightLuminance"],
   lightHue: ["lightHue"],
@@ -441,12 +529,16 @@ type DescendantsType<T extends NodeNameType> =
   typeof PlasmicDescendants[T][number];
 type NodeDefaultElementType = {
   root: "div";
-  saturation: typeof InputField;
-  stepsLighter: typeof InputField;
+  name: typeof InputField;
   baseValue: typeof ColorField;
+  stepsLighter: typeof InputField;
   stepsDarker: typeof InputField;
-  darkSaturation: typeof InputField;
+  remove: typeof Button;
   copy: typeof Button;
+  saturation: typeof InputField;
+  lightDomain: typeof InputField;
+  darkDomain: typeof InputField;
+  darkSaturation: typeof InputField;
   colors: typeof Colors;
   lightLuminance: typeof InputField;
   lightHue: typeof HueField;
@@ -516,12 +608,16 @@ export const PlasmicTheme = Object.assign(
   makeNodeComponent("root"),
   {
     // Helper components rendering sub-elements
-    saturation: makeNodeComponent("saturation"),
-    stepsLighter: makeNodeComponent("stepsLighter"),
+    _name: makeNodeComponent("name"),
     baseValue: makeNodeComponent("baseValue"),
+    stepsLighter: makeNodeComponent("stepsLighter"),
     stepsDarker: makeNodeComponent("stepsDarker"),
-    darkSaturation: makeNodeComponent("darkSaturation"),
+    remove: makeNodeComponent("remove"),
     copy: makeNodeComponent("copy"),
+    saturation: makeNodeComponent("saturation"),
+    lightDomain: makeNodeComponent("lightDomain"),
+    darkDomain: makeNodeComponent("darkDomain"),
+    darkSaturation: makeNodeComponent("darkSaturation"),
     colors: makeNodeComponent("colors"),
     lightLuminance: makeNodeComponent("lightLuminance"),
     lightHue: makeNodeComponent("lightHue"),

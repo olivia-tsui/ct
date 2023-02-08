@@ -99,6 +99,9 @@ function PlasmicColor__RenderFunc(props: {
     ...variants
   };
 
+  const refsRef = React.useRef({});
+  const $refs = refsRef.current;
+
   const currentUser = p.useCurrentUser?.() || {};
 
   const stateSpecs = React.useMemo(

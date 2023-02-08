@@ -209,6 +209,11 @@
           "id": "JJ3xl_PURO",
           "name": "Icon5Icon",
           "moduleFilePath": "plasmic/color_tool/icons/PlasmicIcon__Icon5.tsx"
+        },
+        {
+          "id": "B-EzNgU_VY",
+          "name": "Icon6Icon",
+          "moduleFilePath": "plasmic/color_tool/icons/PlasmicIcon__Icon6.tsx"
         }
       ],
       "images": [],

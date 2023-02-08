@@ -51,6 +51,7 @@ export type PlasmicButton__VariantMembers = {
   isDisabled: "isDisabled";
   simple: "simple";
   notRendered: "notRendered";
+  isDanger: "isDanger";
 };
 
 export type PlasmicButton__VariantsArgs = {
@@ -59,6 +60,7 @@ export type PlasmicButton__VariantsArgs = {
   isDisabled?: SingleBooleanChoiceArg<"isDisabled">;
   simple?: SingleBooleanChoiceArg<"simple">;
   notRendered?: SingleBooleanChoiceArg<"notRendered">;
+  isDanger?: SingleBooleanChoiceArg<"isDanger">;
 };
 
 type VariantPropType = keyof PlasmicButton__VariantsArgs;
@@ -67,7 +69,8 @@ export const PlasmicButton__VariantProps = new Array<VariantPropType>(
   "showEndIcon",
   "isDisabled",
   "simple",
-  "notRendered"
+  "notRendered",
+  "isDanger"
 );
 
 export type PlasmicButton__ArgsType = {
@@ -95,6 +98,7 @@ export type PlasmicButton__OverridesType = {
 export interface DefaultButtonProps extends pp.BaseButtonProps {
   simple?: SingleBooleanChoiceArg<"simple">;
   notRendered?: SingleBooleanChoiceArg<"notRendered">;
+  isDanger?: SingleBooleanChoiceArg<"isDanger">;
 }
 
 const __wrapUserFunction =
@@ -129,6 +133,9 @@ function PlasmicButton__RenderFunc(props: {
     ...args,
     ...variants
   };
+
+  const refsRef = React.useRef({});
+  const $refs = refsRef.current;
 
   const currentUser = p.useCurrentUser?.() || {};
 
@@ -173,6 +180,13 @@ function PlasmicButton__RenderFunc(props: {
         initFunc: true
           ? ($props, $state, $ctx) => $props.notRendered
           : undefined
+      },
+
+      {
+        path: "isDanger",
+        type: "private",
+        variableType: "variant",
+        initFunc: true ? ($props, $state, $ctx) => $props.isDanger : undefined
       }
     ],
 
@@ -223,6 +237,10 @@ function PlasmicButton__RenderFunc(props: {
               "dark",
               "_true"
             ),
+            [sty.rootisDanger]: hasVariant($state, "isDanger", "isDanger"),
+            [sty.rootisDanger_showStartIcon]:
+              hasVariant($state, "showStartIcon", "showStartIcon") &&
+              hasVariant($state, "isDanger", "isDanger"),
             [sty.rootisDisabled]: hasVariant(
               $state,
               "isDisabled",
@@ -268,6 +286,9 @@ function PlasmicButton__RenderFunc(props: {
             data-plasmic-name={"startIconContainer"}
             data-plasmic-override={overrides.startIconContainer}
             className={classNames(projectcss.all, sty.startIconContainer, {
+              [sty.startIconContainerisDanger_showStartIcon]:
+                hasVariant($state, "showStartIcon", "showStartIcon") &&
+                hasVariant($state, "isDanger", "isDanger"),
               [sty.startIconContainershowStartIcon]: hasVariant(
                 $state,
                 "showStartIcon",
@@ -285,6 +306,9 @@ function PlasmicButton__RenderFunc(props: {
 
               value: args.startIcon,
               className: classNames(sty.slotTargetStartIcon, {
+                [sty.slotTargetStartIconisDanger_showStartIcon]:
+                  hasVariant($state, "showStartIcon", "showStartIcon") &&
+                  hasVariant($state, "isDanger", "isDanger"),
                 [sty.slotTargetStartIconshowStartIcon]: hasVariant(
                   $state,
                   "showStartIcon",
@@ -324,6 +348,14 @@ function PlasmicButton__RenderFunc(props: {
                 "dark",
                 "_true"
               ),
+              [sty.slotTargetChildrenisDanger]: hasVariant(
+                $state,
+                "isDanger",
+                "isDanger"
+              ),
+              [sty.slotTargetChildrenisDanger_showStartIcon]:
+                hasVariant($state, "showStartIcon", "showStartIcon") &&
+                hasVariant($state, "isDanger", "isDanger"),
               [sty.slotTargetChildrenisDisabled]: hasVariant(
                 $state,
                 "isDisabled",

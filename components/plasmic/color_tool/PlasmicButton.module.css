@@ -43,6 +43,35 @@
   background: none;
   padding: 8px 12px;
 }
+.rootisDanger {
+  height: 30px;
+  background: none;
+  cursor: pointer;
+  flex-direction: row;
+  border-radius: 2px;
+  padding: 8px 12px;
+  border-width: 0px;
+}
+.rootisDanger > :global(.__wab_flex-container) {
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-left: calc(0px - 8px);
+  width: calc(100% + 8px);
+  margin-top: calc(0px - 0px);
+  height: calc(100% + 0px);
+}
+.rootisDanger > :global(.__wab_flex-container) > *,
+.rootisDanger > :global(.__wab_flex-container) > :global(.__wab_slot) > *,
+.rootisDanger > :global(.__wab_flex-container) > picture > img,
+.rootisDanger
+  > :global(.__wab_flex-container)
+  > :global(.__wab_slot)
+  > picture
+  > img {
+  margin-left: 8px;
+  margin-top: 0px;
+}
 .root:hover {
   background: #282826;
 }
@@ -51,6 +80,9 @@
 }
 .rootsimple_global_dark__true:hover {
   background: #444444;
+}
+.rootisDanger:hover {
+  background: #f248221f;
 }
 .root:focus-within {
   outline: none;
@@ -81,11 +113,18 @@
 .slotTargetStartIcon {
   color: #ededec;
 }
+.slotTargetStartIconshowStartIcon {
+  color: #000000;
+}
+.rootisDanger_showStartIcon:hover .slotTargetStartIconisDanger_showStartIcon {
+  color: #f24822;
+}
 .svg__n1Nxt {
   position: relative;
   object-fit: cover;
   width: 1em;
   height: 1em;
+  color: #f24822;
   flex-shrink: 0;
 }
 .contentContainer {
@@ -108,6 +147,12 @@
 }
 .slotTargetChildrensimple_global_dark__true {
   color: #ffffff;
+}
+.slotTargetChildrenisDanger {
+  color: #000000;
+}
+.rootisDanger:hover .slotTargetChildrenisDanger {
+  color: #f24822;
 }
 .root:focus-within .slotTargetChildren > *,
 .root:focus-within .slotTargetChildren > :global(.__wab_slot) > *,

@@ -1,23 +1,24 @@
 // @ts-nocheck
 import * as React from "react";
 import {
-  PlasmicTheme,
-  DefaultThemeProps,
+  PlasmicTheme
 } from "./plasmic/color_tool/PlasmicTheme";
-import { HTMLElementRefOf } from "@plasmicapp/react-web";
-import { setConfig } from "next/config";
+
 import chroma from "chroma-js";
 
 const config = {
+  name:"Default",
   baseValue: "#0F3CC9",
   saturation: 0,
   darkSaturation: 0,
-  stepsLighter: 11,
-  stepsDarker: 12,
+  stepsLighter: 10,
+  stepsDarker: 10,
   lightLuminance: 0.85,
   darkLuminance: 0.008,
   lightHueShift: 225.48,
   darkHueShift: 225.48,
+  lightDomain:[0,100],
+  darkDomain:[0,100]
 };
 
 export const ColorsContext = React.createContext(config);
@@ -25,18 +26,41 @@ export const ConfigUpdateContext = React.createContext((data) => {
   setConfig(data);
 });
 
-
 function Theme_(props, ref) {
-  const [_config, setConfig] = React.useState(config);
+  const [_config, setConfig] = React.useState(props.config ? props.config : config)
   const [lightScrubColor, setLightScrubColor] = React.useState(
     _config.baseValue
-  );
-  const [darkScrubColor, setDarkScrubColor] = React.useState(_config.baseValue);
-  const [outPut, setOutPut] = React.useState("empty");
+    )
+    const [darkScrubColor, setDarkScrubColor] = React.useState(_config.baseValue);
+    const [outPut, setOutPut] = React.useState("empty");
     const [copied, setCopied] = React.useState(false);
+    const [rawLightDomainLiteral, setRawLightDomainLiteral] = React.useState(_config.lightDomain.toString());
+    const [rawDarkDomainLiteral, setRawDarkDomainLiteral] = React.useState(_config.darkDomain.toString());
+
+    const _configRef = React.useRef(_config);
+
+React.useEffect(() => {
+  _configRef.current = _config;
+}, [_config]);
+
+React.useEffect(() => {
+    var unloadCallback = (event) => {
+      let lastThemeConfigs = localStorage.getItem("theme_configs")
+      lastThemeConfigs = lastThemeConfigs? JSON.parse(lastThemeConfigs): [];
+      if (lastThemeConfigs && lastThemeConfigs.length>0){
+        localStorage.setItem("theme_configs", JSON.stringify([...lastThemeConfigs, _configRef.current]));
+      } else {
+        localStorage.setItem("theme_configs", JSON.stringify([_configRef.current]));
+      }
+    };
+    window.addEventListener("beforeunload", unloadCallback);
+    return () => window.removeEventListener("beforeunload", unloadCallback);
+  }, []);
+  function approximatelyEqual(a: number, b: number, threshold = 0.1) {
+    return Math.abs(a - b) < threshold;
+  }
   return (
     <ColorsContext.Provider value={_config}>
-
       <ConfigUpdateContext.Provider
         value={(data) => {
           setConfig(data);
@@ -58,8 +82,8 @@ function Theme_(props, ref) {
               setConfig({
                 ..._config,
                 darkSaturation: parseFloat(e.target.value.toString()),
-              })
-            }
+              });
+            },
           }}
           stepsLighter={{
             value: _config.stepsLighter.toString(),
@@ -117,7 +141,7 @@ function Theme_(props, ref) {
                 );
               },
             },
-           
+
             huePicker: {
               props: {
                 color: lightScrubColor,
@@ -144,7 +168,7 @@ function Theme_(props, ref) {
                 );
               },
             },
-           
+
             huePicker: {
               props: {
                 color: darkScrubColor,
@@ -154,10 +178,14 @@ function Theme_(props, ref) {
           resetHueShift={{
             props: {
               notRendered:
-                _config.lightHueShift ===
-                  chroma(_config.baseValue).hsl()[0].toFixed(2) &&
-                _config.darkHueShift ===
-                  chroma(_config.baseValue).hsl()[0].toFixed(2),
+                approximatelyEqual(
+                  _config.lightHueShift,
+                  chroma(_config.baseValue).hsl()[0].toFixed(2)
+                ) &&
+                approximatelyEqual(
+                  _config.darkHueShift,
+                  chroma(_config.baseValue).hsl()[0].toFixed(2)
+                ),
               onClick: () => {
                 setConfig({
                   ..._config,
@@ -172,35 +200,78 @@ function Theme_(props, ref) {
           copy={{
             props: {
               onClick: () => {
-                let out = JSON.parse(outPut)
+                let out = JSON.parse(outPut);
                 let r = out[0].reduce((obj, key, index) => {
                   obj[key] = out[1][index];
                   return obj;
                 }, {});
-                navigator.clipboard.writeText(JSON.stringify(r).toUpperCase()).then(function() {
-                  console.log("Result copied to clipboard");
-                });
-                setCopied(true)
+                navigator.clipboard
+                  .writeText(JSON.stringify(r).toUpperCase())
+                  .then(function () {
+                    console.log("Result copied to clipboard");
+                  });
+                setCopied(true);
               },
-              children: copied ? <p style={{fontSize:"14px", fontWeight:400}}>Copied ! </p> : <p style={{fontSize:"14px",fontWeight:400}}>Copy JSON</p>,
+              children: copied ? (
+                <p style={{ fontSize: "14px", fontWeight: 400 }}>Copied ! </p>
+              ) : (
+                <p style={{ fontSize: "14px", fontWeight: 400 }}>Copy JSON</p>
+              ),
               onMouseLeave: () => {
                 setTimeout(() => {
-                  setCopied(false)
+                  setCopied(false);
                 }, 1200);
-               
-              }
-            }
+              },
+            },
           }}
           colors={{
             props: {
-              uploaddata:(d)=>setOutPut(d)
+              uploaddata: (d) => setOutPut(d),
+            },
+          }}
+          lightDomain={{
+            input:{
+              value:rawLightDomainLiteral,
+            onChange: (e) => {
+              setRawLightDomainLiteral( e.target.value)
+              let raw =  e.target.value.split(",").map(n=> n==="" ?0: parseFloat(n))
+              if (!Array.isArray(raw) || raw.length<2) return 
+              else setConfig({
+                ..._config,
+                lightDomain:raw,
+              });
+            },
+            }
+          }}
+          darkDomain={{
+           input:{
+            value: rawDarkDomainLiteral,
+            onChange: (e) => {
+              setRawDarkDomainLiteral( e.target.value)
+              let raw =  e.target.value.split(",").map(n=> n==="" ?0: parseFloat(n))
+              if (!Array.isArray(raw) || raw.length<2) return 
+              else setConfig({
+                ..._config,
+                darkDomain:raw,
+              });
+            },
+           }
+          }}
+          name={{
+            input:{
+              value: _config.name,
+              onChange: (e) => {
+                setConfig({
+                  ..._config,
+                  name: e.target.value,
+                });
+              },
             }
           }}
           root={{ ref }}
           {...props}
         />
       </ConfigUpdateContext.Provider>
-
     </ColorsContext.Provider>
   );
 }

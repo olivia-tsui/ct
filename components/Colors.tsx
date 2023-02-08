@@ -3,7 +3,7 @@
 import * as React from "react";
 import {
   PlasmicColors,
-  DefaultColorsProps
+  DefaultColorsProps,
 } from "./plasmic/color_tool/PlasmicColors";
 import { HTMLElementRefOf } from "@plasmicapp/react-web";
 import Color from "./Color";
@@ -11,70 +11,90 @@ import chroma from "chroma-js";
 import { ColorsContext } from "./Theme";
 import { ModeContext } from "../pages/index";
 
-
 import { InterpolationMode } from "chroma-js";
 export interface ColorsProps extends DefaultColorsProps {
   uploaddata: (data: any) => string[];
 }
 
-
 function Colors_(props: ColorsProps, ref: HTMLElementRefOf<"div">) {
-  const config = React.useContext(ColorsContext)
-  const mode = React.useContext(ModeContext)
+  const config = React.useContext(ColorsContext);
+  const mode = React.useContext(ModeContext);
 
-  let shades :string[]= []
-  let names :string[]= []
-  let textContrast:boolean[] = [];
+  let shades: string[] = [];
+  let names: string[] = [];
+  let textContrast: boolean[] = [];
 
-  let light = chroma(config.baseValue).set('hsl.h',config.lightHueShift).luminance(config.lightLuminance);
+  let light = chroma(config.baseValue)
+    .set("hsl.h", config.lightHueShift)
+    .luminance(config.lightLuminance);
 
-  let dark = chroma(config.baseValue).set('hsl.h',config.darkHueShift).luminance(config.darkLuminance)
+  let dark = chroma(config.baseValue)
+    .set("hsl.h", config.darkHueShift)
+    .luminance(config.darkLuminance);
   if (config.saturation > 0) {
-     light = light.saturate(config.saturation)
+    light = light.saturate(config.saturation);
   } else if (config.saturation < 0) {
-    light = light.desaturate(-config.saturation)
-  } 
+    light = light.desaturate(-config.saturation);
+  }
   if (config.darkSaturation > 0) {
-    dark = dark.saturate(config.darkSaturation)
+    dark = dark.saturate(config.darkSaturation);
   } else if (config.darkSaturation < 0) {
-    dark = dark.desaturate(-config.darkSaturation)
+    dark = dark.desaturate(-config.darkSaturation);
   }
 
-  let lightScale = chroma.scale([light.hex() ,config.baseValue]).mode(mode as InterpolationMode).colors(config.stepsLighter+1)
-  let darkScale = chroma.scale([config.baseValue,dark.hex()]).mode(mode as InterpolationMode).colors(config.stepsDarker+1)
-  for (let i = 0; i < lightScale.length-1; i++) {
-    let newShade = lightScale[i]
-    shades.push(newShade)
-    names.push(`L${config.stepsLighter-i}`)
-    textContrast.push(chroma.contrast("#FFFFFF",newShade)<2.5?true:false)
+  let lightScale = chroma
+    .scale([config.baseValue, light.hex()])
+    .mode(mode as InterpolationMode).domain(config.lightDomain)
+    .colors(config.stepsLighter + 1);
+  let darkScale = chroma
+    .scale([config.baseValue, dark.hex()])
+    .mode(mode as InterpolationMode).domain(config.darkDomain)
+    .colors(config.stepsDarker + 1);
+  for (let i = lightScale.length - 1; i > 0; i--) {
+    let newShade = lightScale[i];
+    shades.push(newShade);
+    names.push(`L${i}`);
+    textContrast.push(
+      chroma.contrast("#FFFFFF", newShade) < 2.5 ? true : false
+    );
   }
   // add base
-  shades.push(config.baseValue)
-  names.push("Base")
-  textContrast.push(chroma.contrast("#FFFFFF",config.baseValue)<2.5?true:false)
+  shades.push(config.baseValue);
+  names.push("Base");
+  textContrast.push(
+    chroma.contrast("#FFFFFF", config.baseValue) < 2.5 ? true : false
+  );
 
   for (let i = 1; i < darkScale.length; i++) {
-    let newShade = darkScale[i]
-    shades.push(newShade)
-    names.push(`D${i}`)
-    textContrast.push(chroma.contrast("#FFFFFF",newShade)<2.5?true:false)
+    let newShade = darkScale[i];
+    shades.push(newShade);
+    names.push(`D${i}`);
+    textContrast.push(
+      chroma.contrast("#FFFFFF", newShade) < 2.5 ? true : false
+    );
   }
 
-  props.uploaddata(JSON.stringify([names,shades]))
+  props.uploaddata(JSON.stringify([names, shades]));
   return (
     // @ts-ignore
-      <PlasmicColors
-        root={{
-          props: {
-            children: (shades).map((color,i) => {
-               // @ts-ignore
-              return <Color onDark={textContrast[i]} color={color} name={names[i]} hexCode={color.toUpperCase()}></Color>
-            })
-          },
-        }}
-        {...props}
-      />
-    
+    <PlasmicColors
+      root={{
+        props: {
+          children: shades.map((color, i) => {
+            // @ts-ignore
+            return (
+              <Color
+                onDark={textContrast[i]}
+                color={color}
+                name={names[i]}
+                hexCode={color.toUpperCase()}
+              ></Color>
+            );
+          }),
+        },
+      }}
+      {...props}
+    />
   );
 }
 
