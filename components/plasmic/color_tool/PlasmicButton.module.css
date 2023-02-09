@@ -114,7 +114,13 @@
   color: #ededec;
 }
 .slotTargetStartIconshowStartIcon {
+  color: #ffffff;
+}
+.slotTargetStartIconisDanger_showStartIcon {
   color: #000000;
+}
+.slotTargetStartIconisDanger_showStartIcon_global_dark__true {
+  color: #ffffff;
 }
 .rootisDanger_showStartIcon:hover .slotTargetStartIconisDanger_showStartIcon {
   color: #f24822;
@@ -150,6 +156,9 @@
 }
 .slotTargetChildrenisDanger {
   color: #000000;
+}
+.slotTargetChildrenisDanger_showStartIcon_global_dark__true {
+  color: #ffffff;
 }
 .rootisDanger:hover .slotTargetChildrenisDanger {
   color: #f24822;

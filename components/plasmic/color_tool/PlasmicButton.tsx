@@ -289,6 +289,10 @@ function PlasmicButton__RenderFunc(props: {
               [sty.startIconContainerisDanger_showStartIcon]:
                 hasVariant($state, "showStartIcon", "showStartIcon") &&
                 hasVariant($state, "isDanger", "isDanger"),
+              [sty.startIconContainerisDanger_showStartIcon_global_dark__true]:
+                hasVariant($state, "isDanger", "isDanger") &&
+                hasVariant($state, "showStartIcon", "showStartIcon") &&
+                hasVariant(globalVariants, "dark", "_true"),
               [sty.startIconContainershowStartIcon]: hasVariant(
                 $state,
                 "showStartIcon",
@@ -309,6 +313,10 @@ function PlasmicButton__RenderFunc(props: {
                 [sty.slotTargetStartIconisDanger_showStartIcon]:
                   hasVariant($state, "showStartIcon", "showStartIcon") &&
                   hasVariant($state, "isDanger", "isDanger"),
+                [sty.slotTargetStartIconisDanger_showStartIcon_global_dark__true]:
+                  hasVariant($state, "isDanger", "isDanger") &&
+                  hasVariant($state, "showStartIcon", "showStartIcon") &&
+                  hasVariant(globalVariants, "dark", "_true"),
                 [sty.slotTargetStartIconshowStartIcon]: hasVariant(
                   $state,
                   "showStartIcon",
@@ -356,6 +364,10 @@ function PlasmicButton__RenderFunc(props: {
               [sty.slotTargetChildrenisDanger_showStartIcon]:
                 hasVariant($state, "showStartIcon", "showStartIcon") &&
                 hasVariant($state, "isDanger", "isDanger"),
+              [sty.slotTargetChildrenisDanger_showStartIcon_global_dark__true]:
+                hasVariant($state, "isDanger", "isDanger") &&
+                hasVariant($state, "showStartIcon", "showStartIcon") &&
+                hasVariant(globalVariants, "dark", "_true"),
               [sty.slotTargetChildrenisDisabled]: hasVariant(
                 $state,
                 "isDisabled",

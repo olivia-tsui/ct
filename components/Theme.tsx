@@ -268,6 +268,13 @@ React.useEffect(() => {
               },
             }
           }}
+          remove={{
+            props:{
+              onClick:()=>{
+
+              }
+            }
+          }}
           root={{ ref }}
           {...props}
         />
