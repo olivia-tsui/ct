@@ -116,6 +116,12 @@
 .slotTargetStartIconshowStartIcon {
   color: #ffffff;
 }
+.slotTargetStartIconsimple_showStartIcon {
+  color: #000000;
+}
+.slotTargetStartIconsimple_showStartIcon_global_dark__true {
+  color: #ffffff;
+}
 .slotTargetStartIconisDanger_showStartIcon {
   color: #000000;
 }
@@ -147,6 +153,7 @@
   color: #ededec;
   font-weight: 500;
   white-space: pre;
+  user-select: none;
 }
 .slotTargetChildrensimple {
   color: #000000;

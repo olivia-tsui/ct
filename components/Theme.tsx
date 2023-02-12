@@ -4,6 +4,7 @@ import {
   PlasmicTheme
 } from "./plasmic/color_tool/PlasmicTheme";
 
+import { HomeContext } from "../pages";
 import chroma from "chroma-js";
 
 const config = {
@@ -26,7 +27,8 @@ export const ConfigUpdateContext = React.createContext((data) => {
   setConfig(data);
 });
 
-function Theme_(props, ref) {
+
+function Theme_(props,ref) {
   const [_config, setConfig] = React.useState(props.config ? props.config : config)
   const [lightScrubColor, setLightScrubColor] = React.useState(
     _config.baseValue
@@ -36,28 +38,29 @@ function Theme_(props, ref) {
     const [copied, setCopied] = React.useState(false);
     const [rawLightDomainLiteral, setRawLightDomainLiteral] = React.useState(_config.lightDomain.toString());
     const [rawDarkDomainLiteral, setRawDarkDomainLiteral] = React.useState(_config.darkDomain.toString());
+    const [key, setKey] = React.useState(generateRandomString());
+    const home = React.useContext(HomeContext);
 
-    const _configRef = React.useRef(_config);
+    React.useEffect(() => {
+      if (home.currentSaveData.length > 0){
+        let isAlreadyIn = home.currentSaveData.some(n =>n.key===key)
+        if (!isAlreadyIn) home.onSaveChange([...home.currentSaveData,{..._config,key:key}]);
+        else home.onSaveChange(home.currentSaveData.map(n => n.key===key ? {..._config,key:key} : n));
+        
+      } else  home.onSaveChange([{..._config,key:key}]);
+    },[_config])
 
-React.useEffect(() => {
-  _configRef.current = _config;
-}, [_config]);
-
-React.useEffect(() => {
-    var unloadCallback = (event) => {
-      let lastThemeConfigs = localStorage.getItem("theme_configs")
-      lastThemeConfigs = lastThemeConfigs? JSON.parse(lastThemeConfigs): [];
-      if (lastThemeConfigs && lastThemeConfigs.length>0){
-        localStorage.setItem("theme_configs", JSON.stringify([...lastThemeConfigs, _configRef.current]));
-      } else {
-        localStorage.setItem("theme_configs", JSON.stringify([_configRef.current]));
-      }
-    };
-    window.addEventListener("beforeunload", unloadCallback);
-    return () => window.removeEventListener("beforeunload", unloadCallback);
-  }, []);
   function approximatelyEqual(a: number, b: number, threshold = 0.1) {
     return Math.abs(a - b) < threshold;
+  }
+  function generateRandomString() {
+    let result = "";
+    let characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let charactersLength = characters.length;
+    for (let i = 0; i < 7; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
   }
   return (
     <ColorsContext.Provider value={_config}>
@@ -271,7 +274,8 @@ React.useEffect(() => {
           remove={{
             props:{
               onClick:()=>{
-
+                props.removeTheme(props.id)
+                home.onSaveChange( home.currentSaveData.filter(n=>n.key !==key))
               }
             }
           }}

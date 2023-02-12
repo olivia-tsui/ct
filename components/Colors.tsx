@@ -9,7 +9,7 @@ import { HTMLElementRefOf } from "@plasmicapp/react-web";
 import Color from "./Color";
 import chroma from "chroma-js";
 import { ColorsContext } from "./Theme";
-import { ModeContext } from "../pages/index";
+import { HomeContext } from "../pages/index";
 
 import { InterpolationMode } from "chroma-js";
 export interface ColorsProps extends DefaultColorsProps {
@@ -18,11 +18,12 @@ export interface ColorsProps extends DefaultColorsProps {
 
 function Colors_(props: ColorsProps, ref: HTMLElementRefOf<"div">) {
   const config = React.useContext(ColorsContext);
-  const mode = React.useContext(ModeContext);
+  const home = React.useContext(HomeContext);
 
   let shades: string[] = [];
   let names: string[] = [];
-  let textContrast: boolean[] = [];
+  let textDisplayColor: boolean[] = [];
+  let contrasts: string[] = [];
 
   let light = chroma(config.baseValue)
     .set("hsl.h", config.lightHueShift)
@@ -44,34 +45,51 @@ function Colors_(props: ColorsProps, ref: HTMLElementRefOf<"div">) {
 
   let lightScale = chroma
     .scale([config.baseValue, light.hex()])
-    .mode(mode as InterpolationMode).domain(config.lightDomain)
+    .mode(home.mode as InterpolationMode).domain(config.lightDomain)
     .colors(config.stepsLighter + 1);
   let darkScale = chroma
     .scale([config.baseValue, dark.hex()])
-    .mode(mode as InterpolationMode).domain(config.darkDomain)
+    .mode(home.mode as InterpolationMode).domain(config.darkDomain)
     .colors(config.stepsDarker + 1);
   for (let i = lightScale.length - 1; i > 0; i--) {
     let newShade = lightScale[i];
     shades.push(newShade);
     names.push(`L${i}`);
-    textContrast.push(
+    textDisplayColor.push(
       chroma.contrast("#FFFFFF", newShade) < 2.5 ? true : false
     );
+    // adding background vs text contrast
+    let whiteTextContrast = chroma.contrast(newShade, "#FFFFFF")
+    let darkTextContrast = chroma.contrast(newShade, "#000000")
+    contrasts.push(
+      whiteTextContrast > darkTextContrast ? `${whiteTextContrast.toFixed(1)}` : `${darkTextContrast.toFixed(1)}`
+    )
   }
   // add base
   shades.push(config.baseValue);
   names.push("Base");
-  textContrast.push(
+  textDisplayColor.push(
     chroma.contrast("#FFFFFF", config.baseValue) < 2.5 ? true : false
   );
+  let whiteTextContrast = chroma.contrast(config.baseValue, "#FFFFFF")
+    let darkTextContrast = chroma.contrast(config.baseValue, "#000000")
+    contrasts.push(
+      whiteTextContrast > darkTextContrast ? `${whiteTextContrast.toFixed(1)}` : `${darkTextContrast.toFixed(1)}`
+    )
 
   for (let i = 1; i < darkScale.length; i++) {
     let newShade = darkScale[i];
     shades.push(newShade);
     names.push(`D${i}`);
-    textContrast.push(
+    textDisplayColor.push(
       chroma.contrast("#FFFFFF", newShade) < 2.5 ? true : false
     );
+    // adding background vs text contrast
+    let whiteTextContrast = chroma.contrast(newShade, "#FFFFFF")
+    let darkTextContrast = chroma.contrast(newShade, "#000000")
+    contrasts.push(
+      whiteTextContrast > darkTextContrast ? `${whiteTextContrast.toFixed(1)}`: `${darkTextContrast.toFixed(1)}`
+    )
   }
 
   props.uploaddata(JSON.stringify([names, shades]));
@@ -84,10 +102,12 @@ function Colors_(props: ColorsProps, ref: HTMLElementRefOf<"div">) {
             // @ts-ignore
             return (
               <Color
-                onDark={textContrast[i]}
+                onDark={textDisplayColor[i]}
                 color={color}
                 name={names[i]}
                 hexCode={color.toUpperCase()}
+                //@ts-ignore
+                contrast={contrasts[i]}
               ></Color>
             );
           }),

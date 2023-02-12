@@ -58,6 +58,7 @@ export const PlasmicColor__ArgProps = new Array<ArgPropType>();
 export type PlasmicColor__OverridesType = {
   root?: p.Flex<"div">;
   name?: p.Flex<"div">;
+  contrast?: p.Flex<"div">;
   hexCode?: p.Flex<"div">;
 };
 
@@ -120,6 +121,11 @@ function PlasmicColor__RenderFunc(props: {
 
   const [$queries, setDollarQueries] = React.useState({});
 
+  const [isRootHover, triggerRootHoverProps] = useTrigger("useHover", {});
+  const triggers = {
+    hover_root: isRootHover
+  };
+
   return (
     <div
       data-plasmic-name={"root"}
@@ -134,6 +140,7 @@ function PlasmicColor__RenderFunc(props: {
         sty.root,
         { [sty.rootonDark]: hasVariant($state, "onDark", "onDark") }
       )}
+      data-plasmic-trigger-props={[triggerRootHoverProps]}
     >
       <div
         data-plasmic-name={"name"}
@@ -146,24 +153,40 @@ function PlasmicColor__RenderFunc(props: {
       </div>
 
       <div
-        data-plasmic-name={"hexCode"}
-        data-plasmic-override={overrides.hexCode}
+        data-plasmic-name={"contrast"}
+        data-plasmic-override={overrides.contrast}
         className={classNames(
           projectcss.all,
           projectcss.__wab_text,
-          sty.hexCode,
-          { [sty.hexCodeonDark]: hasVariant($state, "onDark", "onDark") }
+          sty.contrast,
+          { [sty.contrastonDark]: hasVariant($state, "onDark", "onDark") }
         )}
       >
-        {"#HexCode"}
+        {"4.5:1"}
       </div>
+
+      {(triggers.hover_root ? true : true) ? (
+        <div
+          data-plasmic-name={"hexCode"}
+          data-plasmic-override={overrides.hexCode}
+          className={classNames(
+            projectcss.all,
+            projectcss.__wab_text,
+            sty.hexCode,
+            { [sty.hexCodeonDark]: hasVariant($state, "onDark", "onDark") }
+          )}
+        >
+          {"#HexCode"}
+        </div>
+      ) : null}
     </div>
   ) as React.ReactElement | null;
 }
 
 const PlasmicDescendants = {
-  root: ["root", "name", "hexCode"],
+  root: ["root", "name", "contrast", "hexCode"],
   name: ["name"],
+  contrast: ["contrast"],
   hexCode: ["hexCode"]
 } as const;
 type NodeNameType = keyof typeof PlasmicDescendants;
@@ -172,6 +195,7 @@ type DescendantsType<T extends NodeNameType> =
 type NodeDefaultElementType = {
   root: "div";
   name: "div";
+  contrast: "div";
   hexCode: "div";
 };
 
@@ -237,6 +261,7 @@ export const PlasmicColor = Object.assign(
   {
     // Helper components rendering sub-elements
     _name: makeNodeComponent("name"),
+    contrast: makeNodeComponent("contrast"),
     hexCode: makeNodeComponent("hexCode"),
 
     // Metadata about props expected for PlasmicColor

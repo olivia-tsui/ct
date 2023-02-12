@@ -22,6 +22,7 @@
 }
 .slotTargetChildren {
   white-space: pre;
+  user-select: none;
 }
 .slotTargetChildrenglobal_dark__true {
   color: #ffffff;
@@ -32,6 +33,7 @@
   height: auto;
   max-width: 800px;
   margin-right: 4px;
+  user-select: none;
 }
 .textglobal_dark__true {
   color: #ffffff;

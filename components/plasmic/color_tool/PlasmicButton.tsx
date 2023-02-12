@@ -264,6 +264,13 @@ function PlasmicButton__RenderFunc(props: {
             [sty.rootsimple]: hasVariant($state, "simple", "simple"),
             [sty.rootsimple_global_dark__true]:
               hasVariant($state, "simple", "simple") &&
+              hasVariant(globalVariants, "dark", "_true"),
+            [sty.rootsimple_showStartIcon]:
+              hasVariant($state, "simple", "simple") &&
+              hasVariant($state, "showStartIcon", "showStartIcon"),
+            [sty.rootsimple_showStartIcon_global_dark__true]:
+              hasVariant($state, "simple", "simple") &&
+              hasVariant($state, "showStartIcon", "showStartIcon") &&
               hasVariant(globalVariants, "dark", "_true")
           }
         )}
@@ -297,7 +304,14 @@ function PlasmicButton__RenderFunc(props: {
                 $state,
                 "showStartIcon",
                 "showStartIcon"
-              )
+              ),
+              [sty.startIconContainersimple_showStartIcon]:
+                hasVariant($state, "simple", "simple") &&
+                hasVariant($state, "showStartIcon", "showStartIcon"),
+              [sty.startIconContainersimple_showStartIcon_global_dark__true]:
+                hasVariant($state, "simple", "simple") &&
+                hasVariant($state, "showStartIcon", "showStartIcon") &&
+                hasVariant(globalVariants, "dark", "_true")
             })}
           >
             {p.renderPlasmicSlot({
@@ -321,7 +335,14 @@ function PlasmicButton__RenderFunc(props: {
                   $state,
                   "showStartIcon",
                   "showStartIcon"
-                )
+                ),
+                [sty.slotTargetStartIconsimple_showStartIcon]:
+                  hasVariant($state, "simple", "simple") &&
+                  hasVariant($state, "showStartIcon", "showStartIcon"),
+                [sty.slotTargetStartIconsimple_showStartIcon_global_dark__true]:
+                  hasVariant($state, "simple", "simple") &&
+                  hasVariant($state, "showStartIcon", "showStartIcon") &&
+                  hasVariant(globalVariants, "dark", "_true")
               })
             })}
           </div>
@@ -342,7 +363,10 @@ function PlasmicButton__RenderFunc(props: {
               $state,
               "showEndIcon",
               "showEndIcon"
-            )
+            ),
+            [sty.contentContainersimple_showStartIcon]:
+              hasVariant($state, "simple", "simple") &&
+              hasVariant($state, "showStartIcon", "showStartIcon")
           })}
         >
           {p.renderPlasmicSlot({

@@ -34,6 +34,7 @@ import {
   deriveRenderOpts,
   ensureGlobalVariants
 } from "@plasmicapp/react-web";
+import Button from "../../Button"; // plasmic-import: iXX9rwSFEyL/component
 import Toggle from "../../Toggle"; // plasmic-import: zF_ww3iA59/component
 import { Segmented } from "antd"; // plasmic-import: kcO9YN8MH5/codeComponent
 import Themes from "../../Themes"; // plasmic-import: K_3cTz_dlp/component
@@ -46,6 +47,10 @@ import "@plasmicapp/react-web/lib/plasmic.css";
 
 import projectcss from "./plasmic_blank_project.module.css"; // plasmic-import: dczqNaFYoArv9QmtqhGLsR/projectcss
 import sty from "./PlasmicHomepage.module.css"; // plasmic-import: TG7tj4i4IGD7/css
+
+import Icon7Icon from "../color_tool/icons/PlasmicIcon__Icon7"; // plasmic-import: MxbpqMBUBE/icon
+import IconIcon from "../color_tool/icons/PlasmicIcon__Icon"; // plasmic-import: Kv0ZYfEWi7y/icon
+import Icon8Icon from "../color_tool/icons/PlasmicIcon__Icon8"; // plasmic-import: p5cZTvPKPD/icon
 
 export type PlasmicHomepage__VariantMembers = {};
 
@@ -61,9 +66,9 @@ export type PlasmicHomepage__OverridesType = {
   root?: p.Flex<"div">;
   section?: p.Flex<"section">;
   h2?: p.Flex<"h2">;
-  freeBox?: p.Flex<"div">;
+  save?: p.Flex<typeof Button>;
+  _import?: p.Flex<typeof Button>;
   toggle?: p.Flex<typeof Toggle>;
-  text?: p.Flex<"div">;
   mode?: p.Flex<typeof Segmented>;
   themes?: p.Flex<typeof Themes>;
 };
@@ -145,33 +150,98 @@ function PlasmicHomepage__RenderFunc(props: {
         hasGap={true}
         className={classNames(projectcss.all, sty.section)}
       >
-        <h2
-          data-plasmic-name={"h2"}
-          data-plasmic-override={overrides.h2}
-          className={classNames(
-            projectcss.all,
-            projectcss.h2,
-            projectcss.__wab_text,
-            sty.h2,
-            {
-              [sty.h2global_dark__true]: hasVariant(
-                globalVariants,
-                "dark",
-                "_true"
-              )
-            }
-          )}
-        >
-          {"Nuno Marcelino's Scale Tool"}
-        </h2>
-
         {true ? (
           <p.Stack
             as={"div"}
-            data-plasmic-name={"freeBox"}
-            data-plasmic-override={overrides.freeBox}
             hasGap={true}
-            className={classNames(projectcss.all, sty.freeBox)}
+            className={classNames(projectcss.all, sty.freeBox__lfymz)}
+          >
+            <h2
+              data-plasmic-name={"h2"}
+              data-plasmic-override={overrides.h2}
+              className={classNames(
+                projectcss.all,
+                projectcss.h2,
+                projectcss.__wab_text,
+                sty.h2,
+                {
+                  [sty.h2global_dark__true]: hasVariant(
+                    globalVariants,
+                    "dark",
+                    "_true"
+                  )
+                }
+              )}
+            >
+              {"World's Best Scale Tool"}
+            </h2>
+
+            <Button
+              data-plasmic-name={"save"}
+              data-plasmic-override={overrides.save}
+              className={classNames("__wab_instance", sty.save)}
+              showStartIcon={true}
+              simple={true}
+              startIcon={
+                true ? (
+                  <div
+                    className={classNames(projectcss.all, sty.freeBox__ukFAj)}
+                  >
+                    <Icon7Icon
+                      className={classNames(projectcss.all, sty.svg__vGotH)}
+                      role={"img"}
+                    />
+                  </div>
+                ) : null
+              }
+            >
+              <div
+                className={classNames(
+                  projectcss.all,
+                  projectcss.__wab_text,
+                  sty.text__jjxSr
+                )}
+              >
+                {"Save"}
+              </div>
+            </Button>
+
+            <Button
+              data-plasmic-name={"_import"}
+              data-plasmic-override={overrides._import}
+              className={classNames("__wab_instance", sty._import)}
+              showStartIcon={true}
+              simple={true}
+              startIcon={
+                true ? (
+                  <div
+                    className={classNames(projectcss.all, sty.freeBox___6Syi)}
+                  >
+                    <Icon8Icon
+                      className={classNames(projectcss.all, sty.svg___9Fm1U)}
+                      role={"img"}
+                    />
+                  </div>
+                ) : null
+              }
+            >
+              <div
+                className={classNames(
+                  projectcss.all,
+                  projectcss.__wab_text,
+                  sty.text__ycBpc
+                )}
+              >
+                {"Import"}
+              </div>
+            </Button>
+          </p.Stack>
+        ) : null}
+        {true ? (
+          <p.Stack
+            as={"div"}
+            hasGap={true}
+            className={classNames(projectcss.all, sty.freeBox__e8E5J)}
           >
             <Toggle
               data-plasmic-name={"toggle"}
@@ -186,14 +256,12 @@ function PlasmicHomepage__RenderFunc(props: {
             />
 
             <div
-              data-plasmic-name={"text"}
-              data-plasmic-override={overrides.text}
               className={classNames(
                 projectcss.all,
                 projectcss.__wab_text,
-                sty.text,
+                sty.text__ddXK,
                 {
-                  [sty.textglobal_dark__true]: hasVariant(
+                  [sty.textglobal_dark__true__ddXKuQts4]: hasVariant(
                     globalVariants,
                     "dark",
                     "_true"
@@ -201,7 +269,7 @@ function PlasmicHomepage__RenderFunc(props: {
                 }
               )}
             >
-              {"Interpolation Mode:"}
+              {"Interpolation Method:"}
             </div>
 
             <Segmented
@@ -244,17 +312,17 @@ const PlasmicDescendants = {
     "root",
     "section",
     "h2",
-    "freeBox",
+    "save",
+    "_import",
     "toggle",
-    "text",
     "mode",
     "themes"
   ],
-  section: ["section", "h2", "freeBox", "toggle", "text", "mode"],
+  section: ["section", "h2", "save", "_import", "toggle", "mode"],
   h2: ["h2"],
-  freeBox: ["freeBox", "toggle", "text", "mode"],
+  save: ["save"],
+  _import: ["_import"],
   toggle: ["toggle"],
-  text: ["text"],
   mode: ["mode"],
   themes: ["themes"]
 } as const;
@@ -265,9 +333,9 @@ type NodeDefaultElementType = {
   root: "div";
   section: "section";
   h2: "h2";
-  freeBox: "div";
+  save: typeof Button;
+  _import: typeof Button;
   toggle: typeof Toggle;
-  text: "div";
   mode: typeof Segmented;
   themes: typeof Themes;
 };
@@ -335,9 +403,9 @@ export const PlasmicHomepage = Object.assign(
     // Helper components rendering sub-elements
     section: makeNodeComponent("section"),
     h2: makeNodeComponent("h2"),
-    freeBox: makeNodeComponent("freeBox"),
+    save: makeNodeComponent("save"),
+    _import: makeNodeComponent("_import"),
     toggle: makeNodeComponent("toggle"),
-    text: makeNodeComponent("text"),
     mode: makeNodeComponent("mode"),
     themes: makeNodeComponent("themes"),
 

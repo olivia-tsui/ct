@@ -6,35 +6,89 @@ import { PlasmicHomepage } from "../components/plasmic/blank_project/PlasmicHome
 import { useRouter } from "next/router";
 
 import { DarkContext, DarkValue } from "../components/plasmic/color_tool/PlasmicGlobalVariant__Dark"; 
-export const ModeContext = React.createContext("hsl");
 
+export const HomeContext = React.createContext({mode:"hsl",onSaveChange:(str:{}[])=>{},currentSaveData:[{}]});
 function Homepage() {
 const [mode, setMode] = React.useState("hsl")
 const [dark, setDark] = React.useState('_false')
+const [save, setSave] = React.useState<{}[]>([])
+const inputFile = React.useRef(null) 
 
+const onSaveChange = (str:{}[])=>{
+  setSave(str)
+}
   return (
     <ph.PageParamsProvider
       params={useRouter()?.query}
       query={useRouter()?.query}
     >
       <DarkContext.Provider value={dark as DarkValue}>
-      <ModeContext.Provider value={mode}>
-      <PlasmicHomepage toggle={{
-        // @ts-ignore
-        props:{
-          onClick: () =>  {
-            dark === '_false' ? setDark('_true') : setDark('_false')
-          }
-        }
-      }} mode={{
-        props:{
-          onChange:(value)=>{
-            setMode(value.toString())
-          }
-        }
-      }} />
-</ModeContext.Provider>
-</DarkContext.Provider>
+        <HomeContext.Provider
+          value={{
+            mode: mode,
+            onSaveChange: onSaveChange,
+            currentSaveData: save,
+          }}
+        >
+          <PlasmicHomepage
+            toggle={{
+              // @ts-ignore
+              props: {
+                onClick: () => {
+                  dark === "_false" ? setDark("_true") : setDark("_false");
+                },
+              },
+            }}
+            mode={{
+              props: {
+                onChange: (value) => {
+                  setMode(value.toString());
+                },
+              },
+            }}
+            
+            save={{
+              // @ts-ignore
+              props: {
+                onClick: (event) => {
+                  let correctArr = save.slice(-(save.length - 1));
+                  const blob = new Blob([JSON.stringify(correctArr)], {
+                    type: "application/json",
+                  });
+                  const url = URL.createObjectURL(blob);
+                  const link = document.createElement("a");
+                  link.download = "color_scales.json";
+                  link.href = url;
+                  link.click();
+                },
+              },
+            }}
+            _import={{
+              props: {
+                onClick: () => {
+                  // @ts-ignore
+                  inputFile.current.click();
+                },
+              },
+            }}
+          />
+          <input
+            type="file"
+            id="file"
+            ref={inputFile}
+            style={{ display: "none" }}
+            onChange={(file) => {
+              let reader = new FileReader();
+              reader.readAsText(file.target.files![0]);
+              reader.onload = function () {
+                localStorage.setItem("import", reader.result as string);
+                location.reload()
+
+              };
+            }}
+          />
+        </HomeContext.Provider>
+      </DarkContext.Provider>
     </ph.PageParamsProvider>
   );
 }

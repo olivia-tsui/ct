@@ -214,6 +214,16 @@
           "id": "B-EzNgU_VY",
           "name": "Icon6Icon",
           "moduleFilePath": "plasmic/color_tool/icons/PlasmicIcon__Icon6.tsx"
+        },
+        {
+          "id": "MxbpqMBUBE",
+          "name": "Icon7Icon",
+          "moduleFilePath": "plasmic/color_tool/icons/PlasmicIcon__Icon7.tsx"
+        },
+        {
+          "id": "p5cZTvPKPD",
+          "name": "Icon8Icon",
+          "moduleFilePath": "plasmic/color_tool/icons/PlasmicIcon__Icon8.tsx"
         }
       ],
       "images": [],
@@ -303,6 +313,6 @@
   "nextjsConfig": {
     "pagesDir": "../pages"
   },
-  "cliVersion": "0.1.205",
-  "$schema": "https://unpkg.com/@plasmicapp/cli@0.1.205/dist/plasmic.schema.json"
+  "cliVersion": "0.1.211",
+  "$schema": "https://unpkg.com/@plasmicapp/cli@0.1.211/dist/plasmic.schema.json"
 }
