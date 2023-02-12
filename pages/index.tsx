@@ -14,9 +14,18 @@ const [dark, setDark] = React.useState('_false')
 const [save, setSave] = React.useState<{}[]>([])
 const inputFile = React.useRef(null) 
 
+
 const onSaveChange = (str:{}[])=>{
   setSave(str)
 }
+
+React.useEffect(() => {
+  let import_ = localStorage.getItem("import");
+  if (import_) {
+    setSave(JSON.parse(import_));
+    localStorage.setItem("import", "");
+  }
+},[])
   return (
     <ph.PageParamsProvider
       params={useRouter()?.query}
@@ -83,7 +92,7 @@ const onSaveChange = (str:{}[])=>{
               reader.onload = function () {
                 localStorage.setItem("import", reader.result as string);
                 location.reload()
-
+                
               };
             }}
           />

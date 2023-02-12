@@ -42,13 +42,17 @@ function Theme_(props,ref) {
     const home = React.useContext(HomeContext);
 
     React.useEffect(() => {
+      
       if (home.currentSaveData.length > 0){
-        let isAlreadyIn = home.currentSaveData.some(n =>n.key===key)
+
+        let isAlreadyIn = home.currentSaveData.some(n =>n.key===key || n.name===_config.name)
         if (!isAlreadyIn) home.onSaveChange([...home.currentSaveData,{..._config,key:key}]);
         else home.onSaveChange(home.currentSaveData.map(n => n.key===key ? {..._config,key:key} : n));
         
       } else  home.onSaveChange([{..._config,key:key}]);
     },[_config])
+
+
 
   function approximatelyEqual(a: number, b: number, threshold = 0.1) {
     return Math.abs(a - b) < threshold;
@@ -211,7 +215,7 @@ function Theme_(props,ref) {
                 navigator.clipboard
                   .writeText(JSON.stringify(r).toUpperCase())
                   .then(function () {
-                    console.log("Result copied to clipboard");
+
                   });
                 setCopied(true);
               },

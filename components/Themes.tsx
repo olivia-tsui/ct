@@ -16,14 +16,14 @@ function Themes_(props: ThemesProps, ref: HTMLElementRefOf<"div">) {
     <Theme></Theme>,
   ]);
   const home = React.useContext(HomeContext);
-  // @ts-ignore
 
-    
 React.useEffect(() => {
   let import_ = localStorage.getItem("import")
     if (import_ && import_.length > 0) {
+      let parsed = JSON.parse(import_)
+    
       // @ts-ignore
-    setThemesNodes(JSON.parse(import_).map((config) => {
+    setThemesNodes(parsed.map((config) => {
       let conf = config;
       // @ts-ignore
       let key = config.key;
@@ -31,7 +31,6 @@ React.useEffect(() => {
       delete conf.key;
       return <Theme config={config} removeTheme={removeTheme} key={key} id={generateRandomString()}></Theme>;
     }));
-    localStorage.setItem("import", "");
     }
 },[])
 
