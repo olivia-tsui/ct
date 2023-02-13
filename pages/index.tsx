@@ -62,7 +62,7 @@ React.useEffect(() => {
               // @ts-ignore
               props: {
                 onClick: (event) => {
-                  let correctArr = save.slice(-(save.length - 1));
+                  let correctArr = save.slice(-(save.length));
                   const blob = new Blob([JSON.stringify(correctArr)], {
                     type: "application/json",
                   });
