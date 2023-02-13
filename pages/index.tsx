@@ -6,6 +6,7 @@ import { PlasmicHomepage } from "../components/plasmic/blank_project/PlasmicHome
 import { useRouter } from "next/router";
 
 import { DarkContext, DarkValue } from "../components/plasmic/color_tool/PlasmicGlobalVariant__Dark"; 
+import PlasmicHome from "../components/plasmic/color_tool/PlasmicHome";
 
 export const HomeContext = React.createContext({mode:"hsl",onSaveChange:(str:{}[])=>{},currentSaveData:[{}]});
 function Homepage() {
@@ -39,6 +40,7 @@ React.useEffect(() => {
             currentSaveData: save,
           }}
         >
+          <PlasmicHome>
           <PlasmicHomepage
             toggle={{
               // @ts-ignore
@@ -81,6 +83,7 @@ React.useEffect(() => {
               },
             }}
           />
+          </PlasmicHome>
           <input
             type="file"
             id="file"

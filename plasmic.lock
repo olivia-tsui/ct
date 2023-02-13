@@ -14,12 +14,12 @@
         {
           "type": "renderModule",
           "assetId": "TG7tj4i4IGD7",
-          "checksum": "cd2b501b2a16389cc85266a515e3aa12"
+          "checksum": "f3c048c926d1fff52b49510791ab9f51"
         },
         {
           "type": "cssRules",
           "assetId": "TG7tj4i4IGD7",
-          "checksum": "cd2b501b2a16389cc85266a515e3aa12"
+          "checksum": "f3c048c926d1fff52b49510791ab9f51"
         },
         {
           "type": "globalVariant",
@@ -175,6 +175,16 @@
           "type": "icon",
           "assetId": "p5cZTvPKPD",
           "checksum": "a8506ec0e0593d6bdc81668246acbf64"
+        },
+        {
+          "type": "renderModule",
+          "assetId": "HeyXY6TipU",
+          "checksum": "3c90469e6d148726096d8cd4ee3e13eb"
+        },
+        {
+          "type": "cssRules",
+          "assetId": "HeyXY6TipU",
+          "checksum": "3c90469e6d148726096d8cd4ee3e13eb"
         },
         {
           "assetId": "dczqNaFYoArv9QmtqhGLsR",

@@ -172,6 +172,19 @@
           "cssFilePath": "plasmic/color_tool/PlasmicTheme.module.css",
           "scheme": "blackbox",
           "componentType": "component"
+        },
+        {
+          "id": "HeyXY6TipU",
+          "name": "Home",
+          "type": "managed",
+          "projectId": "dczqNaFYoArv9QmtqhGLsR",
+          "renderModuleFilePath": "plasmic/color_tool/PlasmicHome.tsx",
+          "importSpec": {
+            "modulePath": "../pages/index.tsx"
+          },
+          "cssFilePath": "plasmic/color_tool/PlasmicHome.module.css",
+          "scheme": "blackbox",
+          "componentType": "page"
         }
       ],
       "icons": [
