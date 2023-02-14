@@ -10,22 +10,12 @@
   min-width: 0;
   min-height: 0;
 }
-.name {
-  color: #ffffff;
-}
-.nameonDark {
-  color: #000000;
-}
 .contrast {
-  color: #ffffff;
   position: absolute;
   left: auto;
   top: 4px;
   right: 4px;
   font-size: 12px;
-}
-.contrastonDark {
-  color: #000000;
 }
 .hexCode {
   color: #ffffff;

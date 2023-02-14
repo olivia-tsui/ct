@@ -11,12 +11,14 @@ export interface ColorProps extends DefaultColorProps {
   color?: string;
   name?: string;
   hexCode?: string;
+  darkTextColor? : string;
+  lightTextColor? : string;
 }
 
 function Color_(props: ColorProps, ref: HTMLElementRefOf<"div">) {
   
-
-  return <PlasmicColor name={props.name} hexCode={props.hexCode} style={{backgroundColor:props.color}} root={{ ref }} {...props} />;
+//@ts-ignore
+  return <PlasmicColor name={props.name} hexCode={props.hexCode} style={{backgroundColor:props.color, color:props.onDark? props.lightTextColor : props.darkTextColor}} root={{ ref }} {...props} />;
 }
 
 const Color = React.forwardRef(Color_);

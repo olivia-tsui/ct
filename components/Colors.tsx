@@ -56,11 +56,11 @@ function Colors_(props: ColorsProps, ref: HTMLElementRefOf<"div">) {
     shades.push(newShade);
     names.push(`L${i}`);
     textDisplayColor.push(
-      chroma.contrast("#FFFFFF", newShade) < 2.5 ? true : false
+      chroma.contrast(light, newShade) < 2.5 ? true : false
     );
     // adding background vs text contrast
-    let whiteTextContrast = chroma.contrast(newShade, "#FFFFFF")
-    let darkTextContrast = chroma.contrast(newShade, "#000000")
+    let whiteTextContrast = chroma.contrast(newShade, light)
+    let darkTextContrast = chroma.contrast(newShade, dark)
     contrasts.push(
       whiteTextContrast > darkTextContrast ? `${whiteTextContrast.toFixed(1)}` : `${darkTextContrast.toFixed(1)}`
     )
@@ -69,10 +69,10 @@ function Colors_(props: ColorsProps, ref: HTMLElementRefOf<"div">) {
   shades.push(config.baseValue);
   names.push("Base");
   textDisplayColor.push(
-    chroma.contrast("#FFFFFF", config.baseValue) < 2.5 ? true : false
+    chroma.contrast(light, config.baseValue) < 2.5 ? true : false
   );
-  let whiteTextContrast = chroma.contrast(config.baseValue, "#FFFFFF")
-    let darkTextContrast = chroma.contrast(config.baseValue, "#000000")
+  let whiteTextContrast = chroma.contrast(config.baseValue, light)
+    let darkTextContrast = chroma.contrast(config.baseValue, dark)
     contrasts.push(
       whiteTextContrast > darkTextContrast ? `${whiteTextContrast.toFixed(1)}` : `${darkTextContrast.toFixed(1)}`
     )
@@ -82,11 +82,11 @@ function Colors_(props: ColorsProps, ref: HTMLElementRefOf<"div">) {
     shades.push(newShade);
     names.push(`D${i}`);
     textDisplayColor.push(
-      chroma.contrast("#FFFFFF", newShade) < 2.5 ? true : false
+      chroma.contrast(light, newShade) < 2.5 ? true : false
     );
     // adding background vs text contrast
-    let whiteTextContrast = chroma.contrast(newShade, "#FFFFFF")
-    let darkTextContrast = chroma.contrast(newShade, "#000000")
+    let whiteTextContrast = chroma.contrast(newShade, light)
+    let darkTextContrast = chroma.contrast(newShade, dark)
     contrasts.push(
       whiteTextContrast > darkTextContrast ? `${whiteTextContrast.toFixed(1)}`: `${darkTextContrast.toFixed(1)}`
     )
@@ -108,6 +108,9 @@ function Colors_(props: ColorsProps, ref: HTMLElementRefOf<"div">) {
                 hexCode={color.toUpperCase()}
                 //@ts-ignore
                 contrast={contrasts[i]}
+                darkTextColor={light.hex()}
+                lightTextColor={dark.hex()}
+
               ></Color>
             );
           }),
