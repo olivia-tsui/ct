@@ -34,12 +34,13 @@ function Theme_(props,ref) {
     _config.baseValue
     )
     const [darkScrubColor, setDarkScrubColor] = React.useState(_config.baseValue);
-    const [outPut, setOutPut] = React.useState("empty");
+  let output = "empty"
     const [copied, setCopied] = React.useState(false);
     const [rawLightDomainLiteral, setRawLightDomainLiteral] = React.useState(_config.lightDomain.toString());
     const [rawDarkDomainLiteral, setRawDarkDomainLiteral] = React.useState(_config.darkDomain.toString());
     const [key, setKey] = React.useState(generateRandomString());
     const home = React.useContext(HomeContext);
+    const [manualAdjusting, setManualAdjusting] = React.useState('');
 
     React.useEffect(() => {
       
@@ -204,6 +205,30 @@ function Theme_(props,ref) {
               },
             },
           }}
+          adjustSaturation={{
+            props: {
+              onClick: () => {
+                if (manualAdjusting !== "s") {
+                  setManualAdjusting("s");
+                } else {
+                  setManualAdjusting("");
+                }
+              },
+              children: manualAdjusting === "s" ? "Done" : "Saturation",
+            },
+          }}
+          adjustLightness={{
+            props: {
+              onClick: () => {
+                if (manualAdjusting !== "l") {
+                  setManualAdjusting("l");
+                } else {
+                  setManualAdjusting("");
+                }
+              },
+              children: manualAdjusting === "l" ? "Done" : "Lightness",
+            },
+          }}
           copy={{
             props: {
               onClick: () => {
@@ -214,16 +239,10 @@ function Theme_(props,ref) {
                 }, {});
                 navigator.clipboard
                   .writeText(JSON.stringify(r).toUpperCase())
-                  .then(function () {
-
-                  });
+                  .then(function () {});
                 setCopied(true);
               },
-              children: copied ? (
-                <p style={{ fontSize: "14px", fontWeight: 400 }}>Copied ! </p>
-              ) : (
-                <p style={{ fontSize: "14px", fontWeight: 400 }}>Copy JSON</p>
-              ),
+              children: copied ? "Copied !" : "Copy JSON",
               onMouseLeave: () => {
                 setTimeout(() => {
                   setCopied(false);
@@ -233,39 +252,46 @@ function Theme_(props,ref) {
           }}
           colors={{
             props: {
-              uploaddata: (d) => setOutPut(d),
+              uploaddata: (d) => (output = d),
+              manualAdjusting: manualAdjusting,
             },
           }}
           lightDomain={{
-            input:{
-              value:rawLightDomainLiteral,
-            onChange: (e) => {
-              setRawLightDomainLiteral( e.target.value)
-              let raw =  e.target.value.split(",").map(n=> n==="" ?0: parseFloat(n))
-              if (!Array.isArray(raw) || raw.length<2) return 
-              else setConfig({
-                ..._config,
-                lightDomain:raw,
-              });
+            input: {
+              value: rawLightDomainLiteral,
+              onChange: (e) => {
+                setRawLightDomainLiteral(e.target.value);
+                let raw = e.target.value
+                  .split(",")
+                  .map((n) => (n === "" ? 0 : parseFloat(n)));
+                if (!Array.isArray(raw) || raw.length < 2) return;
+                else
+                  setConfig({
+                    ..._config,
+                    lightDomain: raw,
+                  });
+              },
             },
-            }
           }}
           darkDomain={{
-           input:{
-            value: rawDarkDomainLiteral,
-            onChange: (e) => {
-              setRawDarkDomainLiteral( e.target.value)
-              let raw =  e.target.value.split(",").map(n=> n==="" ?0: parseFloat(n))
-              if (!Array.isArray(raw) || raw.length<2) return 
-              else setConfig({
-                ..._config,
-                darkDomain:raw,
-              });
+            input: {
+              value: rawDarkDomainLiteral,
+              onChange: (e) => {
+                setRawDarkDomainLiteral(e.target.value);
+                let raw = e.target.value
+                  .split(",")
+                  .map((n) => (n === "" ? 0 : parseFloat(n)));
+                if (!Array.isArray(raw) || raw.length < 2) return;
+                else
+                  setConfig({
+                    ..._config,
+                    darkDomain: raw,
+                  });
+              },
             },
-           }
           }}
           name={{
-            input:{
+            input: {
               value: _config.name,
               onChange: (e) => {
                 setConfig({
@@ -273,15 +299,17 @@ function Theme_(props,ref) {
                   name: e.target.value,
                 });
               },
-            }
+            },
           }}
           remove={{
-            props:{
-              onClick:()=>{
-                props.removeTheme(props.id)
-                home.onSaveChange( home.currentSaveData.filter(n=>n.key !==key))
-              }
-            }
+            props: {
+              onClick: () => {
+                props.removeTheme(props.id);
+                home.onSaveChange(
+                  home.currentSaveData.filter((n) => n.key !== key)
+                );
+              },
+            },
           }}
           root={{ ref }}
           {...props}

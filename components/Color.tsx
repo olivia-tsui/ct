@@ -3,22 +3,42 @@
 import * as React from "react";
 import {
   PlasmicColor,
-  DefaultColorProps
+  DefaultColorProps,
 } from "./plasmic/color_tool/PlasmicColor";
+import chroma from "chroma-js";
 import { HTMLElementRefOf } from "@plasmicapp/react-web";
 
 export interface ColorProps extends DefaultColorProps {
   color?: string;
   name?: string;
   hexCode?: string;
-  darkTextColor? : string;
-  lightTextColor? : string;
+  darkTextColor?: string;
+  lightTextColor?: string;
+  manualSaturation: boolean;
 }
 
 function Color_(props: ColorProps, ref: HTMLElementRefOf<"div">) {
-  
-//@ts-ignore
-  return <PlasmicColor name={props.name} hexCode={props.hexCode} style={{backgroundColor:props.color, color:props.onDark? props.lightTextColor : props.darkTextColor}} root={{ ref }} {...props} />;
+
+  let [backgroundColor, setBackgroundColor] = React.useState(props.color);
+
+  React.useEffect(() => {
+
+    setBackgroundColor(props.color);
+
+  }, [props.color]);
+  return (
+    //@ts-ignore
+    <PlasmicColor
+      name={props.name}
+      style={{
+        backgroundColor: backgroundColor,
+        color: props.onDark ? props.lightTextColor : props.darkTextColor,
+      }}
+    
+      root={{ ref }}
+      {...props}
+    />
+  );
 }
 
 const Color = React.forwardRef(Color_);

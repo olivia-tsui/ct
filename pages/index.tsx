@@ -12,18 +12,18 @@ export const HomeContext = React.createContext({mode:"hsl",onSaveChange:(str:{}[
 function Homepage() {
 const [mode, setMode] = React.useState("hsl")
 const [dark, setDark] = React.useState('_false')
-const [save, setSave] = React.useState<{}[]>([])
+let save :{}[]= []
 const inputFile = React.useRef(null) 
 
 
 const onSaveChange = (str:{}[])=>{
-  setSave(str)
+  save= str
 }
 
 React.useEffect(() => {
   let import_ = localStorage.getItem("import");
   if (import_) {
-    setSave(JSON.parse(import_));
+    save = (JSON.parse(import_));
     localStorage.setItem("import", "");
   }
 },[])

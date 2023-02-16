@@ -41,25 +41,30 @@ import "@plasmicapp/react-web/lib/plasmic.css";
 import projectcss from "../blank_project/plasmic_blank_project.module.css"; // plasmic-import: dczqNaFYoArv9QmtqhGLsR/projectcss
 import sty from "./PlasmicColors.module.css"; // plasmic-import: dyZl0Y5DD8/css
 
-export type PlasmicColors__VariantMembers = {};
-
-export type PlasmicColors__VariantsArgs = {};
-type VariantPropType = keyof PlasmicColors__VariantsArgs;
-export const PlasmicColors__VariantProps = new Array<VariantPropType>();
-
-export type PlasmicColors__ArgsType = {
-  children?: React.ReactNode;
+export type PlasmicColors__VariantMembers = {
+  adjustingSaturation: "adjustingSaturation";
 };
 
+export type PlasmicColors__VariantsArgs = {
+  adjustingSaturation?: SingleBooleanChoiceArg<"adjustingSaturation">;
+};
+
+type VariantPropType = keyof PlasmicColors__VariantsArgs;
+export const PlasmicColors__VariantProps = new Array<VariantPropType>(
+  "adjustingSaturation"
+);
+
+export type PlasmicColors__ArgsType = {};
 type ArgPropType = keyof PlasmicColors__ArgsType;
-export const PlasmicColors__ArgProps = new Array<ArgPropType>("children");
+export const PlasmicColors__ArgProps = new Array<ArgPropType>();
 
 export type PlasmicColors__OverridesType = {
   root?: p.Flex<"div">;
+  allColors?: p.Flex<"div">;
 };
 
 export interface DefaultColorsProps {
-  children?: React.ReactNode;
+  adjustingSaturation?: SingleBooleanChoiceArg<"adjustingSaturation">;
   className?: string;
 }
 
@@ -101,6 +106,22 @@ function PlasmicColors__RenderFunc(props: {
 
   const currentUser = p.useCurrentUser?.() || {};
 
+  const stateSpecs = React.useMemo(
+    () => [
+      {
+        path: "adjustingSaturation",
+        type: "private",
+        variableType: "variant",
+        initFunc: true
+          ? ($props, $state, $ctx) => $props.adjustingSaturation
+          : undefined
+      }
+    ],
+
+    [$props, $ctx]
+  );
+  const $state = p.useDollarState(stateSpecs, $props, $ctx);
+
   const [$queries, setDollarQueries] = React.useState({});
 
   return (
@@ -115,40 +136,74 @@ function PlasmicColors__RenderFunc(props: {
           projectcss.root_reset,
           projectcss.plasmic_default_styles,
           projectcss.plasmic_mixins,
-          sty.root
+          sty.root,
+          {
+            [sty.rootadjustingSaturation]: hasVariant(
+              $state,
+              "adjustingSaturation",
+              "adjustingSaturation"
+            )
+          }
         )}
       >
-        {p.renderPlasmicSlot({
-          defaultContents: (
-            <React.Fragment>
-              <Color
-                className={classNames("__wab_instance", sty.color__rqWlM)}
-              />
+        {true ? (
+          <div
+            data-plasmic-name={"allColors"}
+            data-plasmic-override={overrides.allColors}
+            className={classNames(projectcss.all, sty.allColors, {
+              [sty.allColorsadjustingSaturation]: hasVariant(
+                $state,
+                "adjustingSaturation",
+                "adjustingSaturation"
+              )
+            })}
+          >
+            <Color
+              className={classNames("__wab_instance", sty.color__rqWlM, {
+                [sty.coloradjustingSaturation__rqWlMtcnbO]: hasVariant(
+                  $state,
+                  "adjustingSaturation",
+                  "adjustingSaturation"
+                )
+              })}
+            />
 
-              <Color
-                className={classNames("__wab_instance", sty.color__sha4Z)}
-              />
+            <Color
+              className={classNames("__wab_instance", sty.color__sha4Z, {
+                [sty.coloradjustingSaturation__sha4ZtcnbO]: hasVariant(
+                  $state,
+                  "adjustingSaturation",
+                  "adjustingSaturation"
+                )
+              })}
+            />
 
-              <Color
-                className={classNames("__wab_instance", sty.color__edWfw)}
-              />
-            </React.Fragment>
-          ),
-          value: args.children
-        })}
+            <Color
+              className={classNames("__wab_instance", sty.color__edWfw, {
+                [sty.coloradjustingSaturation__edWfWtcnbO]: hasVariant(
+                  $state,
+                  "adjustingSaturation",
+                  "adjustingSaturation"
+                )
+              })}
+            />
+          </div>
+        ) : null}
       </div>
     ) : null
   ) as React.ReactElement | null;
 }
 
 const PlasmicDescendants = {
-  root: ["root"]
+  root: ["root", "allColors"],
+  allColors: ["allColors"]
 } as const;
 type NodeNameType = keyof typeof PlasmicDescendants;
 type DescendantsType<T extends NodeNameType> =
   typeof PlasmicDescendants[T][number];
 type NodeDefaultElementType = {
   root: "div";
+  allColors: "div";
 };
 
 type ReservedPropsType = "variants" | "args" | "overrides";
@@ -212,6 +267,7 @@ export const PlasmicColors = Object.assign(
   makeNodeComponent("root"),
   {
     // Helper components rendering sub-elements
+    allColors: makeNodeComponent("allColors"),
 
     // Metadata about props expected for PlasmicColors
     internalVariantProps: PlasmicColors__VariantProps,

@@ -10,10 +10,12 @@ import Color from "./Color";
 import chroma from "chroma-js";
 import { ColorsContext } from "./Theme";
 import { HomeContext } from "../pages/index";
-
 import { InterpolationMode } from "chroma-js";
+import * as Slider from "@radix-ui/react-slider"
+
 export interface ColorsProps extends DefaultColorsProps {
   uploaddata: (data: any) => string[];
+  manualAdjusting:''|'l'|'s'
 }
 
 function Colors_(props: ColorsProps, ref: HTMLElementRefOf<"div">) {
@@ -22,8 +24,16 @@ function Colors_(props: ColorsProps, ref: HTMLElementRefOf<"div">) {
 
   let shades: string[] = [];
   let names: string[] = [];
-  let textDisplayColor: boolean[] = [];
-  let contrasts: string[] = [];
+  let manualLightAdjustments: number[] = [];
+  let manualSaturationAdjustments: number[] = [];
+  let [manualAdjustments,setManualAdjustments] = React.useState({light:manualLightAdjustments,saturation:manualSaturationAdjustments})
+
+  const contrast = (color:string) => {
+    let whiteTextContrast = chroma.contrast(color, light);
+    let darkTextContrast = chroma.contrast(color, dark);
+     return whiteTextContrast > darkTextContrast ? `${whiteTextContrast.toFixed(1)}` : `${darkTextContrast.toFixed(1)}`
+  }
+
 
   let light = chroma(config.baseValue)
     .set("hsl.h", config.lightHueShift)
@@ -45,77 +55,94 @@ function Colors_(props: ColorsProps, ref: HTMLElementRefOf<"div">) {
 
   let lightScale = chroma
     .scale([config.baseValue, light.hex()])
-    .mode(home.mode as InterpolationMode).domain(config.lightDomain)
+    .mode(home.mode as InterpolationMode)
+    .domain(config.lightDomain)
     .colors(config.stepsLighter + 1);
   let darkScale = chroma
     .scale([config.baseValue, dark.hex()])
-    .mode(home.mode as InterpolationMode).domain(config.darkDomain)
+    .mode(home.mode as InterpolationMode)
+    .domain(config.darkDomain)
     .colors(config.stepsDarker + 1);
   for (let i = lightScale.length - 1; i > 0; i--) {
     let newShade = lightScale[i];
     shades.push(newShade);
     names.push(`L${i}`);
-    textDisplayColor.push(
-      chroma.contrast(light, newShade) < 2.5 ? true : false
-    );
-    // adding background vs text contrast
-    let whiteTextContrast = chroma.contrast(newShade, light)
-    let darkTextContrast = chroma.contrast(newShade, dark)
-    contrasts.push(
-      whiteTextContrast > darkTextContrast ? `${whiteTextContrast.toFixed(1)}` : `${darkTextContrast.toFixed(1)}`
-    )
+    
   }
   // add base
   shades.push(config.baseValue);
   names.push("Base");
-  textDisplayColor.push(
-    chroma.contrast(light, config.baseValue) < 2.5 ? true : false
-  );
-  let whiteTextContrast = chroma.contrast(config.baseValue, light)
-    let darkTextContrast = chroma.contrast(config.baseValue, dark)
-    contrasts.push(
-      whiteTextContrast > darkTextContrast ? `${whiteTextContrast.toFixed(1)}` : `${darkTextContrast.toFixed(1)}`
-    )
+ 
+
 
   for (let i = 1; i < darkScale.length; i++) {
     let newShade = darkScale[i];
     shades.push(newShade);
     names.push(`D${i}`);
-    textDisplayColor.push(
-      chroma.contrast(light, newShade) < 2.5 ? true : false
-    );
-    // adding background vs text contrast
-    let whiteTextContrast = chroma.contrast(newShade, light)
-    let darkTextContrast = chroma.contrast(newShade, dark)
-    contrasts.push(
-      whiteTextContrast > darkTextContrast ? `${whiteTextContrast.toFixed(1)}`: `${darkTextContrast.toFixed(1)}`
-    )
+    
   }
+  
 
   props.uploaddata(JSON.stringify([names, shades]));
   return (
     // @ts-ignore
     <PlasmicColors
       root={{
-        props: {
-          children: shades.map((color, i) => {
+        ref,
+      }}
+      allColors={{
+        props:{
+          children:shades.map((color, i) => {
+            let [thisColor,setThisColor] = React.useState(color)
+      
+            React.useEffect(()=>{
+           
+              setThisColor( color);
+            },[color])
             // @ts-ignore
             return (
               <Color
-                onDark={textDisplayColor[i]}
-                color={color}
+                onDark={chroma.contrast(light, thisColor) < 2.5 ? true : false}
+                color={thisColor}
                 name={names[i]}
-                hexCode={color.toUpperCase()}
+                hexCode={props.manualAdjusting!==""? (chroma(thisColor).get(`hsl.${props.manualAdjusting}`)*100).toFixed(0) :  thisColor.toUpperCase()}
                 //@ts-ignore
-                contrast={contrasts[i]}
+                contrast={ contrast(thisColor)}
+                isLocked={color===config.baseValue}
+                lock={{
+                  props:{
+                      stroke:chroma.contrast(thisColor,"#FFFFFF")<2.5?"#000000":"#ffffff"
+                  }
+                  
+                }}
                 darkTextColor={light.hex()}
                 lightTextColor={dark.hex()}
-
+                adjustingSaturation={props.manualAdjusting!==""}
+                slider={{
+                  props:{
+                    children:
+                      <Slider.Root orientation="vertical" value={[chroma(thisColor).get(`hsl.${props.manualAdjusting}`)*100]} style={{position:"relative",display:"flex",alignItems:"center",flexDirection:"column",width:40,height:"100%"}} onValueChange={(e)=>{
+                        if (names[i]==="Base") return
+                        if (props.manualAdjusting === "s") {
+                          manualAdjustments.saturation[i] = e[0] / 100;
+                        } else if (props.manualAdjusting === "l") {
+                          manualAdjustments.light[i] = e[0] / 100;
+                        }
+                        setThisColor( chroma(color).set(`hsl.s`,manualAdjustments.saturation.length>0? manualAdjustments.saturation[i]:chroma(color).get("hsl.s")).set('hsl.l',manualAdjustments.light.length>0? manualAdjustments.light[i]:chroma(color).get('hsl.l')).hex())
+                      }}>
+                        <Slider.Track style={{flexGrow:1,position:"relative",width:3}}>
+                        </Slider.Track>
+                        <Slider.Thumb style={{display:"block",width:16,height:16,backgroundColor:chroma.contrast("white", thisColor) < 2.5 ? "black" : "white",borderRadius:"99px"}}/>
+                      </Slider.Root>
+                  }
+                }}
               ></Color>
             );
           }),
-        },
+        }
       }}
+      adjustingSaturation={props.manualAdjusting!==""}
+      
       {...props}
     />
   );

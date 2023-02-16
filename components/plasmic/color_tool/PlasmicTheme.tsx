@@ -38,7 +38,6 @@ import InputField from "../../InputField"; // plasmic-import: AIPmHdmqsY/compone
 import ColorField from "../../ColorField"; // plasmic-import: -6Apr9wI1O5/component
 import Button from "../../Button"; // plasmic-import: iXX9rwSFEyL/component
 import Colors from "../../Colors"; // plasmic-import: dyZl0Y5DD8/component
-import Color from "../../Color"; // plasmic-import: YczP2_j8Fh/component
 import HueField from "../../HueField"; // plasmic-import: b0WRjvMctS/component
 
 import { useScreenVariants as useScreenVariantspt71TlTNpDnZr } from "../blank_project/PlasmicGlobalVariant__Screen"; // plasmic-import: Pt71tlTNpDnZr/globalVariant
@@ -52,6 +51,8 @@ import sty from "./PlasmicTheme.module.css"; // plasmic-import: 848il-tpeEh/css
 import Icon6Icon from "./icons/PlasmicIcon__Icon6"; // plasmic-import: B-EzNgU_VY/icon
 import IconIcon from "./icons/PlasmicIcon__Icon"; // plasmic-import: Kv0ZYfEWi7y/icon
 import Icon5Icon from "./icons/PlasmicIcon__Icon5"; // plasmic-import: JJ3xl_PURO/icon
+import Icon13Icon from "./icons/PlasmicIcon__Icon13"; // plasmic-import: TO9aAi2aN/icon
+import Icon14Icon from "./icons/PlasmicIcon__Icon14"; // plasmic-import: DhTNvOfuLF/icon
 
 export type PlasmicTheme__VariantMembers = {};
 
@@ -73,6 +74,8 @@ export type PlasmicTheme__OverridesType = {
   copy?: p.Flex<typeof Button>;
   saturation?: p.Flex<typeof InputField>;
   lightDomain?: p.Flex<typeof InputField>;
+  adjustSaturation?: p.Flex<typeof Button>;
+  adjustLightness?: p.Flex<typeof Button>;
   darkDomain?: p.Flex<typeof InputField>;
   darkSaturation?: p.Flex<typeof InputField>;
   colors?: p.Flex<typeof Colors>;
@@ -319,7 +322,7 @@ function PlasmicTheme__RenderFunc(props: {
                 data-plasmic-name={"saturation"}
                 data-plasmic-override={overrides.saturation}
                 className={classNames("__wab_instance", sty.saturation)}
-                step={0.1 as const}
+                step={0.01 as const}
                 type={"Number" as const}
               >
                 {"Light Saturation(±)"}
@@ -336,6 +339,75 @@ function PlasmicTheme__RenderFunc(props: {
               </InputField>
             ) : null}
             {true ? (
+              <div className={classNames(projectcss.all, sty.freeBox___500Kj)}>
+                <Button
+                  data-plasmic-name={"adjustSaturation"}
+                  data-plasmic-override={overrides.adjustSaturation}
+                  className={classNames("__wab_instance", sty.adjustSaturation)}
+                  showStartIcon={true}
+                  simple={true}
+                  startIcon={
+                    true ? (
+                      <div
+                        className={classNames(
+                          projectcss.all,
+                          sty.freeBox__xogkm
+                        )}
+                      >
+                        <Icon13Icon
+                          className={classNames(projectcss.all, sty.svg__u6Tik)}
+                          role={"img"}
+                        />
+                      </div>
+                    ) : null
+                  }
+                >
+                  <div
+                    className={classNames(
+                      projectcss.all,
+                      projectcss.__wab_text,
+                      sty.text__cMpHy
+                    )}
+                  >
+                    {"Adjust S"}
+                  </div>
+                </Button>
+
+                <Button
+                  data-plasmic-name={"adjustLightness"}
+                  data-plasmic-override={overrides.adjustLightness}
+                  className={classNames("__wab_instance", sty.adjustLightness)}
+                  showStartIcon={true}
+                  simple={true}
+                  startIcon={
+                    true ? (
+                      <div
+                        className={classNames(
+                          projectcss.all,
+                          sty.freeBox__iYrSl
+                        )}
+                      >
+                        <Icon14Icon
+                          className={classNames(projectcss.all, sty.svg__un72G)}
+                          role={"img"}
+                        />
+                      </div>
+                    ) : null
+                  }
+                >
+                  <div
+                    className={classNames(
+                      projectcss.all,
+                      projectcss.__wab_text,
+                      sty.text__qOpx
+                    )}
+                  >
+                    {"Adjust L"}
+                  </div>
+                </Button>
+              </div>
+            ) : null}
+            {true ? (
               <InputField
                 data-plasmic-name={"darkDomain"}
                 data-plasmic-override={overrides.darkDomain}
@@ -350,7 +422,7 @@ function PlasmicTheme__RenderFunc(props: {
                 data-plasmic-name={"darkSaturation"}
                 data-plasmic-override={overrides.darkSaturation}
                 className={classNames("__wab_instance", sty.darkSaturation)}
-                step={0.1 as const}
+                step={0.01 as const}
                 type={"Number" as const}
               >
                 {"Dark Saturation(±)"}
@@ -363,13 +435,7 @@ function PlasmicTheme__RenderFunc(props: {
             data-plasmic-name={"colors"}
             data-plasmic-override={overrides.colors}
             className={classNames("__wab_instance", sty.colors)}
-          >
-            <Color className={classNames("__wab_instance", sty.color__avIB)} />
-
-            <Color className={classNames("__wab_instance", sty.color__qotr1)} />
-
-            <Color className={classNames("__wab_instance", sty.color__qxMe)} />
-          </Colors>
+          />
         ) : null}
         {true ? (
           <p.Stack
@@ -498,6 +564,8 @@ const PlasmicDescendants = {
     "copy",
     "saturation",
     "lightDomain",
+    "adjustSaturation",
+    "adjustLightness",
     "darkDomain",
     "darkSaturation",
     "colors",
@@ -515,6 +583,8 @@ const PlasmicDescendants = {
   copy: ["copy"],
   saturation: ["saturation"],
   lightDomain: ["lightDomain"],
+  adjustSaturation: ["adjustSaturation"],
+  adjustLightness: ["adjustLightness"],
   darkDomain: ["darkDomain"],
   darkSaturation: ["darkSaturation"],
   colors: ["colors"],
@@ -537,6 +607,8 @@ type NodeDefaultElementType = {
   copy: typeof Button;
   saturation: typeof InputField;
   lightDomain: typeof InputField;
+  adjustSaturation: typeof Button;
+  adjustLightness: typeof Button;
   darkDomain: typeof InputField;
   darkSaturation: typeof InputField;
   colors: typeof Colors;
@@ -616,6 +688,8 @@ export const PlasmicTheme = Object.assign(
     copy: makeNodeComponent("copy"),
     saturation: makeNodeComponent("saturation"),
     lightDomain: makeNodeComponent("lightDomain"),
+    adjustSaturation: makeNodeComponent("adjustSaturation"),
+    adjustLightness: makeNodeComponent("adjustLightness"),
     darkDomain: makeNodeComponent("darkDomain"),
     darkSaturation: makeNodeComponent("darkSaturation"),
     colors: makeNodeComponent("colors"),

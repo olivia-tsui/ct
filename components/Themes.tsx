@@ -5,17 +5,14 @@ import {
 } from "./plasmic/color_tool/PlasmicThemes";
 import { HTMLElementRefOf } from "@plasmicapp/react-web";
 import Theme from "./Theme";
-import { HomeContext } from "../pages";
 
 
 export interface ThemesProps extends DefaultThemesProps {}
 
 function Themes_(props: ThemesProps, ref: HTMLElementRefOf<"div">) {
-  const [localConfigs, setLocalConfigs] = React.useState([]);
   const [themesNodes, setThemesNodes] = React.useState<React.ReactElement[]>([
     <Theme></Theme>,
   ]);
-  const home = React.useContext(HomeContext);
 
 React.useEffect(() => {
   let import_ = localStorage.getItem("import")

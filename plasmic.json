@@ -237,6 +237,36 @@
           "id": "p5cZTvPKPD",
           "name": "Icon8Icon",
           "moduleFilePath": "plasmic/color_tool/icons/PlasmicIcon__Icon8.tsx"
+        },
+        {
+          "id": "4JOBecA1UU",
+          "name": "Icon9Icon",
+          "moduleFilePath": "plasmic/color_tool/icons/PlasmicIcon__Icon9.tsx"
+        },
+        {
+          "id": "hi7bENd5j2",
+          "name": "Icon10Icon",
+          "moduleFilePath": "plasmic/color_tool/icons/PlasmicIcon__Icon10.tsx"
+        },
+        {
+          "id": "Nf9h6L9BaX",
+          "name": "Icon11Icon",
+          "moduleFilePath": "plasmic/color_tool/icons/PlasmicIcon__Icon11.tsx"
+        },
+        {
+          "id": "pvDF8fHmEM",
+          "name": "Icon12Icon",
+          "moduleFilePath": "plasmic/color_tool/icons/PlasmicIcon__Icon12.tsx"
+        },
+        {
+          "id": "TO9aAi2aN",
+          "name": "Icon13Icon",
+          "moduleFilePath": "plasmic/color_tool/icons/PlasmicIcon__Icon13.tsx"
+        },
+        {
+          "id": "DhTNvOfuLF",
+          "name": "Icon14Icon",
+          "moduleFilePath": "plasmic/color_tool/icons/PlasmicIcon__Icon14.tsx"
         }
       ],
       "images": [],
@@ -267,6 +297,26 @@
           "id": "HV4wY_pYon",
           "name": "SketchPicker",
           "componentImportPath": "react-color"
+        },
+        {
+          "id": "YmuMF6L35U",
+          "name": "Slider_Root",
+          "componentImportPath": "@radix-ui/react-slider"
+        },
+        {
+          "id": "7aPxeUWcxj",
+          "name": "Slider_Track",
+          "componentImportPath": "@radix-ui/react-slider"
+        },
+        {
+          "id": "jM_Rl26jSj",
+          "name": "Slider_Range",
+          "componentImportPath": "@radix-ui/react-slider"
+        },
+        {
+          "id": "Pr7NhlEb6p",
+          "name": "Slider_Thumb",
+          "componentImportPath": "@radix-ui/react-slider"
         }
       ]
     },

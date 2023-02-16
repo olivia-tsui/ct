@@ -4,7 +4,7 @@ import Script from 'next/script';
 import { PlasmicCanvasHost, registerComponent } from '@plasmicapp/host';
 import { HuePicker,SketchPicker } from 'react-color';
 import {Segmented} from "antd"
-
+import * as Slider from "@radix-ui/react-slider"
 registerComponent(HuePicker,{
   name: "HuePicker",
   importPath: "react-color",
@@ -20,6 +20,59 @@ registerComponent(HuePicker,{
 
   }
 });
+
+registerComponent(Slider.Root,{
+  name: "Slider_Root",
+  importPath: "@radix-ui/react-slider",
+  props: {
+    defaultValue:{
+      type: "array",
+      defaultValue: [50]
+    },
+    orientation:{
+      type: "choice",
+      options: ["horizontal","vertical"]
+    },
+    children:{
+      type:"slot",
+      defaultValue:[{
+        type: "component",
+        name:"Slider_Track",
+      },
+    {
+      type: "component",
+      name:"Slider_Thumb",
+    }]
+    }
+  }
+})
+registerComponent(Slider.Track,{
+  name: "Slider_Track",
+  importPath: "@radix-ui/react-slider",
+  props: {
+    children:{
+      type:"slot",
+      defaultValue:{
+        type: "component",
+        name:"Slider_Range",
+      }
+    }
+  }
+})
+
+registerComponent(Slider.Range,{
+  name: "Slider_Range",
+  importPath: "@radix-ui/react-slider",
+  props: {
+  }
+})
+
+registerComponent(Slider.Thumb,{
+  name: "Slider_Thumb",
+  importPath: "@radix-ui/react-slider",
+  props: {
+  }
+})
 
 registerComponent(SketchPicker,{
   name: "SketchPicker",

@@ -8,7 +8,7 @@
   transition-duration: 0.1s;
   -webkit-transition-property: background;
   -webkit-transition-duration: 0.1s;
-  border-radius: 2px;
+  border-radius: 4px;
   padding: 12px 20px;
   border-width: 0px;
 }
@@ -155,8 +155,15 @@
   white-space: pre;
   user-select: none;
 }
+.slotTargetChildrenshowStartIcon {
+  font-size: 16px;
+}
+.slotTargetChildrenshowEndIcon {
+  font-size: 16px;
+}
 .slotTargetChildrensimple {
   color: #000000;
+  font-weight: 400;
 }
 .slotTargetChildrensimple_global_dark__true {
   color: #ffffff;

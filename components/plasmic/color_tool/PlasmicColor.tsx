@@ -40,16 +40,27 @@ import "@plasmicapp/react-web/lib/plasmic.css";
 import projectcss from "../blank_project/plasmic_blank_project.module.css"; // plasmic-import: dczqNaFYoArv9QmtqhGLsR/projectcss
 import sty from "./PlasmicColor.module.css"; // plasmic-import: YczP2_j8Fh/css
 
+import Icon11Icon from "./icons/PlasmicIcon__Icon11"; // plasmic-import: Nf9h6L9BaX/icon
+import Icon12Icon from "./icons/PlasmicIcon__Icon12"; // plasmic-import: pvDF8fHmEM/icon
+
 export type PlasmicColor__VariantMembers = {
   onDark: "onDark";
+  adjustingSaturation: "adjustingSaturation";
+  isLocked: "isLocked";
 };
 
 export type PlasmicColor__VariantsArgs = {
   onDark?: SingleBooleanChoiceArg<"onDark">;
+  adjustingSaturation?: SingleBooleanChoiceArg<"adjustingSaturation">;
+  isLocked?: SingleBooleanChoiceArg<"isLocked">;
 };
 
 type VariantPropType = keyof PlasmicColor__VariantsArgs;
-export const PlasmicColor__VariantProps = new Array<VariantPropType>("onDark");
+export const PlasmicColor__VariantProps = new Array<VariantPropType>(
+  "onDark",
+  "adjustingSaturation",
+  "isLocked"
+);
 
 export type PlasmicColor__ArgsType = {};
 type ArgPropType = keyof PlasmicColor__ArgsType;
@@ -57,13 +68,17 @@ export const PlasmicColor__ArgProps = new Array<ArgPropType>();
 
 export type PlasmicColor__OverridesType = {
   root?: p.Flex<"div">;
+  lock?: p.Flex<"svg">;
   name?: p.Flex<"div">;
   contrast?: p.Flex<"div">;
   hexCode?: p.Flex<"div">;
+  slider?: p.Flex<"div">;
 };
 
 export interface DefaultColorProps {
   onDark?: SingleBooleanChoiceArg<"onDark">;
+  adjustingSaturation?: SingleBooleanChoiceArg<"adjustingSaturation">;
+  isLocked?: SingleBooleanChoiceArg<"isLocked">;
   className?: string;
 }
 
@@ -112,6 +127,22 @@ function PlasmicColor__RenderFunc(props: {
         type: "private",
         variableType: "variant",
         initFunc: true ? ($props, $state, $ctx) => $props.onDark : undefined
+      },
+
+      {
+        path: "adjustingSaturation",
+        type: "private",
+        variableType: "variant",
+        initFunc: true
+          ? ($props, $state, $ctx) => $props.adjustingSaturation
+          : undefined
+      },
+
+      {
+        path: "isLocked",
+        type: "private",
+        variableType: "variant",
+        initFunc: true ? ($props, $state, $ctx) => $props.isLocked : undefined
       }
     ],
 
@@ -138,34 +169,131 @@ function PlasmicColor__RenderFunc(props: {
         projectcss.plasmic_default_styles,
         projectcss.plasmic_mixins,
         sty.root,
-        { [sty.rootonDark]: hasVariant($state, "onDark", "onDark") }
+        {
+          [sty.rootadjustingSaturation]: hasVariant(
+            $state,
+            "adjustingSaturation",
+            "adjustingSaturation"
+          ),
+          [sty.rootadjustingSaturation_isLocked]:
+            hasVariant($state, "isLocked", "isLocked") &&
+            hasVariant($state, "adjustingSaturation", "adjustingSaturation"),
+          [sty.rootisLocked]: hasVariant($state, "isLocked", "isLocked"),
+          [sty.rootonDark]: hasVariant($state, "onDark", "onDark")
+        }
       )}
       data-plasmic-trigger-props={[triggerRootHoverProps]}
     >
-      <div
-        data-plasmic-name={"name"}
-        data-plasmic-override={overrides.name}
-        className={classNames(projectcss.all, projectcss.__wab_text, sty.name, {
-          [sty.nameonDark]: hasVariant($state, "onDark", "onDark")
-        })}
-      >
-        {"Name"}
-      </div>
-
-      <div
-        data-plasmic-name={"contrast"}
-        data-plasmic-override={overrides.contrast}
-        className={classNames(
-          projectcss.all,
-          projectcss.__wab_text,
-          sty.contrast,
-          { [sty.contrastonDark]: hasVariant($state, "onDark", "onDark") }
-        )}
-      >
-        {"4.5:1"}
-      </div>
-
-      {(triggers.hover_root ? true : true) ? (
+      {(
+        hasVariant($state, "isLocked", "isLocked") &&
+        hasVariant($state, "adjustingSaturation", "adjustingSaturation")
+          ? true
+          : hasVariant($state, "isLocked", "isLocked")
+          ? true
+          : true
+      ) ? (
+        <p.PlasmicIcon
+          data-plasmic-name={"lock"}
+          data-plasmic-override={overrides.lock}
+          PlasmicIconType={
+            hasVariant($state, "isLocked", "isLocked") &&
+            hasVariant($state, "adjustingSaturation", "adjustingSaturation")
+              ? Icon12Icon
+              : Icon11Icon
+          }
+          className={classNames(projectcss.all, sty.lock, {
+            [sty.lockadjustingSaturation_isLocked]:
+              hasVariant($state, "isLocked", "isLocked") &&
+              hasVariant($state, "adjustingSaturation", "adjustingSaturation"),
+            [sty.lockadjustingSaturation_onDark_isLocked]:
+              hasVariant(
+                $state,
+                "adjustingSaturation",
+                "adjustingSaturation"
+              ) &&
+              hasVariant($state, "isLocked", "isLocked") &&
+              hasVariant($state, "onDark", "onDark"),
+            [sty.lockisLocked]: hasVariant($state, "isLocked", "isLocked")
+          })}
+          role={"img"}
+        />
+      ) : null}
+      {(
+        hasVariant($state, "adjustingSaturation", "adjustingSaturation")
+          ? true
+          : true
+      ) ? (
+        <div
+          data-plasmic-name={"name"}
+          data-plasmic-override={overrides.name}
+          className={classNames(
+            projectcss.all,
+            projectcss.__wab_text,
+            sty.name,
+            {
+              [sty.nameadjustingSaturation]: hasVariant(
+                $state,
+                "adjustingSaturation",
+                "adjustingSaturation"
+              ),
+              [sty.nameadjustingSaturation_onDark_isLocked]:
+                hasVariant(
+                  $state,
+                  "adjustingSaturation",
+                  "adjustingSaturation"
+                ) &&
+                hasVariant($state, "isLocked", "isLocked") &&
+                hasVariant($state, "onDark", "onDark"),
+              [sty.nameisLocked]: hasVariant($state, "isLocked", "isLocked"),
+              [sty.nameonDark]: hasVariant($state, "onDark", "onDark")
+            }
+          )}
+        >
+          {"Name"}
+        </div>
+      ) : null}
+      {(
+        hasVariant($state, "adjustingSaturation", "adjustingSaturation")
+          ? true
+          : true
+      ) ? (
+        <div
+          data-plasmic-name={"contrast"}
+          data-plasmic-override={overrides.contrast}
+          className={classNames(
+            projectcss.all,
+            projectcss.__wab_text,
+            sty.contrast,
+            {
+              [sty.contrastadjustingSaturation]: hasVariant(
+                $state,
+                "adjustingSaturation",
+                "adjustingSaturation"
+              ),
+              [sty.contrastadjustingSaturation_isLocked]:
+                hasVariant($state, "isLocked", "isLocked") &&
+                hasVariant(
+                  $state,
+                  "adjustingSaturation",
+                  "adjustingSaturation"
+                ),
+              [sty.contrastonDark]: hasVariant($state, "onDark", "onDark")
+            }
+          )}
+        >
+          {"4.5:1"}
+        </div>
+      ) : null}
+      {(
+        hasVariant($state, "adjustingSaturation", "adjustingSaturation") &&
+        triggers.hover_root
+          ? true
+          : triggers.hover_root
+          ? true
+          : hasVariant($state, "adjustingSaturation", "adjustingSaturation")
+          ? true
+          : true
+      ) ? (
         <div
           data-plasmic-name={"hexCode"}
           data-plasmic-override={overrides.hexCode}
@@ -173,30 +301,70 @@ function PlasmicColor__RenderFunc(props: {
             projectcss.all,
             projectcss.__wab_text,
             sty.hexCode,
-            { [sty.hexCodeonDark]: hasVariant($state, "onDark", "onDark") }
+            {
+              [sty.hexCodeadjustingSaturation]: hasVariant(
+                $state,
+                "adjustingSaturation",
+                "adjustingSaturation"
+              ),
+              [sty.hexCodeonDark]: hasVariant($state, "onDark", "onDark")
+            }
           )}
         >
           {"#HexCode"}
         </div>
+      ) : null}
+      {(
+        hasVariant($state, "adjustingSaturation", "adjustingSaturation")
+          ? true
+          : true
+      ) ? (
+        <div
+          data-plasmic-name={"slider"}
+          data-plasmic-override={overrides.slider}
+          className={classNames(projectcss.all, sty.slider, {
+            [sty.slideradjustingSaturation]: hasVariant(
+              $state,
+              "adjustingSaturation",
+              "adjustingSaturation"
+            ),
+            [sty.slideradjustingSaturation_isLocked]:
+              hasVariant($state, "isLocked", "isLocked") &&
+              hasVariant($state, "adjustingSaturation", "adjustingSaturation"),
+            [sty.slideradjustingSaturation_onDark_isLocked]:
+              hasVariant(
+                $state,
+                "adjustingSaturation",
+                "adjustingSaturation"
+              ) &&
+              hasVariant($state, "isLocked", "isLocked") &&
+              hasVariant($state, "onDark", "onDark"),
+            [sty.slideronDark]: hasVariant($state, "onDark", "onDark")
+          })}
+        />
       ) : null}
     </div>
   ) as React.ReactElement | null;
 }
 
 const PlasmicDescendants = {
-  root: ["root", "name", "contrast", "hexCode"],
+  root: ["root", "lock", "name", "contrast", "hexCode", "slider"],
+  lock: ["lock"],
   name: ["name"],
   contrast: ["contrast"],
-  hexCode: ["hexCode"]
+  hexCode: ["hexCode"],
+  slider: ["slider"]
 } as const;
 type NodeNameType = keyof typeof PlasmicDescendants;
 type DescendantsType<T extends NodeNameType> =
   typeof PlasmicDescendants[T][number];
 type NodeDefaultElementType = {
   root: "div";
+  lock: "svg";
   name: "div";
   contrast: "div";
   hexCode: "div";
+  slider: "div";
 };
 
 type ReservedPropsType = "variants" | "args" | "overrides";
@@ -260,9 +428,11 @@ export const PlasmicColor = Object.assign(
   makeNodeComponent("root"),
   {
     // Helper components rendering sub-elements
+    lock: makeNodeComponent("lock"),
     _name: makeNodeComponent("name"),
     contrast: makeNodeComponent("contrast"),
     hexCode: makeNodeComponent("hexCode"),
+    slider: makeNodeComponent("slider"),
 
     // Metadata about props expected for PlasmicColor
     internalVariantProps: PlasmicColor__VariantProps,
