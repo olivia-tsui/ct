@@ -98,7 +98,6 @@ function Colors_(props: ColorsProps, ref: HTMLElementRefOf<"div">) {
       allColors={{
         props: {
           children: thisColor.map((color, i) => {
-            console.log(i, thisColor[i]);
             return (
               <Color
                 key={i}
