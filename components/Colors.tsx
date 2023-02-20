@@ -89,15 +89,8 @@ function Colors_(props: ColorsProps, ref: HTMLElementRefOf<"div">) {
 
   //useEffect for updating the color Array
   React.useEffect(() => {
-    if (shades.length === thisColor.length) {
-      for (var i = 0; i < shades.length; i++) {
-        if (shades[i] === thisColor[i]) continue;
-        else break;
-      }
-    } else {
-      setThisColor(shades);
-    }
-  }, [shades]);
+    setThisColor(shades);
+  }, [config]);
 
   return (
     <PlasmicColors
