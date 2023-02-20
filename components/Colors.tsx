@@ -67,6 +67,7 @@ function Colors_(props: ColorsProps, ref: HTMLElementRefOf<"div">) {
     .mode(home.mode as InterpolationMode)
     .domain(config.darkDomain)
     .colors(config.stepsDarker + 1);
+
   for (let i = lightScale.length - 1; i > 0; i--) {
     let newShade = lightScale[i];
     shades.push(newShade);
@@ -84,6 +85,11 @@ function Colors_(props: ColorsProps, ref: HTMLElementRefOf<"div">) {
 
   props.uploaddata(JSON.stringify([names, shades]));
   const [thisColor, setThisColor] = React.useState(shades);
+
+  React.useEffect(() => {
+    setThisColor(shades);
+  }, [shades]);
+
   return (
     <PlasmicColors
       root={{
@@ -91,7 +97,8 @@ function Colors_(props: ColorsProps, ref: HTMLElementRefOf<"div">) {
       }}
       allColors={{
         props: {
-          children: shades.map((color, i) => {
+          children: thisColor.map((color, i) => {
+            console.log(i, thisColor[i]);
             return (
               <Color
                 key={i}
