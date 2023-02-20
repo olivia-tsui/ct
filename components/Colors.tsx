@@ -84,10 +84,19 @@ function Colors_(props: ColorsProps, ref: HTMLElementRefOf<"div">) {
   }
 
   props.uploaddata(JSON.stringify([names, shades]));
+  //useState to manage to shade array
   const [thisColor, setThisColor] = React.useState(shades);
 
+  //useEffect for updating the color Array
   React.useEffect(() => {
-    setThisColor(shades);
+    if (shades.length === thisColor.length) {
+      for (var i = 0; i < shades.length; i++) {
+        if (shades[i] === thisColor[i]) continue;
+        else break;
+      }
+    } else {
+      setThisColor(shades);
+    }
   }, [shades]);
 
   return (
