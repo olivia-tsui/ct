@@ -210,25 +210,32 @@ function Colors_(props: ColorsProps, ref: HTMLElementRefOf<"div">) {
                           }
 
                           const updatedColorSets = [...thisColor];
-                          updatedColorSets[i] =
-                            props.manualAdjusting === "s"
-                              ? chroma(shades[i])
-                                  .set(
-                                    `hsl.s`,
-                                    updatedManualAdjustments.saturation.length >
-                                      0
-                                      ? updatedManualAdjustments.saturation[i]
-                                      : chroma(shades[i]).get("hsl.s")
-                                  )
-                                  .hex()
-                              : chroma(shades[i])
-                                  .set(
-                                    `hsl.l`,
-                                    updatedManualAdjustments.light.length > 0
-                                      ? updatedManualAdjustments.light[i]
-                                      : chroma(shades[i]).get("hsl.l")
-                                  )
-                                  .hex();
+                          if (
+                            updatedManualAdjustments.saturation[i] === undefined
+                          )
+                            updatedManualAdjustments.saturation[i] = chroma(
+                              shades[i]
+                            ).get("hsl.s");
+
+                          if (updatedManualAdjustments.light[i] === undefined)
+                            updatedManualAdjustments.light[i] = chroma(
+                              shades[i]
+                            ).get("hsl.l");
+
+                          updatedColorSets[i] = chroma(shades[i])
+                            .set(
+                              `hsl.s`,
+                              updatedManualAdjustments.saturation.length > 0
+                                ? updatedManualAdjustments.saturation[i]
+                                : chroma(shades[i]).get("hsl.s")
+                            )
+                            .set(
+                              `hsl.l`,
+                              updatedManualAdjustments.light.length > 0
+                                ? updatedManualAdjustments.light[i]
+                                : chroma(shades[i]).get("hsl.l")
+                            )
+                            .hex();
 
                           // Set the state with the updated items
                           setThisColor(updatedColorSets);
