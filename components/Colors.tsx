@@ -134,6 +134,7 @@ function Colors_(props: ColorsProps, ref: HTMLElementRefOf<"div">) {
   }, [config]);
 
   return (
+    // @ts-ignore
     <PlasmicColors
       root={{
         ref,
@@ -158,6 +159,7 @@ function Colors_(props: ColorsProps, ref: HTMLElementRefOf<"div">) {
                       ).toFixed(0)
                     : thisColor[i].toUpperCase()
                 }
+                // @ts-ignore
                 contrast={contrast(thisColor[i])}
                 isLocked={thisColor[i] === config.baseValue}
                 lock={{
