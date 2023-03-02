@@ -20,10 +20,10 @@ const config = {
   darkHueShift: 225.48,
   lightDomain:[0,100],
   darkDomain:[0,100],
-  // manualAdjustments:{
-  //   light:[],
-  //   saturation:[]
-  // }
+  manualAdjustments:{
+    lightness:[],
+    saturation:[]
+  }
 };
 
 export const ColorsContext = React.createContext(config);
