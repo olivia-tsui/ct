@@ -19,7 +19,11 @@ const config = {
   lightHueShift: 225.48,
   darkHueShift: 225.48,
   lightDomain:[0,100],
-  darkDomain:[0,100]
+  darkDomain:[0,100],
+  manualAdjustments:{
+    lightness:[],
+    saturation:[]
+  }
 };
 
 export const ColorsContext = React.createContext(config);
@@ -232,11 +236,13 @@ function Theme_(props,ref) {
           copy={{
             props: {
               onClick: () => {
-                let out = JSON.parse(outPut);
+
+                let out = JSON.parse(output);
                 let r = out[0].reduce((obj, key, index) => {
                   obj[key] = out[1][index];
                   return obj;
                 }, {});
+                console.log("r = ", r)
                 navigator.clipboard
                   .writeText(JSON.stringify(r).toUpperCase())
                   .then(function () {});
@@ -252,7 +258,7 @@ function Theme_(props,ref) {
           }}
           colors={{
             props: {
-              uploaddata: (d) => (output = d),
+              uploaddata: (d) => {output = d},
               manualAdjusting: manualAdjusting,
             },
           }}
