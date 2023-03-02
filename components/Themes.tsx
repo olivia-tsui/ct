@@ -18,7 +18,6 @@ React.useEffect(() => {
   let import_ = localStorage.getItem("import")
     if (import_ && import_.length > 0) {
       let parsed = JSON.parse(import_)
-    
       // @ts-ignore
     setThemesNodes(parsed.map((config) => {
       let conf = config;
