@@ -31,7 +31,7 @@ React.useEffect(() => {
 },[])
 
   const defaultConfig = {
-    name: "Default",
+    name:"Default",
     baseValue: "#0F3CC9",
     saturation: 0,
     darkSaturation: 0,
@@ -41,9 +41,13 @@ React.useEffect(() => {
     darkLuminance: 0.008,
     lightHueShift: 225.48,
     darkHueShift: 225.48,
-    lightDomain: [0, 100],
-    darkDomain: [0, 100]
-  };
+    lightDomain:[0,100],
+    darkDomain:[0,100],
+    manualAdjustments:{
+      lightness:[],
+      saturation:[]
+    }
+  }
 
 
   function removeTheme(id: string) {

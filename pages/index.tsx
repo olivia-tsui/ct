@@ -17,7 +17,7 @@ const inputFile = React.useRef(null)
 
 
 const onSaveChange = (str:{}[])=>{
-  save= str
+  save = str
 }
 
 React.useEffect(() => {
