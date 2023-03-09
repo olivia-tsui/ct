@@ -45,30 +45,26 @@ function Theme_(props, ref) {
   const [rawDarkDomainLiteral, setRawDarkDomainLiteral] = React.useState(
     _config.darkDomain.toString()
   );
-  const [key, setKey] = React.useState(generateRandomString());
   const home = React.useContext(HomeContext);
   const [manualAdjusting, setManualAdjusting] = React.useState("");
 
   React.useEffect(() => {
     if (home.currentSaveData.length > 0) {
-      let isAlreadyIn = home.currentSaveData.some((n) => n.key === key);
-
+      let isAlreadyIn = home.currentSaveData.some((n) => n.key === _config.key);
       if (!isAlreadyIn) {
         if (home.currentSaveData.some((obj) => Object.keys(obj).length === 0))
-          home.onSaveChange([{ ..._config, key: key }]);
-        else
-          home.onSaveChange([
-            ...home.currentSaveData,
-            { ..._config, key: key },
-          ]);
+          home.onSaveChange([{ ..._config }]);
+        else home.onSaveChange([...home.currentSaveData, { ..._config }]);
       } else {
         home.onSaveChange(
           home.currentSaveData.map((n) =>
-            n.key === key ? { ..._config, key: key } : n
+            n.key === _config.key ? { ..._config } : n
           )
         );
       }
-    } else home.onSaveChange([{ ..._config, key: key }]);
+    } else {
+      home.onSaveChange([{ ..._config }]);
+    }
   }, [_config]);
 
   function approximatelyEqual(a: number, b: number, threshold = 0.1) {
@@ -325,7 +321,7 @@ function Theme_(props, ref) {
               onClick: () => {
                 props.removeTheme(props.id);
                 home.onSaveChange(
-                  home.currentSaveData.filter((n) => n.key !== key)
+                  home.currentSaveData.filter((n) => n.key !== props.config.key)
                 );
               },
             },

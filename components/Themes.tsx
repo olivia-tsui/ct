@@ -10,6 +10,7 @@ export interface ThemesProps extends DefaultThemesProps {}
 
 function Themes_(props: ThemesProps, ref: HTMLElementRefOf<"div">) {
   const defaultConfig = {
+    key: "Ra5GY78",
     name: "Default",
     baseValue: "#0F3CC9",
     saturation: 0,
@@ -43,11 +44,10 @@ function Themes_(props: ThemesProps, ref: HTMLElementRefOf<"div">) {
       // @ts-ignore
       setThemesNodes(
         parsed.map((config) => {
-          let conf = config;
           // @ts-ignore
           let key = config.key;
           // @ts-ignore
-          delete conf.key;
+
           return (
             <Theme
               config={config}
@@ -89,7 +89,7 @@ function Themes_(props: ThemesProps, ref: HTMLElementRefOf<"div">) {
             setThemesNodes([
               ...themesNodes,
               <Theme
-                config={defaultConfig}
+                config={{ ...defaultConfig, key: generateRandomString() }}
                 key={id}
                 id={id}
                 removeTheme={removeTheme}
