@@ -6,32 +6,11 @@ import {
 import { HTMLElementRefOf } from "@plasmicapp/react-web";
 import Theme from "./Theme";
 
-
 export interface ThemesProps extends DefaultThemesProps {}
 
 function Themes_(props: ThemesProps, ref: HTMLElementRefOf<"div">) {
-  const [themesNodes, setThemesNodes] = React.useState<React.ReactElement[]>([
-    <Theme></Theme>,
-  ]);
-
-React.useEffect(() => {
-  let import_ = localStorage.getItem("import")
-    if (import_ && import_.length > 0) {
-      let parsed = JSON.parse(import_)
-      // @ts-ignore
-    setThemesNodes(parsed.map((config) => {
-      let conf = config;
-      // @ts-ignore
-      let key = config.key;
-      // @ts-ignore
-      delete conf.key;
-      return <Theme config={config} removeTheme={removeTheme} key={key} id={generateRandomString()}></Theme>;
-    }));
-    }
-},[])
-
   const defaultConfig = {
-    name:"Default",
+    name: "Default",
     baseValue: "#0F3CC9",
     saturation: 0,
     darkSaturation: 0,
@@ -41,17 +20,48 @@ React.useEffect(() => {
     darkLuminance: 0.008,
     lightHueShift: 225.48,
     darkHueShift: 225.48,
-    lightDomain:[0,100],
-    darkDomain:[0,100],
-    manualAdjustments:{
-      lightness:[],
-      saturation:[]
-    }
-  }
+    lightDomain: [0, 100],
+    darkDomain: [0, 100],
+    manualAdjustments: {
+      lightness: [],
+      saturation: [],
+    },
+  };
+  const [themesNodes, setThemesNodes] = React.useState<React.ReactElement[]>([
+    <Theme
+      key={generateRandomString()}
+      config={defaultConfig}
+      id={generateRandomString()}
+      removeTheme={removeTheme}
+    ></Theme>,
+  ]);
 
+  React.useEffect(() => {
+    let import_ = localStorage.getItem("import");
+    if (import_ && import_.length > 0) {
+      let parsed = JSON.parse(import_);
+      // @ts-ignore
+      setThemesNodes(
+        parsed.map((config) => {
+          let conf = config;
+          // @ts-ignore
+          let key = config.key;
+          // @ts-ignore
+          delete conf.key;
+          return (
+            <Theme
+              config={config}
+              removeTheme={removeTheme}
+              key={key}
+              id={generateRandomString()}
+            ></Theme>
+          );
+        })
+      );
+    }
+  }, []);
 
   function removeTheme(id: string) {
-
     setThemesNodes((prevThemesNodes) => {
       return prevThemesNodes.filter((n) => {
         return n.props.id !== id;
@@ -68,6 +78,7 @@ React.useEffect(() => {
     }
     return result;
   }
+
   return (
     <PlasmicThemes
       count={themesNodes}
