@@ -5,28 +5,36 @@ import * as ph from "@plasmicapp/host";
 import { PlasmicHomepage } from "../components/plasmic/blank_project/PlasmicHomepage";
 import { useRouter } from "next/router";
 
-import { DarkContext, DarkValue } from "../components/plasmic/color_tool/PlasmicGlobalVariant__Dark"; 
+import {
+  DarkContext,
+  DarkValue,
+} from "../components/plasmic/color_tool/PlasmicGlobalVariant__Dark";
 import PlasmicHome from "../components/plasmic/color_tool/PlasmicHome";
 
-export const HomeContext = React.createContext({mode:"hsl",onSaveChange:(str:{}[])=>{},currentSaveData:[{}]});
+export const HomeContext = React.createContext({
+  mode: "hsl",
+  onSaveChange: (str: {}[]) => {},
+  currentSaveData: [{}],
+});
 function Homepage() {
-const [mode, setMode] = React.useState("hsl")
-const [dark, setDark] = React.useState('_false')
-let save :{}[]= []
-const inputFile = React.useRef(null) 
+  const [mode, setMode] = React.useState("hsl");
+  const [dark, setDark] = React.useState("_false");
+  const [save, setSave] = React.useState([{}]);
 
+  const onSaveChange = (str: {}[]) => {
+    setSave(str);
+  };
 
-const onSaveChange = (str:{}[])=>{
-  save = str
-}
+  const inputFile = React.useRef(null);
 
-React.useEffect(() => {
-  let import_ = localStorage.getItem("import");
-  if (import_) {
-    save = (JSON.parse(import_));
-    localStorage.setItem("import", "");
-  }
-},[])
+  React.useEffect(() => {
+    let import_ = localStorage.getItem("import");
+    if (import_) {
+      setSave(JSON.parse(import_));
+      localStorage.setItem("import", "");
+    }
+  }, []);
+
   return (
     <ph.PageParamsProvider
       params={useRouter()?.query}
@@ -41,48 +49,47 @@ React.useEffect(() => {
           }}
         >
           <PlasmicHome>
-          <PlasmicHomepage
-            toggle={{
-              // @ts-ignore
-              props: {
-                onClick: () => {
-                  dark === "_false" ? setDark("_true") : setDark("_false");
+            <PlasmicHomepage
+              toggle={{
+                // @ts-ignore
+                props: {
+                  onClick: () => {
+                    dark === "_false" ? setDark("_true") : setDark("_false");
+                  },
                 },
-              },
-            }}
-            mode={{
-              props: {
-                onChange: (value) => {
-                  setMode(value.toString());
+              }}
+              mode={{
+                props: {
+                  onChange: (value) => {
+                    setMode(value.toString());
+                  },
                 },
-              },
-            }}
-            
-            save={{
-              // @ts-ignore
-              props: {
-                onClick: (event) => {
-                  let correctArr = save.slice(-(save.length));
-                  const blob = new Blob([JSON.stringify(correctArr)], {
-                    type: "application/json",
-                  });
-                  const url = URL.createObjectURL(blob);
-                  const link = document.createElement("a");
-                  link.download = "color_scales.json";
-                  link.href = url;
-                  link.click();
+              }}
+              save={{
+                // @ts-ignore
+                props: {
+                  onClick: (event) => {
+                    let correctArr = save.slice(-save.length);
+                    const blob = new Blob([JSON.stringify(correctArr)], {
+                      type: "application/json",
+                    });
+                    const url = URL.createObjectURL(blob);
+                    const link = document.createElement("a");
+                    link.download = "color_scales.json";
+                    link.href = url;
+                    link.click();
+                  },
                 },
-              },
-            }}
-            _import={{
-              props: {
-                onClick: () => {
-                  // @ts-ignore
-                  inputFile.current.click();
+              }}
+              _import={{
+                props: {
+                  onClick: () => {
+                    // @ts-ignore
+                    inputFile.current.click();
+                  },
                 },
-              },
-            }}
-          />
+              }}
+            />
           </PlasmicHome>
           <input
             type="file"
@@ -94,8 +101,7 @@ React.useEffect(() => {
               reader.readAsText(file.target.files![0]);
               reader.onload = function () {
                 localStorage.setItem("import", reader.result as string);
-                location.reload()
-                
+                location.reload();
               };
             }}
           />
