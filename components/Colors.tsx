@@ -115,6 +115,22 @@ let fixedHues = shades.map((color) => {
       }
     }  else return 0
   }
+
+  // updated colors
+  const updatedColors = allColors
+
+  if (config.manualAdjustments && config.manualAdjustments.lightness ) {
+  Object.keys(config.manualAdjustments.lightness).forEach((key) => {
+      updatedColors[+key] = chroma(updatedColors[+key]).set("hsl.h",fixedHues[+key]). set("hsl.l", config.manualAdjustments.lightness[+key]).hex()
+  
+  })}
+  if (config.manualAdjustments && config.manualAdjustments.saturation){
+  Object.keys(config.manualAdjustments.saturation).forEach((key) => {
+      updatedColors[+key] = chroma(updatedColors[+key]).set("hsl.h",fixedHues[+key]). set("hsl.s", config.manualAdjustments.saturation[+key]).hex()
+    
+  })}
+
+
   return (
     // @ts-ignore
     <PlasmicColors
@@ -123,7 +139,7 @@ let fixedHues = shades.map((color) => {
       }}
       allColors={{
         props: {
-          children: allColors.map((color, i) => {
+          children: updatedColors.map((color, i) => {
             
             return (
               <Color

@@ -43,7 +43,7 @@ function Themes_(props: ThemesProps, ref: HTMLElementRefOf<"div">) {
       let parsed = JSON.parse(import_);
       // @ts-ignore
       setThemesNodes(
-        parsed.map((config) => {
+        parsed.map((config:any) => {
           // @ts-ignore
           let key = config.key;
           // @ts-ignore
