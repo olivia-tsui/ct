@@ -14,6 +14,7 @@ import * as React from "react";
 
 import Head from "next/head";
 import Link, { LinkProps } from "next/link";
+import { useRouter } from "next/router";
 
 import * as p from "@plasmicapp/react-web";
 import * as ph from "@plasmicapp/host";
@@ -91,6 +92,13 @@ const __wrapUserPromise =
     return await promise;
   });
 
+function useNextRouter() {
+  try {
+    return useRouter();
+  } catch {}
+  return undefined;
+}
+
 function PlasmicHueField__RenderFunc(props: {
   variants: PlasmicHueField__VariantsArgs;
   args: PlasmicHueField__ArgsType;
@@ -99,6 +107,7 @@ function PlasmicHueField__RenderFunc(props: {
   forNode?: string;
 }) {
   const { variants, overrides, forNode } = props;
+  const __nextRouter = useNextRouter();
 
   const $ctx = ph.useDataEnv?.() || {};
   const args = React.useMemo(
@@ -121,8 +130,22 @@ function PlasmicHueField__RenderFunc(props: {
   const $refs = refsRef.current;
 
   const currentUser = p.useCurrentUser?.() || {};
-
   const [$queries, setDollarQueries] = React.useState({});
+  const stateSpecs = React.useMemo(
+    () => [
+      {
+        path: "input.value",
+        type: "private",
+        variableType: "text",
+        initFunc: true
+          ? ({ $props, $state, $queries, $ctx }) => undefined
+          : undefined
+      }
+    ],
+
+    [$props, $ctx]
+  );
+  const $state = p.useDollarState(stateSpecs, { $props, $ctx, $queries });
 
   const globalVariants = ensureGlobalVariants({
     dark: useDark()
@@ -204,6 +227,11 @@ function PlasmicHueField__RenderFunc(props: {
               role={"img"}
             />
           }
+          onChange={(...args) => {
+            p.generateStateOnChangeProp($state, ["input", "value"])(
+              (e => e.target?.value).apply(null, args)
+            );
+          }}
           startIcon={
             <svg
               className={classNames(projectcss.all, sty.svg__u49Cf)}
@@ -212,6 +240,7 @@ function PlasmicHueField__RenderFunc(props: {
           }
           step={args.step}
           type={"Number" as const}
+          value={p.generateStateValueProp($state, ["input", "value"])}
         />
       </div>
     ) : null

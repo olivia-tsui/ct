@@ -14,6 +14,7 @@ import * as React from "react";
 
 import Head from "next/head";
 import Link, { LinkProps } from "next/link";
+import { useRouter } from "next/router";
 
 import * as p from "@plasmicapp/react-web";
 import * as ph from "@plasmicapp/host";
@@ -102,6 +103,13 @@ const __wrapUserPromise =
     return await promise;
   });
 
+function useNextRouter() {
+  try {
+    return useRouter();
+  } catch {}
+  return undefined;
+}
+
 function PlasmicColorField__RenderFunc(props: {
   variants: PlasmicColorField__VariantsArgs;
   args: PlasmicColorField__ArgsType;
@@ -110,6 +118,7 @@ function PlasmicColorField__RenderFunc(props: {
   forNode?: string;
 }) {
   const { variants, overrides, forNode } = props;
+  const __nextRouter = useNextRouter();
 
   const $ctx = ph.useDataEnv?.() || {};
   const args = React.useMemo(
@@ -132,22 +141,31 @@ function PlasmicColorField__RenderFunc(props: {
   const $refs = refsRef.current;
 
   const currentUser = p.useCurrentUser?.() || {};
-
+  const [$queries, setDollarQueries] = React.useState({});
   const stateSpecs = React.useMemo(
     () => [
       {
         path: "showPanel",
         type: "private",
         variableType: "variant",
-        initFunc: true ? ($props, $state, $ctx) => $props.showPanel : undefined
+        initFunc: true
+          ? ({ $props, $state, $queries, $ctx }) => $props.showPanel
+          : undefined
+      },
+
+      {
+        path: "input.value",
+        type: "private",
+        variableType: "text",
+        initFunc: true
+          ? ({ $props, $state, $queries, $ctx }) => undefined
+          : undefined
       }
     ],
 
     [$props, $ctx]
   );
-  const $state = p.useDollarState(stateSpecs, $props, $ctx);
-
-  const [$queries, setDollarQueries] = React.useState({});
+  const $state = p.useDollarState(stateSpecs, { $props, $ctx, $queries });
 
   const globalVariants = ensureGlobalVariants({
     dark: useDark()
@@ -213,6 +231,11 @@ function PlasmicColorField__RenderFunc(props: {
               role={"img"}
             />
           }
+          onChange={(...args) => {
+            p.generateStateOnChangeProp($state, ["input", "value"])(
+              (e => e.target?.value).apply(null, args)
+            );
+          }}
           showStartIcon={true}
           startIcon={
             <div
@@ -223,6 +246,7 @@ function PlasmicColorField__RenderFunc(props: {
           }
           step={args.step}
           type={"Text" as const}
+          value={p.generateStateValueProp($state, ["input", "value"])}
         />
 
         {(

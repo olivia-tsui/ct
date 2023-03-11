@@ -185,6 +185,19 @@
           "cssFilePath": "plasmic/color_tool/PlasmicHome.module.css",
           "scheme": "blackbox",
           "componentType": "page"
+        },
+        {
+          "id": "CA75pWuZR0",
+          "name": "ResetNob",
+          "type": "managed",
+          "projectId": "dczqNaFYoArv9QmtqhGLsR",
+          "renderModuleFilePath": "plasmic/color_tool/PlasmicResetNob.tsx",
+          "importSpec": {
+            "modulePath": "ResetNob.tsx"
+          },
+          "cssFilePath": "plasmic/color_tool/PlasmicResetNob.module.css",
+          "scheme": "blackbox",
+          "componentType": "component"
         }
       ],
       "icons": [
@@ -267,6 +280,11 @@
           "id": "DhTNvOfuLF",
           "name": "Icon14Icon",
           "moduleFilePath": "plasmic/color_tool/icons/PlasmicIcon__Icon14.tsx"
+        },
+        {
+          "id": "LeL7JWYpsX",
+          "name": "Icon15Icon",
+          "moduleFilePath": "plasmic/color_tool/icons/PlasmicIcon__Icon15.tsx"
         }
       ],
       "images": [],
@@ -376,6 +394,6 @@
   "nextjsConfig": {
     "pagesDir": "../pages"
   },
-  "cliVersion": "0.1.211",
-  "$schema": "https://unpkg.com/@plasmicapp/cli@0.1.211/dist/plasmic.schema.json"
+  "cliVersion": "0.1.220",
+  "$schema": "https://unpkg.com/@plasmicapp/cli@0.1.220/dist/plasmic.schema.json"
 }

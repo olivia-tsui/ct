@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "@plasmicapp/cli": "^0.1.205",
-    "@plasmicapp/host": "^1.0.100",
-    "@plasmicapp/react-web": "^0.2.150",
+    "@plasmicapp/host": "^1.0.110",
+    "@plasmicapp/react-web": "^0.2.166",
     "@plasmicpkgs/plasmic-basic-components": "^0.0.108",
     "@radix-ui/react-slider": "^1.1.0",
     "antd": "^5.1.7",

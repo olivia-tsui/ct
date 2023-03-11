@@ -1,0 +1,34 @@
+.root {
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  height: 0px;
+  max-width: 100%;
+  margin-bottom: 0px;
+  padding: 0px;
+}
+.nob {
+  display: flex;
+  flex-direction: column;
+  width: 16px;
+  height: 16px;
+  justify-content: flex-start;
+  align-items: center;
+  transition-property: all;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-out;
+  flex-shrink: 0;
+  -webkit-transition-property: all;
+  -webkit-transition-timing-function: ease-out;
+  -webkit-transition-duration: 0.2s;
+  border-radius: 99px;
+  border-width: 1.5px;
+  border-style: solid;
+}
+.root:hover .nob {
+  transform: rotateX(0deg) rotateY(0deg) rotateZ(45deg);
+  border-radius: 0px;
+}
