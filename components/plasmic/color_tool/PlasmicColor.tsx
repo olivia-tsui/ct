@@ -14,6 +14,7 @@ import * as React from "react";
 
 import Head from "next/head";
 import Link, { LinkProps } from "next/link";
+import { useRouter } from "next/router";
 
 import * as p from "@plasmicapp/react-web";
 import * as ph from "@plasmicapp/host";
@@ -34,6 +35,7 @@ import {
   deriveRenderOpts,
   ensureGlobalVariants
 } from "@plasmicapp/react-web";
+import ResetNob from "../../ResetNob"; // plasmic-import: CA75pWuZR0/component
 
 import "@plasmicapp/react-web/lib/plasmic.css";
 
@@ -72,7 +74,10 @@ export type PlasmicColor__OverridesType = {
   name?: p.Flex<"div">;
   contrast?: p.Flex<"div">;
   hexCode?: p.Flex<"div">;
+  reset?: p.Flex<"div">;
+  resetNob?: p.Flex<typeof ResetNob>;
   slider?: p.Flex<"div">;
+  freeBox?: p.Flex<"div">;
 };
 
 export interface DefaultColorProps {
@@ -90,6 +95,13 @@ const __wrapUserPromise =
     return await promise;
   });
 
+function useNextRouter() {
+  try {
+    return useRouter();
+  } catch {}
+  return undefined;
+}
+
 function PlasmicColor__RenderFunc(props: {
   variants: PlasmicColor__VariantsArgs;
   args: PlasmicColor__ArgsType;
@@ -98,6 +110,7 @@ function PlasmicColor__RenderFunc(props: {
   forNode?: string;
 }) {
   const { variants, overrides, forNode } = props;
+  const __nextRouter = useNextRouter();
 
   const $ctx = ph.useDataEnv?.() || {};
   const args = React.useMemo(
@@ -119,14 +132,16 @@ function PlasmicColor__RenderFunc(props: {
   const $refs = refsRef.current;
 
   const currentUser = p.useCurrentUser?.() || {};
-
+  const [$queries, setDollarQueries] = React.useState({});
   const stateSpecs = React.useMemo(
     () => [
       {
         path: "onDark",
         type: "private",
         variableType: "variant",
-        initFunc: true ? ($props, $state, $ctx) => $props.onDark : undefined
+        initFunc: true
+          ? ({ $props, $state, $queries, $ctx }) => $props.onDark
+          : undefined
       },
 
       {
@@ -134,7 +149,7 @@ function PlasmicColor__RenderFunc(props: {
         type: "private",
         variableType: "variant",
         initFunc: true
-          ? ($props, $state, $ctx) => $props.adjustingSaturation
+          ? ({ $props, $state, $queries, $ctx }) => $props.adjustingSaturation
           : undefined
       },
 
@@ -142,15 +157,15 @@ function PlasmicColor__RenderFunc(props: {
         path: "isLocked",
         type: "private",
         variableType: "variant",
-        initFunc: true ? ($props, $state, $ctx) => $props.isLocked : undefined
+        initFunc: true
+          ? ({ $props, $state, $queries, $ctx }) => $props.isLocked
+          : undefined
       }
     ],
 
     [$props, $ctx]
   );
-  const $state = p.useDollarState(stateSpecs, $props, $ctx);
-
-  const [$queries, setDollarQueries] = React.useState({});
+  const $state = p.useDollarState(stateSpecs, { $props, $ctx, $queries });
 
   const [isRootHover, triggerRootHoverProps] = useTrigger("useHover", {});
   const triggers = {
@@ -307,11 +322,47 @@ function PlasmicColor__RenderFunc(props: {
                 "adjustingSaturation",
                 "adjustingSaturation"
               ),
+              [sty.hexCodeisLocked]: hasVariant($state, "isLocked", "isLocked"),
               [sty.hexCodeonDark]: hasVariant($state, "onDark", "onDark")
             }
           )}
         >
           {"#HexCode"}
+        </div>
+      ) : null}
+      {(
+        hasVariant($state, "adjustingSaturation", "adjustingSaturation")
+          ? true
+          : true
+      ) ? (
+        <div
+          data-plasmic-name={"reset"}
+          data-plasmic-override={overrides.reset}
+          className={classNames(projectcss.all, sty.reset, {
+            [sty.resetadjustingSaturation]: hasVariant(
+              $state,
+              "adjustingSaturation",
+              "adjustingSaturation"
+            )
+          })}
+        >
+          {(
+            hasVariant($state, "adjustingSaturation", "adjustingSaturation")
+              ? true
+              : true
+          ) ? (
+            <ResetNob
+              data-plasmic-name={"resetNob"}
+              data-plasmic-override={overrides.resetNob}
+              className={classNames("__wab_instance", sty.resetNob, {
+                [sty.resetNobadjustingSaturation]: hasVariant(
+                  $state,
+                  "adjustingSaturation",
+                  "adjustingSaturation"
+                )
+              })}
+            />
+          ) : null}
         </div>
       ) : null}
       {(
@@ -339,21 +390,47 @@ function PlasmicColor__RenderFunc(props: {
               ) &&
               hasVariant($state, "isLocked", "isLocked") &&
               hasVariant($state, "onDark", "onDark"),
+            [sty.sliderisLocked]: hasVariant($state, "isLocked", "isLocked"),
             [sty.slideronDark]: hasVariant($state, "onDark", "onDark")
           })}
-        />
+        >
+          <div
+            data-plasmic-name={"freeBox"}
+            data-plasmic-override={overrides.freeBox}
+            className={classNames(projectcss.all, sty.freeBox, {
+              [sty.freeBoxadjustingSaturation]: hasVariant(
+                $state,
+                "adjustingSaturation",
+                "adjustingSaturation"
+              )
+            })}
+          />
+        </div>
       ) : null}
     </div>
   ) as React.ReactElement | null;
 }
 
 const PlasmicDescendants = {
-  root: ["root", "lock", "name", "contrast", "hexCode", "slider"],
+  root: [
+    "root",
+    "lock",
+    "name",
+    "contrast",
+    "hexCode",
+    "reset",
+    "resetNob",
+    "slider",
+    "freeBox"
+  ],
   lock: ["lock"],
   name: ["name"],
   contrast: ["contrast"],
   hexCode: ["hexCode"],
-  slider: ["slider"]
+  reset: ["reset", "resetNob"],
+  resetNob: ["resetNob"],
+  slider: ["slider", "freeBox"],
+  freeBox: ["freeBox"]
 } as const;
 type NodeNameType = keyof typeof PlasmicDescendants;
 type DescendantsType<T extends NodeNameType> =
@@ -364,7 +441,10 @@ type NodeDefaultElementType = {
   name: "div";
   contrast: "div";
   hexCode: "div";
+  reset: "div";
+  resetNob: typeof ResetNob;
   slider: "div";
+  freeBox: "div";
 };
 
 type ReservedPropsType = "variants" | "args" | "overrides";
@@ -432,7 +512,10 @@ export const PlasmicColor = Object.assign(
     _name: makeNodeComponent("name"),
     contrast: makeNodeComponent("contrast"),
     hexCode: makeNodeComponent("hexCode"),
+    reset: makeNodeComponent("reset"),
+    resetNob: makeNodeComponent("resetNob"),
     slider: makeNodeComponent("slider"),
+    freeBox: makeNodeComponent("freeBox"),
 
     // Metadata about props expected for PlasmicColor
     internalVariantProps: PlasmicColor__VariantProps,

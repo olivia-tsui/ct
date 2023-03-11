@@ -1,6 +1,6 @@
 .root {
-  flex-direction: column;
   display: flex;
+  flex-direction: column;
   width: 100%;
   height: auto;
   max-width: 100%;
@@ -16,8 +16,8 @@
 }
 .root > :global(.__wab_flex-container) {
   flex-direction: column;
-  justify-content: flex-start;
   align-items: center;
+  justify-content: flex-start;
   min-width: 0;
   margin-top: calc(0px - 8px);
   height: calc(100% + 8px);
@@ -35,8 +35,8 @@
   }
 }
 .freeBox___4U85 {
-  flex-direction: row;
   display: flex;
+  flex-direction: row;
   width: 100%;
   height: auto;
   max-width: 100%;
@@ -45,8 +45,8 @@
 }
 .freeBox___4U85 > :global(.__wab_flex-container) {
   flex-direction: row;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   min-width: 0;
   margin-left: calc(0px - 24px);
   width: calc(100% + 24px);
@@ -193,8 +193,8 @@
   height: 1em;
 }
 .freeBox__jo9H0 {
-  flex-direction: row;
   display: flex;
+  flex-direction: row;
   width: 100%;
   height: auto;
   max-width: 100%;
@@ -203,8 +203,8 @@
 }
 .freeBox__jo9H0 > :global(.__wab_flex-container) {
   flex-direction: row;
-  justify-content: flex-start;
   align-items: center;
+  justify-content: flex-start;
   min-width: 0;
   margin-left: calc(0px - 24px);
   width: calc(100% + 24px);
@@ -374,9 +374,9 @@
   }
 }
 .freeBox__mViK {
-  flex-direction: row;
   display: flex;
   position: relative;
+  flex-direction: row;
   width: 100%;
   height: auto;
   max-width: 100%;
@@ -385,8 +385,8 @@
 }
 .freeBox__mViK > :global(.__wab_flex-container) {
   flex-direction: row;
-  justify-content: space-between;
   align-items: stretch;
+  justify-content: space-between;
   min-width: 0;
 }
 @media (min-width: 0px) and (max-width: 768px) {
@@ -418,9 +418,9 @@
   }
 }
 .freeBox__wpWem {
-  flex-direction: row;
   display: flex;
   position: relative;
+  flex-direction: row;
   width: auto;
   height: auto;
   max-width: 100%;
@@ -428,8 +428,8 @@
 }
 .freeBox__wpWem > :global(.__wab_flex-container) {
   flex-direction: row;
-  justify-content: flex-start;
   align-items: center;
+  justify-content: flex-start;
   margin-left: calc(0px - 16px);
   width: calc(100% + 16px);
 }
@@ -522,9 +522,9 @@
   height: 1em;
 }
 .freeBox__eZ3Ci {
-  flex-direction: row;
   display: flex;
   position: relative;
+  flex-direction: row;
   width: auto;
   height: auto;
   max-width: 100%;
@@ -532,8 +532,8 @@
 }
 .freeBox__eZ3Ci > :global(.__wab_flex-container) {
   flex-direction: row;
-  justify-content: flex-start;
   align-items: center;
+  justify-content: flex-start;
   margin-left: calc(0px - 16px);
   width: calc(100% + 16px);
 }

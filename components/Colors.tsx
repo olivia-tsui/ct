@@ -12,6 +12,7 @@ import { ColorsContext, ConfigUpdateContext } from "./Theme";
 import { HomeContext } from "../pages/index";
 import { InterpolationMode } from "chroma-js";
 import * as Slider from "@radix-ui/react-slider";
+import ResetNob from "./ResetNob";
 
 export interface ColorsProps extends DefaultColorsProps {
   uploaddata: (data: any) => string[];
@@ -102,19 +103,35 @@ let fixedHues = shades.map((color) => {
 
   function getValue(color:string,i:number):number {
     if (props.manualAdjusting === "s") {
-      if (config.manualAdjustments.saturation[i] === undefined || config.manualAdjustments.saturation[i] === null) {
+      if (config.manualAdjustments?.saturation[i] === undefined || config.manualAdjustments?.saturation[i] === null) {
       return chroma(color).get(`hsl.${props.manualAdjusting}`) * 100;
       } else {
         return config.manualAdjustments.saturation[i] * 100;
       }
     }   else if (props.manualAdjusting === "l") {
-      if (config.manualAdjustments.lightness[i] === undefined || config.manualAdjustments.lightness[i] === null) {
+      if (config.manualAdjustments?.lightness[i] === undefined || config.manualAdjustments?.lightness[i] === null) {
       return chroma(color).get(`hsl.${props.manualAdjusting}`) * 100;
       } else {
         return config.manualAdjustments.lightness[i] * 100;
       }
     }  else return 0
   }
+
+  // updated colors
+  const updatedColors = allColors
+
+  if (config.manualAdjustments && config.manualAdjustments.lightness ) {
+  Object.keys(config.manualAdjustments.lightness).forEach((key) => {
+      updatedColors[+key] = chroma(updatedColors[+key]).set("hsl.h",fixedHues[+key]). set("hsl.l", config.manualAdjustments.lightness[+key]).hex()
+  
+  })}
+  if (config.manualAdjustments && config.manualAdjustments.saturation){
+  Object.keys(config.manualAdjustments.saturation).forEach((key) => {
+      updatedColors[+key] = chroma(updatedColors[+key]).set("hsl.h",fixedHues[+key]). set("hsl.s", config.manualAdjustments.saturation[+key]).hex()
+    
+  })}
+
+
   return (
     // @ts-ignore
     <PlasmicColors
@@ -123,7 +140,7 @@ let fixedHues = shades.map((color) => {
       }}
       allColors={{
         props: {
-          children: allColors.map((color, i) => {
+          children: updatedColors.map((color, i) => {
             
             return (
               <Color
@@ -133,9 +150,71 @@ let fixedHues = shades.map((color) => {
                 name={names[i]}
                 hexCode={
                   props.manualAdjusting !== ""
-                    ? chroma(color).get(`hsl.${props.manualAdjusting}`).toFixed(2)
+                    ? chroma(color)
+                        .get(`hsl.${props.manualAdjusting}`)
+                        .toFixed(2)
                     : color.toUpperCase()
                 }
+                // @ts-ignore
+                resetNob={{
+                  props: {
+                    isHidden: (() => {
+                      if (props.manualAdjusting === "s") {
+                        let saturations = Object.keys(
+                          config.manualAdjustments.saturation
+                        );
+                        if (saturations && saturations.length > 0) {
+                          return saturations.some(
+                            (saturation) => saturation === i.toString()
+                          )
+                            ? false
+                            : true;
+                        }
+                      } else if (props.manualAdjusting === "l") {
+                        let lightness = Object.keys(
+                          config.manualAdjustments.lightness
+                        );
+                        if (lightness && lightness.length > 0) {
+                          return lightness.some(
+                            (light) => light === i.toString()
+                          )
+                            ? false
+                            : true;
+                        }
+                      } 
+                       return true;
+                    })(),
+                    style:{
+                      bottom:(() => {
+                        if (props.manualAdjusting === "s") {
+                          return `${chroma(shades[i]).get('hsl.s')*100}%`
+                        } else if (props.manualAdjusting === "l") {
+                          return `${chroma(shades[i]).get('hsl.l')*100}%`
+                        }
+                      }) (),
+                      color:chroma.contrast("white", color) < 2.5
+                      ? "black"
+                      : "white"
+                    },
+                    onClick: () => {
+                      if (props.manualAdjusting==="s") {
+                        let newConfig = config 
+                        delete newConfig.manualAdjustments.saturation[`${i}`]
+                        updateConfig(newConfig)
+                        let updatedColors = [...allColors]
+                        updatedColors[i] = shades[i]
+                        setAllColors(updatedColors)
+                      } else if (props.manualAdjusting==="l") {
+                        let newConfig = config 
+                        delete newConfig.manualAdjustments.lightness[`${i}`]
+                        updateConfig(newConfig)
+                        let updatedColors = [...allColors]
+                        updatedColors[i] = shades[i]
+                        setAllColors(updatedColors)
+                      }
+                    }
+                  },
+                }}
                 // @ts-ignore
                 contrast={contrast(color)}
                 isLocked={color === config.baseValue}
@@ -155,7 +234,7 @@ let fixedHues = shades.map((color) => {
                     children: (
                       <Slider.Root
                         orientation="vertical"
-                        value={[ getValue(color,i) ]}
+                        value={[getValue(color, i)]}
                         style={{
                           position: "relative",
                           display: "flex",
@@ -176,7 +255,7 @@ let fixedHues = shades.map((color) => {
                               manualAdjustments: {
                                 ...config.manualAdjustments,
                                 saturation: {
-                                  ...config.manualAdjustments.saturation,
+                                  ...config.manualAdjustments?.saturation,
                                   [i]: e[0] / 100,
                                 },
                               },
@@ -188,7 +267,7 @@ let fixedHues = shades.map((color) => {
                               manualAdjustments: {
                                 ...config.manualAdjustments,
                                 lightness: {
-                                  ...config.manualAdjustments.lightness,
+                                  ...config.manualAdjustments?.lightness,
                                   [i]: e[0] / 100,
                                 },
                               },
@@ -199,20 +278,27 @@ let fixedHues = shades.map((color) => {
 
                           if (props.manualAdjusting == "l") {
                             updatedColorSets[i] = chroma(shades[i])
-                            .set("hsl.h", fixedHues[i])
-                            .set('hsl.s', config.manualAdjustments.saturation[i]? config.manualAdjustments.saturation[i] :originalSaturation[i] )
-                            .set(
-                              `hsl.l`,  e[0] / 100
-                            )
-                            .hex();
+                              .set("hsl.h", fixedHues[i])
+                              .set(
+                                "hsl.s",
+                                config.manualAdjustments?.saturation[i]
+                                  ? config.manualAdjustments.saturation[i]
+                                  : originalSaturation[i]
+                              )
+                              .set(`hsl.l`, e[0] / 100)
+                              .hex();
                           }
                           if (props.manualAdjusting == "s") {
                             updatedColorSets[i] = chroma(shades[i])
-                            .set("hsl.h", fixedHues[i])
-                            .set(
-                              `hsl.s`,  e[0] / 100
-                            ).set('hsl.l', config.manualAdjustments.lightness[i] ? config.manualAdjustments.lightness[i] : originalLightness[i] )
-                            .hex();
+                              .set("hsl.h", fixedHues[i])
+                              .set(`hsl.s`, e[0] / 100)
+                              .set(
+                                "hsl.l",
+                                config.manualAdjustments?.lightness[i]
+                                  ? config.manualAdjustments.lightness[i]
+                                  : originalLightness[i]
+                              )
+                              .hex();
                           }
 
                           // Set the state with the updated items

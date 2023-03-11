@@ -1,14 +1,12 @@
 // @ts-nocheck
 import * as React from "react";
-import {
-  PlasmicTheme
-} from "./plasmic/color_tool/PlasmicTheme";
+import { PlasmicTheme } from "./plasmic/color_tool/PlasmicTheme";
 
 import { HomeContext } from "../pages";
 import chroma from "chroma-js";
 
 const config = {
-  name:"Default",
+  name: "Default",
   baseValue: "#0F3CC9",
   saturation: 0,
   darkSaturation: 0,
@@ -18,12 +16,12 @@ const config = {
   darkLuminance: 0.008,
   lightHueShift: 225.48,
   darkHueShift: 225.48,
-  lightDomain:[0,100],
-  darkDomain:[0,100],
-  manualAdjustments:{
-    lightness:[],
-    saturation:[]
-  }
+  lightDomain: [0, 100],
+  darkDomain: [0, 100],
+  manualAdjustments: {
+    lightness: [],
+    saturation: [],
+  },
 };
 
 export const ColorsContext = React.createContext(config);
@@ -31,33 +29,43 @@ export const ConfigUpdateContext = React.createContext((data) => {
   setConfig(data);
 });
 
-
-function Theme_(props,ref) {
-  const [_config, setConfig] = React.useState(props.config ? props.config : config)
+function Theme_(props, ref) {
+  const [_config, setConfig] = React.useState(
+    props.config ? props.config : config
+  );
   const [lightScrubColor, setLightScrubColor] = React.useState(
     _config.baseValue
-    )
-    const [darkScrubColor, setDarkScrubColor] = React.useState(_config.baseValue);
-  let output = "empty"
-    const [copied, setCopied] = React.useState(false);
-    const [rawLightDomainLiteral, setRawLightDomainLiteral] = React.useState(_config.lightDomain.toString());
-    const [rawDarkDomainLiteral, setRawDarkDomainLiteral] = React.useState(_config.darkDomain.toString());
-    const [key, setKey] = React.useState(generateRandomString());
-    const home = React.useContext(HomeContext);
-    const [manualAdjusting, setManualAdjusting] = React.useState('');
+  );
+  const [darkScrubColor, setDarkScrubColor] = React.useState(_config.baseValue);
+  let output = "empty";
+  const [copied, setCopied] = React.useState(false);
+  const [rawLightDomainLiteral, setRawLightDomainLiteral] = React.useState(
+    _config.lightDomain.toString()
+  );
+  const [rawDarkDomainLiteral, setRawDarkDomainLiteral] = React.useState(
+    _config.darkDomain.toString()
+  );
+  const home = React.useContext(HomeContext);
+  const [manualAdjusting, setManualAdjusting] = React.useState("");
 
-    React.useEffect(() => {
-      
-      if (home.currentSaveData.length > 0){
-
-        let isAlreadyIn = home.currentSaveData.some(n =>n.key===key || n.name===_config.name)
-        if (!isAlreadyIn) home.onSaveChange([...home.currentSaveData,{..._config,key:key}]);
-        else home.onSaveChange(home.currentSaveData.map(n => n.key===key ? {..._config,key:key} : n));
-        
-      } else  home.onSaveChange([{..._config,key:key}]);
-    },[_config])
-
-
+  React.useEffect(() => {
+    if (home.currentSaveData.length > 0) {
+      let isAlreadyIn = home.currentSaveData.some((n) => n.key === _config.key);
+      if (!isAlreadyIn) {
+        if (home.currentSaveData.some((obj) => Object.keys(obj).length === 0))
+          home.onSaveChange([{ ..._config }]);
+        else home.onSaveChange([...home.currentSaveData, { ..._config }]);
+      } else {
+        home.onSaveChange(
+          home.currentSaveData.map((n) =>
+            n.key === _config.key ? { ..._config } : n
+          )
+        );
+      }
+    } else {
+      home.onSaveChange([{ ..._config }]);
+    }
+  }, [_config]);
 
   function approximatelyEqual(a: number, b: number, threshold = 0.1) {
     return Math.abs(a - b) < threshold;
@@ -236,13 +244,12 @@ function Theme_(props,ref) {
           copy={{
             props: {
               onClick: () => {
-
                 let out = JSON.parse(output);
                 let r = out[0].reduce((obj, key, index) => {
                   obj[key] = out[1][index];
                   return obj;
                 }, {});
-                console.log("r = ", r)
+                console.log("r = ", r);
                 navigator.clipboard
                   .writeText(JSON.stringify(r).toUpperCase())
                   .then(function () {});
@@ -258,7 +265,9 @@ function Theme_(props,ref) {
           }}
           colors={{
             props: {
-              uploaddata: (d) => {output = d},
+              uploaddata: (d) => {
+                output = d;
+              },
               manualAdjusting: manualAdjusting,
             },
           }}
@@ -312,7 +321,7 @@ function Theme_(props,ref) {
               onClick: () => {
                 props.removeTheme(props.id);
                 home.onSaveChange(
-                  home.currentSaveData.filter((n) => n.key !== key)
+                  home.currentSaveData.filter((n) => n.key !== props.config.key)
                 );
               },
             },
