@@ -17,7 +17,7 @@ import Link, { LinkProps } from "next/link";
 import { useRouter } from "next/router";
 
 import * as p from "@plasmicapp/react-web";
-import * as ph from "@plasmicapp/host";
+import * as ph from "@plasmicapp/react-web/lib/host";
 
 import {
   hasVariant,
@@ -231,9 +231,9 @@ function PlasmicColorField__RenderFunc(props: {
               role={"img"}
             />
           }
-          onChange={(...args) => {
+          onChange={(...eventArgs) => {
             p.generateStateOnChangeProp($state, ["input", "value"])(
-              (e => e.target?.value).apply(null, args)
+              (e => e.target?.value).apply(null, eventArgs)
             );
           }}
           showStartIcon={true}

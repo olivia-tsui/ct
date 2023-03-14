@@ -17,7 +17,7 @@ import Link, { LinkProps } from "next/link";
 import { useRouter } from "next/router";
 
 import * as p from "@plasmicapp/react-web";
-import * as ph from "@plasmicapp/host";
+import * as ph from "@plasmicapp/react-web/lib/host";
 
 import {
   hasVariant,
@@ -52,6 +52,7 @@ import sty from "./PlasmicHomepage.module.css"; // plasmic-import: TG7tj4i4IGD7/
 import Icon7Icon from "../color_tool/icons/PlasmicIcon__Icon7"; // plasmic-import: MxbpqMBUBE/icon
 import IconIcon from "../color_tool/icons/PlasmicIcon__Icon"; // plasmic-import: Kv0ZYfEWi7y/icon
 import Icon8Icon from "../color_tool/icons/PlasmicIcon__Icon8"; // plasmic-import: p5cZTvPKPD/icon
+import Icon16Icon from "../color_tool/icons/PlasmicIcon__Icon16"; // plasmic-import: vWE28weqKx/icon
 
 export type PlasmicHomepage__VariantMembers = {};
 
@@ -69,6 +70,7 @@ export type PlasmicHomepage__OverridesType = {
   h2?: p.Flex<"h2">;
   save?: p.Flex<typeof Button>;
   _import?: p.Flex<typeof Button>;
+  token?: p.Flex<typeof Button>;
   toggle?: p.Flex<typeof Toggle>;
   mode?: p.Flex<typeof Segmented>;
   themes?: p.Flex<typeof Themes>;
@@ -243,6 +245,36 @@ function PlasmicHomepage__RenderFunc(props: {
                 {"Import"}
               </div>
             </Button>
+
+            <Button
+              data-plasmic-name={"token"}
+              data-plasmic-override={overrides.token}
+              className={classNames("__wab_instance", sty.token)}
+              showStartIcon={true}
+              simple={true}
+              startIcon={
+                true ? (
+                  <div
+                    className={classNames(projectcss.all, sty.freeBox___8II6J)}
+                  >
+                    <Icon16Icon
+                      className={classNames(projectcss.all, sty.svg__t4Rtv)}
+                      role={"img"}
+                    />
+                  </div>
+                ) : null
+              }
+            >
+              <div
+                className={classNames(
+                  projectcss.all,
+                  projectcss.__wab_text,
+                  sty.text___7WTzw
+                )}
+              >
+                {"Get Tokens"}
+              </div>
+            </Button>
           </p.Stack>
         ) : null}
         {true ? (
@@ -322,14 +354,16 @@ const PlasmicDescendants = {
     "h2",
     "save",
     "_import",
+    "token",
     "toggle",
     "mode",
     "themes"
   ],
-  section: ["section", "h2", "save", "_import", "toggle", "mode"],
+  section: ["section", "h2", "save", "_import", "token", "toggle", "mode"],
   h2: ["h2"],
   save: ["save"],
   _import: ["_import"],
+  token: ["token"],
   toggle: ["toggle"],
   mode: ["mode"],
   themes: ["themes"]
@@ -343,6 +377,7 @@ type NodeDefaultElementType = {
   h2: "h2";
   save: typeof Button;
   _import: typeof Button;
+  token: typeof Button;
   toggle: typeof Toggle;
   mode: typeof Segmented;
   themes: typeof Themes;
@@ -413,6 +448,7 @@ export const PlasmicHomepage = Object.assign(
     h2: makeNodeComponent("h2"),
     save: makeNodeComponent("save"),
     _import: makeNodeComponent("_import"),
+    token: makeNodeComponent("token"),
     toggle: makeNodeComponent("toggle"),
     mode: makeNodeComponent("mode"),
     themes: makeNodeComponent("themes"),

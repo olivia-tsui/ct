@@ -285,6 +285,11 @@
           "id": "LeL7JWYpsX",
           "name": "Icon15Icon",
           "moduleFilePath": "plasmic/color_tool/icons/PlasmicIcon__Icon15.tsx"
+        },
+        {
+          "id": "vWE28weqKx",
+          "name": "Icon16Icon",
+          "moduleFilePath": "plasmic/color_tool/icons/PlasmicIcon__Icon16.tsx"
         }
       ],
       "images": [],
