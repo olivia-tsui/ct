@@ -4,7 +4,7 @@ import * as React from "react";
 import * as ph from "@plasmicapp/host";
 import { PlasmicHomepage } from "../components/plasmic/blank_project/PlasmicHomepage";
 import { useRouter } from "next/router";
-import {reformat} from './helper.js'
+import {reformat} from '../helper.js'
 import {
   DarkContext,
   DarkValue,
