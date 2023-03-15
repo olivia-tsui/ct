@@ -36,7 +36,7 @@ export function reformat(configs) {
     }
   }
   configs.forEach((config) => {
-    let scaleName = config.name
+    let scaleName = toKebabCase( config.name)
     lightColor[scaleName]={
       "weak-6": {
         value: `{brand.color.scale.${scaleName}.l12}`,
@@ -102,7 +102,7 @@ export function reformat(configs) {
     }
   }
   configs.forEach((config) => {
-    let scaleName = config.name
+    let scaleName = toKebabCase( config.name)
     darkColor[scaleName]={"strong-6": {
     "value": `{brand.color.scale.${scaleName}.l12}`,
     "type": "color",
@@ -166,7 +166,7 @@ export function reformat(configs) {
     },
   };
   configs.forEach((config) => {
-    let scaleName = config.name
+    let scaleName = toKebabCase( config.name)
     dimColor[scaleName]={
       "strong-6": {
         "value": `{brand.color.scale.${scaleName}.l12}`,
@@ -225,75 +225,85 @@ export function reformat(configs) {
   download(dim,"dim")
 
 }
- function reformatOne(config) {
 
-    let shades = [];
-  let names = [];
-  let light = chroma(config.baseValue)
-    .set("hsl.h", config.lightHueShift)
-    .luminance(config.lightLuminance);
-  let dark = chroma(config.baseValue)
-    .set("hsl.h", config.darkHueShift)
-    .luminance(config.darkLuminance);
-  if (config.saturation > 0) {
-    light = light.saturate(config.saturation);
-  } else if (config.saturation < 0) {
-    light = light.desaturate(-config.saturation);
-  }
-  if (config.darkSaturation > 0) {
-    dark = dark.saturate(config.darkSaturation);
-  } else if (config.darkSaturation < 0) {
-    dark = dark.desaturate(-config.darkSaturation);
-  }
-
-  let lightScale = chroma
-    .scale([config.baseValue, light.hex()])
-    .mode('hsl')
-    .domain(config.lightDomain)
-    .colors(config.stepsLighter + 1);
-  let darkScale = chroma
-    .scale([config.baseValue, dark.hex()])
-    .mode('hsl')
-    .domain(config.darkDomain)
-    .colors(config.stepsDarker + 1);
-
-  for (let i = lightScale.length - 1; i > 0; i--) {
-    let newShade = lightScale[i];
-    shades.push(newShade);
-    names.push(`L${i}`);
-  }
-  // add base
-  shades.push(config.baseValue);
-  names.push("Base");
-
-  for (let i = 1; i < darkScale.length; i++) {
-    let newShade = darkScale[i];
-    shades.push(newShade);
-    names.push(`D${i}`);
-  }
-  let fixedHues = shades.map((color) => {
-    return chroma(color).get("hsl.h").toFixed(2);
-  });
-
-  // updated colors
-  const updatedColors = shades
-
-  if (config.manualAdjustments && config.manualAdjustments.lightness ) {
-  Object.keys(config.manualAdjustments.lightness).forEach((key) => {
-      updatedColors[+key] = chroma(updatedColors[+key]).set("hsl.h",fixedHues[+key]). set("hsl.l", config.manualAdjustments.lightness[+key]).hex()
-  })}
-  if (config.manualAdjustments && config.manualAdjustments.saturation){
-  Object.keys(config.manualAdjustments.saturation).forEach((key) => {
-      updatedColors[+key] = chroma(updatedColors[+key]).set("hsl.h",fixedHues[+key]). set("hsl.s", config.manualAdjustments.saturation[+key]).hex()
-    
-  })}
-  let output = {}
-  names = names.reverse()
-  updatedColors.reverse().forEach((color, index) => {
-    output[names[index]] = {
-        value:color,
-        type:'color'
-    }
-  })
-  return output
+function toKebabCase(str) {
+  return str.toLowerCase().replace(/\s+/g, '-');
 }
+ function reformatOne(config) {
+   let shades = [];
+   let names = [];
+   let light = chroma(config.baseValue)
+     .set("hsl.h", config.lightHueShift)
+     .luminance(config.lightLuminance);
+   let dark = chroma(config.baseValue)
+     .set("hsl.h", config.darkHueShift)
+     .luminance(config.darkLuminance);
+   if (config.saturation > 0) {
+     light = light.saturate(config.saturation);
+   } else if (config.saturation < 0) {
+     light = light.desaturate(-config.saturation);
+   }
+   if (config.darkSaturation > 0) {
+     dark = dark.saturate(config.darkSaturation);
+   } else if (config.darkSaturation < 0) {
+     dark = dark.desaturate(-config.darkSaturation);
+   }
+
+   let lightScale = chroma
+     .scale([config.baseValue, light.hex()])
+     .mode("hsl")
+     .domain(config.lightDomain)
+     .colors(config.stepsLighter + 1);
+   let darkScale = chroma
+     .scale([config.baseValue, dark.hex()])
+     .mode("hsl")
+     .domain(config.darkDomain)
+     .colors(config.stepsDarker + 1);
+
+   for (let i = lightScale.length - 1; i > 0; i--) {
+     let newShade = lightScale[i];
+     shades.push(newShade);
+     names.push(`l${i}`);
+   }
+   // add base
+   shades.push(config.baseValue);
+   names.push("Base");
+
+   for (let i = 1; i < darkScale.length; i++) {
+     let newShade = darkScale[i];
+     shades.push(newShade);
+     names.push(`d${i}`);
+   }
+   let fixedHues = shades.map((color) => {
+     return chroma(color).get("hsl.h").toFixed(2);
+   });
+
+   // updated colors
+   const updatedColors = shades;
+
+   if (config.manualAdjustments && config.manualAdjustments.lightness) {
+     Object.keys(config.manualAdjustments.lightness).forEach((key) => {
+       updatedColors[+key] = chroma(updatedColors[+key])
+         .set("hsl.h", fixedHues[+key])
+         .set("hsl.l", config.manualAdjustments.lightness[+key])
+         .hex();
+     });
+   }
+   if (config.manualAdjustments && config.manualAdjustments.saturation) {
+     Object.keys(config.manualAdjustments.saturation).forEach((key) => {
+       updatedColors[+key] = chroma(updatedColors[+key])
+         .set("hsl.h", fixedHues[+key])
+         .set("hsl.s", config.manualAdjustments.saturation[+key])
+         .hex();
+     });
+   }
+   let output = {};
+   names = names.reverse()
+   updatedColors.reverse().forEach((color, index) => {
+     output[names[index]] = {
+       value: color,
+       type: "color",
+     };
+   });
+   return output;
+ }

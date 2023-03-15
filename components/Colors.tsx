@@ -79,7 +79,7 @@ function Colors_(props: ColorsProps, ref: HTMLElementRefOf<"div">) {
     names.push(`D${i}`);
   }
 
-  props.uploaddata(JSON.stringify([names, shades]));
+
 let fixedHues = shades.map((color) => {
     return chroma(color).get("hsl.h").toFixed(2);
   });
@@ -130,7 +130,7 @@ let fixedHues = shades.map((color) => {
       updatedColors[+key] = chroma(updatedColors[+key]).set("hsl.h",fixedHues[+key]). set("hsl.s", config.manualAdjustments.saturation[+key]).hex()
     
   })}
-
+  props.uploaddata(JSON.stringify([names, updatedColors]));
 
   return (
     // @ts-ignore

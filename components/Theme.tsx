@@ -249,7 +249,7 @@ function Theme_(props, ref) {
                   obj[key] = out[1][index];
                   return obj;
                 }, {});
-                console.log("r = ", r);
+
                 navigator.clipboard
                   .writeText(JSON.stringify(r).toUpperCase())
                   .then(function () {});
