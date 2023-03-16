@@ -16,7 +16,7 @@ export function reformat(configs) {
   let scale = {}
    outputs.forEach((n,i)=>{
     
-    return scale[configs[i]['name']]=n
+    return scale[toKebabCase(configs[i]['name'])]=n
   })
   // scale.json
   download(  {
@@ -227,7 +227,10 @@ export function reformat(configs) {
 }
 
 function toKebabCase(str) {
-  return str.toLowerCase().replace(/\s+/g, '-');
+  return str
+  .replace(/([a-z])([A-Z])/g, "$1-$2")
+  .replace(/[\s_]+/g, '-')
+  .toLowerCase();
 }
  function reformatOne(config) {
    let shades = [];
@@ -267,7 +270,7 @@ function toKebabCase(str) {
    }
    // add base
    shades.push(config.baseValue);
-   names.push("Base");
+   names.push("base");
 
    for (let i = 1; i < darkScale.length; i++) {
      let newShade = darkScale[i];
@@ -300,7 +303,7 @@ function toKebabCase(str) {
    let output = {};
    names = names.reverse()
    updatedColors.reverse().forEach((color, index) => {
-     output[names[index]] = {
+     output[ names[index]] = {
        value: color,
        type: "color",
      };
