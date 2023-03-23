@@ -13,6 +13,7 @@ import { HomeContext } from "../pages/index";
 import { InterpolationMode } from "chroma-js";
 import * as Slider from "@radix-ui/react-slider";
 import ResetNob from "./ResetNob";
+import { calcAPCA,  } from 'apca-w3';
 
 export interface ColorsProps extends DefaultColorsProps {
   uploaddata: (data: any) => string[];
@@ -28,11 +29,12 @@ function Colors_(props: ColorsProps, ref: HTMLElementRefOf<"div">) {
   let names: string[] = [];
 
   const contrast = (color: string) => {
-    let whiteTextContrast = chroma.contrast(color, light);
-    let darkTextContrast = chroma.contrast(color, dark);
+    let whiteTextContrast =  Math.abs(calcAPCA(color, chroma( light).hex()) as number);
+    let darkTextContrast = Math.abs(calcAPCA(color, chroma(dark).hex()) as number);
+    
     return whiteTextContrast > darkTextContrast
       ? `${whiteTextContrast.toFixed(1)}`
-      : `${darkTextContrast.toFixed(1)}`;
+      : `${darkTextContrast.toFixed(1)}`
   };
 
   let light = chroma(config.baseValue)

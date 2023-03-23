@@ -1,5 +1,5 @@
 import chroma from "chroma-js";
-
+import { calcAPCA } from 'apca-w3';
 export function download(data, name) {
   const blob = new Blob([JSON.stringify(data)], { type: "application/json" });
   const url = URL.createObjectURL(blob);
@@ -9,11 +9,33 @@ export function download(data, name) {
   link.click();
 }
 
+function contrastingColor(backgroundColor,textColorA,textColorB,output='contrast'){
+  let contrastlight = Math.abs( calcAPCA(backgroundColor,textColorA));
+  let contrastDark = Math.abs( calcAPCA(backgroundColor,textColorB));
+  
+  if (output === 'contrast'){
+    if(contrastlight > contrastDark){
+      return "strong";
+    }else{
+      return "weak";
+    }
+  } else {
+    if(contrastlight > contrastDark){
+      return "light";
+    }else{
+      return "dark";
+    }
+  }
+ 
+
+
+}
+
 export function reformat(configs) {
   let outputs = configs.map(generateColorScale);
 
   let scale = {};
-  outputs.forEach((n, i) => {
+  outputs.map((n, i) => {
     return (scale[toKebabCase(configs[i]["name"])] = n);
   });
 
@@ -51,9 +73,9 @@ export function reformat(configs) {
     base: "d1"
   };
   
-  let light = createColorObject(configs, stepsLight, prefix);
-  let dark = createColorObject(configs, stepsDark, prefix);
-  let dim = createColorObject(configs, stepsDim, prefix);
+  let light = createColorObject(configs,outputs, stepsLight, prefix);
+  let dark = createColorObject(configs,outputs, stepsDark, prefix);
+  let dim = createColorObject(configs,outputs, stepsDim, prefix);
 
 
   download(light, "light");
@@ -61,65 +83,130 @@ export function reformat(configs) {
   download(dim, "dim");
 }
 
-function createColorObject(configs, steps, prefix) {
+function createColorObject(configs,colors, steps, prefix) {
   let colorObj = {};
+  let contrastColorObj = {}
 
-  configs.forEach((config) => {
+  configs.forEach((config,i) => {
     let scaleName = toKebabCase(config.name);
     colorObj[scaleName] = {};
-
+    contrastColorObj[scaleName] = {};
     // Add weak colors
-    for (let index = steps['weak'].length - 1; index >= 0; index--) {
-      const step = steps['weak'][index];
+
+    for (let index = steps["weak"].length - 1; index >= 0; index--) {
+      const step = steps["weak"][index];
       colorObj[scaleName][`weak-${index + 1}`] = {
         value: `{${prefix}.${scaleName}.${step}}`,
         type: "color",
+      };
+
+      let backgroundColor = colors[i][step].value;
+      let textColorA = colors[i][steps["strong"][5]].value;
+      let textColorB = colors[i][steps["weak"][5]].value;
+
+      contrastColorObj[scaleName][`weak-${index + 1}`] = {
+        value: contrastingColor(backgroundColor, textColorA, textColorB), // TODO: contrasting text color output: weak or strong
+        type: "other",
       };
     }
 
     // Add base color
     colorObj[scaleName]["base"] = {
-      value: `{${prefix}.${scaleName}.${steps['base']}}`,
+      value: `{${prefix}.${scaleName}.${steps["base"]}}`,
       type: "color",
+    };
+    let backgroundColor = colors[i]["base"].value;
+    let textColorA = colors[i][steps["strong"][5]].value;
+    let textColorB = colors[i][steps["weak"][5]].value;
+    contrastColorObj[scaleName]["base"] = {
+      value: contrastingColor(backgroundColor, textColorA, textColorB), // TODO: contrasting text color output: weak or strong
+      type: "other",
     };
 
     // Add strong colors
-    steps['strong'].forEach((step, index) => {
+    steps["strong"].forEach((step, index) => {
       colorObj[scaleName][`strong-${index + 1}`] = {
         value: `{${prefix}.${scaleName}.${step}}`,
         type: "color",
       };
+
+      let backgroundColor = colors[i][step].value;
+      let textColorA = colors[i][steps["strong"][5]].value;
+      let textColorB = colors[i][steps["weak"][5]].value;
+      contrastColorObj[scaleName][`strong-${index + 1}`] = {
+        value: contrastingColor(backgroundColor, textColorA, textColorB), // TODO: contrasting text color output: weak or strong
+        type: "other",
+      };
     });
 
     // Add light colors
-    for (let index = steps['light'].length - 1; index >= 0; index--) {
-      const step = steps['light'][index];
+    for (let index = steps["light"].length - 1; index >= 0; index--) {
+      const step = steps["light"][index];
       colorObj[scaleName][`light-${index + 1}`] = {
         value: `{${prefix}.${scaleName}.${step}}`,
         type: "color",
+      };
+
+      let backgroundColor = colors[i][step].value;
+      let textColorA = colors[i][steps["light"][5]].value;
+      let textColorB = colors[i][steps["dark"][5]].value;
+      contrastColorObj[scaleName][`light-${index + 1}`] = {
+        value: contrastingColor(
+          backgroundColor,
+          textColorA,
+          textColorB,
+          "static"
+        ), // TODO: contrasting text color output: light or dark
+        type: "other",
       };
     }
 
     // Add base color
     colorObj[scaleName]["_base"] = {
-      value: `{${prefix}.${scaleName}.${steps['base']}}`,
+      value: `{${prefix}.${scaleName}.${steps["base"]}}`,
       type: "color",
     };
 
+    backgroundColor = colors[i]['base'].value;
+    textColorA = colors[i][steps["light"][5]].value;
+    textColorB = colors[i][steps["dark"][5]].value;
+
+    contrastColorObj[scaleName][`_base`] = {
+      value: contrastingColor(
+        backgroundColor,
+        textColorA,
+        textColorB,
+        "static"
+      ), // TODO: contrasting text color
+      type: "other",
+    };
+
     // Add dark colors
-    steps['dark'].forEach((step, index) => {
+    steps["dark"].forEach((step, index) => {
       colorObj[scaleName][`dark-${index + 1}`] = {
         value: `{${prefix}.${scaleName}.${step}}`,
         type: "color",
       };
+      let backgroundColor = colors[i][step].value;
+      let textColorA = colors[i][steps["light"][5]].value;
+      let textColorB = colors[i][steps["dark"][5]].value;
+      contrastColorObj[scaleName][`dark-${index + 1}`] = {
+        value: contrastingColor(
+          backgroundColor,
+          textColorA,
+          textColorB,
+          "static"
+        ), // TODO: contrasting text color
+        type: "other",
+      };
     });
-
   });
   
 
   return {
     brand: {
       color: colorObj,
+      contrast:contrastColorObj
     },
   };
 }

@@ -15,6 +15,7 @@
     "@plasmicpkgs/plasmic-basic-components": "^0.0.108",
     "@radix-ui/react-slider": "^1.1.0",
     "antd": "^5.1.7",
+    "apca-w3": "^0.1.9",
     "chroma-js": "^2.4.2",
     "next": "13.1.6",
     "react": "18.2.0",
@@ -22,6 +23,7 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
+    "@types/apca-w3": "^0.1.0",
     "@types/chroma-js": "^2.1.4",
     "@types/node": "18.11.18",
     "@types/react": "18.0.27",
